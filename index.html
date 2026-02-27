@@ -11,6 +11,7 @@
 /* ══════════════════════════════════════════
    ROOT & RESET
 ══════════════════════════════════════════ */
+/* ── Dark Mode (default) ── */
 :root {
   --bg: #0a0a0f;
   --bg2: #12121a;
@@ -31,6 +32,7 @@
   --nav-bg: rgba(10,10,15,0.92);
 }
 
+/* ── Light Mode ── */
 body.light {
   --bg: #f5f5f7;
   --bg2: #ffffff;
@@ -53,11 +55,14 @@ body.light .leaflet-popup-content-wrapper { background:#fff!important; border-co
 body.light .leaflet-popup-content { color:#1a1a2e!important; }
 body.light .leaflet-popup-tip { background:#fff!important; }
 
+/* ── Theme transition ── */
 *, *::before, *::after {
   margin:0; padding:0; box-sizing:border-box;
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
-img, svg, canvas, .loc-card:hover, .loc-img-wrap img, .loader-fill, .progress-fill, .toast {
+/* ยกเว้น animation-sensitive elements */
+img, svg, canvas, .loc-card:hover, .loc-img-wrap img,
+.loader-fill, .progress-fill, .toast {
   transition: none !important;
 }
 .loc-card { transition: transform .3s, border-color .3s, box-shadow .3s !important; }
@@ -65,23 +70,35 @@ img, svg, canvas, .loc-card:hover, .loc-img-wrap img, .loader-fill, .progress-fi
 
 html { scroll-behavior: smooth; }
 body {
-  font-family: var(--font-th); background: var(--bg); color: var(--text);
-  min-height: 100vh; overflow-x: hidden;
+  font-family: var(--font-th);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+/* ── Theme Toggle Button ── */
 .theme-toggle {
-  width: 40px; height: 40px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; flex-shrink: 0;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; cursor: pointer; flex-shrink: 0;
   transition: transform .3s, background .3s !important;
 }
 .theme-toggle:hover { transform: rotate(20deg) scale(1.1); background: var(--bg2); }
 
-.pw-wrap { position: relative; }
-.pw-wrap .form-input { padding-right: 44px; }
+/* ── Password input wrapper ── */
+.pw-wrap {
+  position: relative;
+}
+.pw-wrap .form-input {
+  padding-right: 44px;
+}
 .pw-eye {
   position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
   background: none; border: none; color: var(--muted); font-size: 18px;
-  cursor: pointer; padding: 4px; line-height: 1; transition: color .2s !important;
+  cursor: pointer; padding: 4px; line-height: 1;
+  transition: color .2s !important;
 }
 .pw-eye:hover { color: var(--text); }
 a { color: inherit; text-decoration: none; }
@@ -89,36 +106,72 @@ button { font-family: var(--font-th); cursor: pointer; }
 input, textarea, select { font-family: var(--font-th); }
 img { max-width:100%; }
 
+/* ══════════════════════════════════════════
+   SCROLLBAR
+══════════════════════════════════════════ */
 ::-webkit-scrollbar { width:6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--red); border-radius:3px; }
 
 /* ══════════════════════════════════════════
-   LOADER & NAVBAR
+   LOADER
 ══════════════════════════════════════════ */
 #loader {
-  position: fixed; inset:0; background:var(--bg); display:flex; align-items:center; justify-content:center;
-  z-index:9999; flex-direction:column; gap:16px; transition: opacity .5s;
+  position: fixed; inset:0; background:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+  z-index:9999; flex-direction:column; gap:16px;
+  transition: opacity .5s;
 }
-.loader-logo { font-family: var(--font-jp); font-size: 48px; font-weight:900; color: var(--text); }
+.loader-logo {
+  font-family: var(--font-jp);
+  font-size: 48px; font-weight:900;
+  color: var(--text);
+}
 .loader-logo span { color: var(--red); }
-.loader-bar { width:200px; height:3px; background: var(--bg3); border-radius:2px; overflow:hidden; }
-.loader-fill { height:100%; background: var(--red); animation: loaderAnim 1.5s ease forwards; }
+.loader-bar {
+  width:200px; height:3px;
+  background: var(--bg3); border-radius:2px; overflow:hidden;
+}
+.loader-fill {
+  height:100%; background: var(--red);
+  animation: loaderAnim 1.5s ease forwards;
+}
 @keyframes loaderAnim { from{width:0} to{width:100%} }
 
+/* ══════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════ */
 nav {
-  position: fixed; top:0; left:0; right:0; z-index:1000; background: var(--nav-bg);
-  backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
-  display:flex; align-items:center; gap:16px; padding: 0 40px; height:64px;
+  position: fixed; top:0; left:0; right:0; z-index:1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display:flex; align-items:center; gap:16px;
+  padding: 0 40px; height:64px;
 }
-.nav-logo { font-family: var(--font-jp); font-size:20px; font-weight:900; white-space:nowrap; cursor:pointer; }
+.nav-logo {
+  font-family: var(--font-jp);
+  font-size:20px; font-weight:900;
+  white-space:nowrap;
+}
 .nav-logo span { color:var(--red); }
 .nav-links { display:flex; gap:4px; }
-.nav-btn { background:none; border:none; color:var(--muted); font-size:14px; padding:8px 14px; border-radius:8px; transition: all .2s; }
+.nav-btn {
+  background:none; border:none; color:var(--muted);
+  font-size:14px; padding:8px 14px; border-radius:8px;
+  transition: all .2s;
+}
 .nav-btn:hover, .nav-btn.active { color:var(--text); background:var(--bg3); }
 .nav-spacer { flex:1; }
-.nav-search { display:flex; align-items:center; gap:8px; background:var(--bg3); border:1px solid var(--border); border-radius:24px; padding:0 16px; height:38px; }
-.nav-search input { background:none; border:none; outline:none; color:var(--text); font-size:14px; width:180px; }
+.nav-search {
+  display:flex; align-items:center; gap:8px;
+  background:var(--bg3); border:1px solid var(--border);
+  border-radius:24px; padding:0 16px; height:38px;
+}
+.nav-search input {
+  background:none; border:none; outline:none; color:var(--text);
+  font-size:14px; width:180px;
+}
 .nav-search input::placeholder { color:var(--muted); }
 .nav-user { display:flex; align-items:center; gap:10px; }
 .btn { border:none; border-radius:8px; padding:8px 18px; font-size:14px; font-weight:600; transition:all .2s; cursor:pointer; }
@@ -129,26 +182,76 @@ nav {
 .btn-gold { background:var(--gold); color:#1a1a00; }
 .btn-gold:hover { filter:brightness(1.1); }
 .btn-green { background:var(--green); color:#003b2e; }
-.points-badge { background:var(--bg3); border:1px solid var(--gold); border-radius:20px; padding:5px 12px; font-size:13px; color:var(--gold); display:flex; align-items:center; gap:5px; cursor:pointer; }
-.user-avatar { width:36px; height:36px; border-radius:50%; background: linear-gradient(135deg,var(--red),var(--red2)); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; cursor:pointer; overflow:hidden; }
+
+.points-badge {
+  background:var(--bg3); border:1px solid var(--gold);
+  border-radius:20px; padding:5px 12px;
+  font-size:13px; color:var(--gold);
+  display:flex; align-items:center; gap:5px;
+}
+.user-avatar {
+  width:36px; height:36px; border-radius:50%;
+  background: linear-gradient(135deg,var(--red),var(--red2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:14px; font-weight:700; cursor:pointer; overflow:hidden;
+}
 .user-avatar img { width:100%; height:100%; object-fit:cover; }
 
+/* ══════════════════════════════════════════
+   VIEWS / PAGES
+══════════════════════════════════════════ */
 .view { display:none; padding-top:64px; }
 .view.active { display:block; }
 
 /* ══════════════════════════════════════════
    HOME VIEW
 ══════════════════════════════════════════ */
-.hero { height: calc(100vh - 64px); min-height: 600px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:40px; position:relative; overflow:hidden; }
-.hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(230,57,70,0.12) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 20% 20%, rgba(74,144,226,0.08) 0%, transparent 60%); }
-.hero-jp { font-family:var(--font-jp); font-size:13px; font-weight:400; letter-spacing:8px; color:var(--red); margin-bottom:20px; position:relative; }
-.hero-title { font-family:var(--font-jp); font-size:clamp(40px,8vw,90px); font-weight:900; line-height:1.1; position:relative; }
+.hero {
+  height: calc(100vh - 64px);
+  min-height: 600px;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  text-align:center; padding:40px;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 100%, rgba(230,57,70,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 20% 20%, rgba(74,144,226,0.08) 0%, transparent 60%);
+}
+.hero-jp {
+  font-family:var(--font-jp); font-size:13px; font-weight:400;
+  letter-spacing:8px; color:var(--red); margin-bottom:20px;
+  position:relative;
+}
+.hero-title {
+  font-family:var(--font-jp); font-size:clamp(40px,8vw,90px);
+  font-weight:900; line-height:1.1; position:relative;
+}
 .hero-title em { font-style:normal; color:var(--red); }
-.hero-sub { font-size:clamp(14px,2vw,18px); color:var(--muted); margin-top:16px; max-width:560px; line-height:1.7; position:relative; }
+.hero-sub {
+  font-size:clamp(14px,2vw,18px); color:var(--muted);
+  margin-top:16px; max-width:560px; line-height:1.7; position:relative;
+}
 .hero-cta { display:flex; gap:12px; margin-top:36px; position:relative; flex-wrap:wrap; justify-content:center; }
-.season-bar { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:32px; position:relative; }
-.season-pill { background:var(--bg3); border:1px solid var(--border); border-radius:24px; padding:8px 20px; font-size:14px; cursor:pointer; transition:all .2s; }
-.season-pill:hover, .season-pill.active { background:var(--red); border-color:var(--red); color:white; }
+
+/* Season bar */
+.season-bar {
+  display:flex; gap:8px; justify-content:center; flex-wrap:wrap;
+  margin-top:32px; position:relative;
+}
+.season-pill {
+  background:var(--bg3); border:1px solid var(--border);
+  border-radius:24px; padding:8px 20px; font-size:14px;
+  cursor:pointer; transition:all .2s;
+}
+.season-pill:hover, .season-pill.active {
+  background:var(--red); border-color:var(--red); color:white;
+}
+
+/* Season recommendation section */
 .section { padding:60px 40px; max-width:1300px; margin:0 auto; }
 .section-header { display:flex; align-items:baseline; gap:16px; margin-bottom:32px; flex-wrap:wrap; }
 .section-title { font-family:var(--font-jp); font-size:26px; font-weight:700; }
@@ -156,14 +259,35 @@ nav {
 .see-all { margin-left:auto; font-size:13px; color:var(--red); cursor:pointer; }
 .see-all:hover { text-decoration:underline; }
 
-.loc-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:20px; }
-.loc-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; cursor:pointer; transition:all .3s; position:relative; }
-.loc-card:hover { transform:translateY(-4px); border-color:rgba(230,57,70,0.3); box-shadow:0 20px 40px rgba(0,0,0,0.4); }
+/* Location grid */
+.loc-grid {
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap:20px;
+}
+.loc-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; overflow:hidden; cursor:pointer;
+  transition:all .3s; position:relative;
+}
+.loc-card:hover { transform:translateY(-4px); border-color:rgba(230,57,70,0.3);
+  box-shadow:0 20px 40px rgba(0,0,0,0.4); }
+.loc-card-img {
+  width:100%; height:180px; object-fit:cover;
+  position:relative;
+}
 .loc-img-wrap { position:relative; height:180px; overflow:hidden; }
 .loc-img-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .4s; }
 .loc-card:hover .loc-img-wrap img { transform:scale(1.06); }
-.loc-cat-badge { position:absolute; top:10px; left:10px; background:rgba(0,0,0,0.7); border:1px solid var(--border); border-radius:6px; padding:3px 10px; font-size:11px; font-weight:600; }
-.loc-season-badge { position:absolute; top:10px; right:10px; font-size:18px; }
+.loc-cat-badge {
+  position:absolute; top:10px; left:10px;
+  background:rgba(0,0,0,0.7); border:1px solid var(--border);
+  border-radius:6px; padding:3px 10px; font-size:11px; font-weight:600;
+}
+.loc-season-badge {
+  position:absolute; top:10px; right:10px;
+  font-size:18px;
+}
 .loc-card-body { padding:16px; }
 .loc-card-title { font-size:16px; font-weight:700; margin-bottom:4px; }
 .loc-card-anime { font-size:12px; color:var(--red); margin-bottom:8px; }
@@ -173,54 +297,115 @@ nav {
 .rating-num { font-size:13px; font-weight:700; }
 .review-count { font-size:12px; color:var(--muted); }
 
+/* Category tabs */
+.cat-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
+.cat-tab {
+  background:var(--bg3); border:1px solid var(--border);
+  border-radius:24px; padding:8px 18px; font-size:13px;
+  cursor:pointer; transition:all .2s;
+}
+.cat-tab:hover, .cat-tab.active {
+  background:var(--red); border-color:var(--red); color:white;
+}
+
 /* ══════════════════════════════════════════
    EXPLORE VIEW
 ══════════════════════════════════════════ */
-.cat-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:28px; }
-.cat-tab { background:var(--bg3); border:1px solid var(--border); border-radius:24px; padding:8px 18px; font-size:13px; cursor:pointer; transition:all .2s; }
-.cat-tab:hover, .cat-tab.active { background:var(--red); border-color:var(--red); color:white; }
-.explore-layout { display:flex; gap:24px; max-width:1400px; margin:0 auto; padding:24px 32px; }
-.filter-panel { width:240px; flex-shrink:0; position:sticky; top:80px; height:fit-content; }
-.filter-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
-.filter-title { font-size:13px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
-.filter-opt { display:flex; align-items:center; gap:10px; padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; transition:all .2s; }
+.explore-layout {
+  display:flex; gap:24px;
+  max-width:1400px; margin:0 auto;
+  padding:24px 32px;
+}
+.filter-panel {
+  width:240px; flex-shrink:0;
+  position:sticky; top:80px;
+  height:fit-content;
+}
+.filter-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:24px; margin-bottom:16px;
+}
+.filter-title { font-size:13px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
+.filter-opt {
+  display:flex; align-items:center; gap:10px;
+  padding:8px 12px; border-radius:8px; cursor:pointer;
+  font-size:14px; transition:all .2s;
+}
 .filter-opt:hover { background:var(--bg3); }
 .filter-opt.active { background:rgba(230,57,70,0.15); color:var(--red); }
 .filter-opt input[type=radio] { accent-color:var(--red); }
 .explore-main { flex:1; min-width:0; }
-.explore-toolbar { display:flex; gap:12px; align-items:center; margin-bottom:20px; flex-wrap:wrap; }
-.search-input { flex:1; background:var(--bg3); border:1px solid var(--border); border-radius:10px; padding:10px 16px; color:var(--text); font-size:14px; outline:none; transition:border-color .2s; min-width:200px; }
+.explore-toolbar {
+  display:flex; gap:12px; align-items:center;
+  margin-bottom:20px; flex-wrap:wrap;
+}
+.search-input {
+  flex:1; background:var(--bg3); border:1px solid var(--border);
+  border-radius:10px; padding:10px 16px; color:var(--text);
+  font-size:14px; outline:none; transition:border-color .2s;
+  min-width:200px;
+}
 .search-input:focus { border-color:var(--red); }
 
 /* ══════════════════════════════════════════
    LOCATION DETAIL
 ══════════════════════════════════════════ */
 .detail-wrap { max-width:1100px; margin:0 auto; padding:32px; }
-.detail-back { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:14px; cursor:pointer; margin-bottom:24px; transition:color .2s; }
+.detail-back { display:flex; align-items:center; gap:8px; color:var(--muted);
+  font-size:14px; cursor:pointer; margin-bottom:24px; transition:color .2s; }
 .detail-back:hover { color:var(--red); }
-.detail-hero { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:32px; }
+
+.detail-hero {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:16px; margin-bottom:32px;
+}
 .img-compare { position:relative; border-radius:16px; overflow:hidden; }
 .img-compare img { width:100%; height:300px; object-fit:cover; display:block; }
-.img-label { position:absolute; bottom:12px; left:12px; background:rgba(0,0,0,0.75); border:1px solid var(--border); border-radius:8px; padding:5px 12px; font-size:12px; font-weight:600; }
+.img-label {
+  position:absolute; bottom:12px; left:12px;
+  background:rgba(0,0,0,0.75); border:1px solid var(--border);
+  border-radius:8px; padding:5px 12px; font-size:12px; font-weight:600;
+}
 .img-label.anime-label { background:rgba(230,57,70,0.8); }
+
 .detail-info { margin-bottom:32px; }
 .detail-title { font-family:var(--font-jp); font-size:32px; font-weight:900; margin-bottom:4px; }
 .detail-jp { font-family:var(--font-jp); font-size:18px; font-weight:200; color:var(--muted); margin-bottom:12px; }
 .detail-meta { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:16px; }
-.meta-chip { display:flex; align-items:center; gap:6px; font-size:13px; background:var(--bg3); border:1px solid var(--border); border-radius:8px; padding:6px 14px; }
+.meta-chip {
+  display:flex; align-items:center; gap:6px; font-size:13px;
+  background:var(--bg3); border:1px solid var(--border);
+  border-radius:8px; padding:6px 14px;
+}
 .meta-chip .icon { font-size:16px; }
 .detail-desc { font-size:16px; color:rgba(240,240,245,0.7); line-height:1.8; margin-bottom:24px; }
 .detail-actions { display:flex; gap:12px; flex-wrap:wrap; }
+
+/* Map container */
 .map-container { border-radius:16px; overflow:hidden; border:1px solid var(--border); margin-bottom:32px; }
 #detail-map { height:360px; }
 
 /* Review section */
 .review-tabs { display:flex; gap:8px; margin-bottom:20px; }
-.rev-tab { padding:9px 20px; border-radius:24px; font-size:14px; font-weight:600; background:var(--bg3); border:1px solid var(--border); cursor:pointer; transition:all .2s; }
+.rev-tab {
+  padding:9px 20px; border-radius:24px; font-size:14px; font-weight:600;
+  background:var(--bg3); border:1px solid var(--border); cursor:pointer;
+  transition:all .2s;
+}
 .rev-tab.active { background:var(--red); border-color:var(--red); color:white; }
-.review-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; margin-bottom:12px; }
+
+.review-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:20px; margin-bottom:12px;
+}
 .rev-header { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
-.rev-avatar { width:40px; height:40px; border-radius:50%; font-size:14px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--red),var(--red2)); font-weight:700; flex-shrink:0; overflow:hidden; }
+.rev-avatar {
+  width:40px; height:40px; border-radius:50%; font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,var(--red),var(--red2));
+  font-weight:700; flex-shrink:0; overflow:hidden;
+}
 .rev-avatar img { width:100%; height:100%; object-fit:cover; }
 .rev-user { flex:1; }
 .rev-name { font-size:15px; font-weight:700; }
@@ -233,124 +418,262 @@ nav {
 /* ══════════════════════════════════════════
    REVIEW FORM & UPLOAD AREA
 ══════════════════════════════════════════ */
-.review-form { background:var(--bg3); border:1px solid var(--border); border-radius:16px; padding:28px; margin-bottom:24px; }
+.review-form {
+  background:var(--bg3); border:1px solid var(--border);
+  border-radius:16px; padding:28px; margin-bottom:24px;
+}
 .form-title { font-size:18px; font-weight:700; margin-bottom:20px; }
 .form-group { margin-bottom:16px; }
 .form-label { font-size:13px; color:var(--muted); margin-bottom:8px; display:block; }
-.form-input { width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:11px 14px; color:var(--text); font-size:14px; outline:none; transition:border-color .2s; }
+.form-input {
+  width:100%; background:var(--bg2); border:1px solid var(--border);
+  border-radius:10px; padding:11px 14px; color:var(--text);
+  font-size:14px; outline:none; transition:border-color .2s;
+}
 .form-input:focus { border-color:var(--red); }
 .form-textarea { min-height:100px; resize:vertical; }
 .star-picker { display:flex; gap:4px; }
-.star-pick { font-size:28px; cursor:pointer; opacity:.3; transition:all .2s; user-select:none; }
+.star-pick {
+  font-size:28px; cursor:pointer; opacity:.3; transition:all .2s;
+  user-select:none;
+}
 .star-pick.lit { opacity:1; }
 
-.upload-area { border:2px dashed var(--border); border-radius:12px; padding:24px; text-align:center; cursor:pointer; transition:all .2s; position:relative; }
+.upload-area {
+  border:2px dashed var(--border); border-radius:12px;
+  padding:24px; text-align:center; cursor:pointer; transition:all .2s;
+  position:relative;
+}
 .upload-area:hover { border-color:var(--red); background:rgba(230,57,70,0.05); }
 .upload-preview { max-height:200px; border-radius:8px; margin-top:12px; }
-.upload-preview-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; margin-top: 12px; }
-.preview-item { position: relative; padding-top: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
-.preview-item img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
-.remove-preview-btn { position: absolute; top: 4px; right: 4px; background: rgba(230,57,70,0.9); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3); }
 
+.upload-preview-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px; margin-top: 12px;
+}
+.preview-item {
+  position: relative; padding-top: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
+}
+.preview-item img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
+.remove-preview-btn {
+  position: absolute; top: 4px; right: 4px; background: rgba(230,57,70,0.9); color: white;
+  border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
 .gallery-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-top: 16px; }
 .gallery-row::-webkit-scrollbar { height: 6px; }
 .gallery-row::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
 .gallery-row img { height: 80px; width: 120px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.2s; border: 2px solid transparent; flex-shrink: 0; }
 .gallery-row img:hover { transform: scale(1.05); border-color: var(--border); }
 
+
 /* ══════════════════════════════════════════
-   REWARDS & PROFILE VIEW
+   REWARDS VIEW
 ══════════════════════════════════════════ */
-.rewards-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr)); gap:20px; }
-.reward-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; transition:all .3s; }
+.rewards-grid {
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(250px,1fr));
+  gap:20px;
+}
+.reward-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:24px; transition:all .3s;
+}
 .reward-card:hover { border-color:rgba(255,209,102,0.3); transform:translateY(-3px); }
 .reward-icon { font-size:40px; margin-bottom:16px; }
 .reward-name { font-size:17px; font-weight:700; margin-bottom:6px; }
 .reward-desc { font-size:13px; color:var(--muted); margin-bottom:16px; line-height:1.6; }
-.reward-pts { font-size:22px; font-weight:900; color:var(--gold); display:flex; align-items:center; gap:4px; margin-bottom:12px; }
+.reward-pts {
+  font-size:22px; font-weight:900; color:var(--gold);
+  display:flex; align-items:center; gap:4px; margin-bottom:12px;
+}
 .reward-stock { font-size:12px; color:var(--muted); margin-bottom:16px; }
 
+/* ══════════════════════════════════════════
+   PROFILE VIEW
+══════════════════════════════════════════ */
 .profile-wrap { max-width:900px; margin:0 auto; padding:32px; }
-.profile-hero { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center; margin-bottom:24px; position:relative; overflow:hidden; }
-.profile-hero::before { content:'';position:absolute;inset:0; background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(230,57,70,0.1) 0%, transparent 60%); }
-.profile-avatar-container { position: relative; width: 100px; height: 100px; margin: 0 auto 16px; border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid var(--border); }
+.profile-hero {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:40px; text-align:center; margin-bottom:24px;
+  position:relative; overflow:hidden;
+}
+.profile-hero::before {
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(230,57,70,0.1) 0%, transparent 60%);
+}
+
+.profile-avatar-container {
+  position: relative; width: 100px; height: 100px; margin: 0 auto 16px;
+  border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid var(--border);
+}
 .profile-avatar-container:hover .avatar-overlay { opacity: 1; }
 .profile-big-avatar { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,var(--red),var(--red2)); font-size: 32px; font-weight: 900; }
 .profile-big-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
-.avatar-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s; color: white; font-size: 13px; font-weight: bold; text-align: center; }
+.avatar-overlay {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s; color: white; font-size: 13px; font-weight: bold; text-align: center;
+}
+
 .profile-username { font-size:26px; font-weight:900; position:relative; }
-.profile-level { font-size:13px; color:var(--gold); position:relative; margin-top:4px; }
-.points-display { font-size:48px; font-weight:900; color:var(--gold); position:relative; margin-top:16px; }
+.profile-level {
+  font-size:13px; color:var(--gold); position:relative;
+  margin-top:4px;
+}
+.points-display {
+  font-size:48px; font-weight:900; color:var(--gold);
+  position:relative; margin-top:16px;
+}
 .points-label { font-size:14px; color:var(--muted); position:relative; }
-.progress-bar { background:var(--bg3); border-radius:8px; height:10px; margin-top:16px; overflow:hidden; position:relative; }
-.progress-fill { height:100%; background:linear-gradient(90deg,var(--red),var(--red2)); border-radius:8px; transition:width 1s ease; }
+.progress-bar {
+  background:var(--bg3); border-radius:8px; height:10px;
+  margin-top:16px; overflow:hidden; position:relative;
+}
+.progress-fill {
+  height:100%; background:linear-gradient(90deg,var(--red),var(--red2));
+  border-radius:8px; transition:width 1s ease;
+}
+
 .stats-row { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:24px; }
-.stat-card { flex:1; min-width:120px; background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; text-align:center; }
+.stat-card {
+  flex:1; min-width:120px;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:12px; padding:20px; text-align:center;
+}
 .stat-num { font-size:28px; font-weight:900; color:var(--red); }
 .stat-lbl { font-size:12px; color:var(--muted); margin-top:4px; }
 
 /* ══════════════════════════════════════════
-   SUBMIT & ADMIN VIEW
+   SUBMIT LOCATION VIEW
 ══════════════════════════════════════════ */
 .submit-wrap { max-width:760px; margin:0 auto; padding:32px; }
-.submit-card { background:var(--card); border:1px solid var(--border); border-radius:20px; padding:40px; }
+.submit-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; padding:40px;
+}
 .submit-title { font-family:var(--font-jp); font-size:26px; font-weight:900; margin-bottom:8px; }
 .submit-sub { font-size:14px; color:var(--muted); margin-bottom:32px; line-height:1.6; }
 .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 .season-checks { display:flex; gap:12px; flex-wrap:wrap; }
 .season-check-item { display:flex; align-items:center; gap:6px; font-size:14px; }
 .season-check-item input { accent-color:var(--red); }
-.form-select { width:100%; background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:11px 14px; color:var(--text); font-size:14px; outline:none; }
+.form-select {
+  width:100%; background:var(--bg2); border:1px solid var(--border);
+  border-radius:10px; padding:11px 14px; color:var(--text);
+  font-size:14px; outline:none;
+}
 
+/* ══════════════════════════════════════════
+   ADMIN VIEW
+══════════════════════════════════════════ */
 .admin-wrap { max-width:1200px; margin:0 auto; padding:32px; }
-.admin-header { background:var(--card); border:1px solid rgba(230,57,70,0.3); border-radius:16px; padding:24px 32px; margin-bottom:24px; display:flex; align-items:center; gap:16px; }
-.admin-badge { background:rgba(230,57,70,0.2); border:1px solid var(--red); color:var(--red); font-size:12px; font-weight:700; letter-spacing:2px; padding:5px 14px; border-radius:6px; }
+.admin-header {
+  background:var(--card); border:1px solid rgba(230,57,70,0.3);
+  border-radius:16px; padding:24px 32px; margin-bottom:24px;
+  display:flex; align-items:center; gap:16px;
+}
+.admin-badge {
+  background:rgba(230,57,70,0.2); border:1px solid var(--red);
+  color:var(--red); font-size:12px; font-weight:700; letter-spacing:2px;
+  padding:5px 14px; border-radius:6px;
+}
 .admin-login-form { max-width:380px; margin:100px auto; }
-.admin-pending-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:16px; }
+.admin-pending-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:24px; margin-bottom:16px;
+}
 .pending-imgs { display:flex; gap:12px; margin:12px 0; overflow-x: auto; }
 .pending-imgs img { width:200px; border-radius:8px; height:140px; object-fit:cover; flex-shrink: 0; }
 .admin-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
 
 /* ══════════════════════════════════════════
-   MODAL & TOAST
+   MODAL
 ══════════════════════════════════════════ */
-.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:2000; display:none; align-items:center; justify-content:center; padding:20px; }
+.modal-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(8px); z-index:2000;
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
 .modal-overlay.open { display:flex; }
-.modal { background:var(--bg2); border:1px solid var(--border); border-radius:20px; padding:36px; width:100%; max-width:480px; position:relative; animation:modalIn .25s ease; max-height: 90vh; overflow-y: auto; }
+.modal {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:20px; padding:36px; width:100%; max-width:480px;
+  position:relative; animation:modalIn .25s ease;
+  max-height: 90vh; overflow-y: auto;
+}
 @keyframes modalIn { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
-.modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:var(--muted); font-size:22px; cursor:pointer; line-height:1; }
+.modal-close {
+  position:absolute; top:16px; right:16px; background:none; border:none;
+  color:var(--muted); font-size:22px; cursor:pointer; line-height:1;
+}
 .modal-close:hover { color:var(--text); }
 .modal-title { font-family:var(--font-jp); font-size:24px; font-weight:900; margin-bottom:6px; }
 .modal-sub { font-size:14px; color:var(--muted); margin-bottom:28px; }
 .tab-switch { display:flex; background:var(--bg3); border-radius:10px; padding:4px; margin-bottom:24px; }
-.tab-sw-btn { flex:1; padding:9px; border-radius:8px; border:none; background:none; color:var(--muted); font-size:14px; font-weight:600; cursor:pointer; transition:all .2s; }
+.tab-sw-btn {
+  flex:1; padding:9px; border-radius:8px; border:none; background:none;
+  color:var(--muted); font-size:14px; font-weight:600; cursor:pointer; transition:all .2s;
+}
 .tab-sw-btn.active { background:var(--bg2); color:var(--text); }
+
 .country-select { width:100%; }
 .error-msg { color:var(--red); font-size:13px; margin-top:8px; display:none; }
 .success-msg { color:var(--green); font-size:13px; margin-top:8px; display:none; }
 
-#toast-container { position:fixed; bottom:24px; right:24px; z-index:9999; display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
-.toast { background:var(--bg2); border:1px solid var(--border); border-radius:12px; padding:14px 20px; display:flex; align-items:center; gap:10px; font-size:14px; box-shadow:0 8px 32px rgba(0,0,0,0.5); animation: toastIn .3s ease; max-width:360px; }
+/* ══════════════════════════════════════════
+   TOAST
+══════════════════════════════════════════ */
+#toast-container {
+  position:fixed; bottom:24px; right:24px; z-index:9999;
+  display:flex; flex-direction:column; gap:8px; align-items:flex-end;
+}
+.toast {
+  background:var(--bg2); border:1px solid var(--border);
+  border-radius:12px; padding:14px 20px;
+  display:flex; align-items:center; gap:10px; font-size:14px;
+  box-shadow:0 8px 32px rgba(0,0,0,0.5);
+  animation: toastIn .3s ease;
+  max-width:360px;
+}
 @keyframes toastIn { from{opacity:0;transform:translateX(60px)} to{opacity:1;transform:none} }
 .toast.success { border-left:3px solid var(--green); }
 .toast.error   { border-left:3px solid var(--red); }
 .toast.info    { border-left:3px solid var(--blue); }
+
+/* ══════════════════════════════════════════
+   MISC
+══════════════════════════════════════════ */
 .empty-state { text-align:center; padding:60px 20px; color:var(--muted); }
 .empty-state .empty-icon { font-size:60px; margin-bottom:16px; }
 .empty-state p { font-size:16px; }
-.loading-spinner { text-align:center; padding:40px; color:var(--muted); font-size:14px; }
+.loading-spinner {
+  text-align:center; padding:40px;
+  color:var(--muted); font-size:14px;
+}
 .loading-spinner::after { content:' ⌛'; animation:spin 1s linear infinite; }
 @keyframes spin { to{transform:rotate(360deg)} }
 .divider { border:none; border-top:1px solid var(--border); margin:32px 0; }
 
+/* Map popup */
+.leaflet-popup-content-wrapper { background:var(--bg2)!important; border:1px solid var(--border)!important; border-radius:12px!important; box-shadow:0 10px 40px rgba(0,0,0,.5)!important; }
+.leaflet-popup-content { color:var(--text)!important; font-family:var(--font-th)!important; }
+.leaflet-popup-tip { background:var(--bg2)!important; }
+.leaflet-popup-close-button { color:var(--muted)!important; }
+
+.map-popup-title { font-size:15px; font-weight:700; margin-bottom:4px; }
+.map-popup-anime { font-size:12px; color:var(--red); margin-bottom:8px; }
+.map-popup-btn { display:inline-block; background:var(--red); color:white; font-size:12px; padding:5px 12px; border-radius:6px; cursor:pointer; }
+
 /* Responsive */
 @media (max-width:768px) {
   nav { padding:0 16px; gap:12px; }
-  .nav-links, .nav-search { display:none; }
+  .nav-links { display:none; }
+  .nav-search { display:none; }
   .section { padding:40px 16px; }
-  .detail-hero, .grid2 { grid-template-columns:1fr; }
+  .detail-hero { grid-template-columns:1fr; }
   .explore-layout { flex-direction:column; padding:16px; }
   .filter-panel { width:100%; position:static; }
+  .grid2 { grid-template-columns:1fr; }
   .submit-card, .profile-wrap, .detail-wrap { padding:16px; }
 }
 </style>
@@ -366,7 +689,7 @@ nav {
 
 <!-- ── NAVBAR ── -->
 <nav>
-  <div class="nav-logo" onclick="showView('home')">聖地<span>ナビ</span></div>
+  <div class="nav-logo" onclick="showView('home')" style="cursor:pointer">聖地<span>ナビ</span></div>
   <div class="nav-links">
     <button class="nav-btn active" onclick="showView('home')">🏠 หน้าหลัก</button>
     <button class="nav-btn" onclick="showView('explore')">🔍 สำรวจสถานที่</button>
@@ -385,7 +708,7 @@ nav {
     <button class="btn btn-red" onclick="openAuthModal('register')">สมัครสมาชิก</button>
   </div>
   <div class="nav-user" id="navLoggedIn" style="display:none">
-    <div class="points-badge" onclick="showView('profile')">⭐ <span id="navPoints">0</span> แต้ม</div>
+    <div class="points-badge" onclick="showView('profile')" style="cursor:pointer">⭐ <span id="navPoints">0</span> แต้ม</div>
     <div class="user-avatar" id="navAvatar" onclick="showView('profile')">U</div>
     <button class="btn btn-outline" onclick="logout()">ออก</button>
   </div>
@@ -420,7 +743,9 @@ nav {
       <div class="section-sub" id="seasonSub">สถานที่สวยงามช่วงซากุระบาน</div>
       <span class="see-all" onclick="showView('explore')">ดูทั้งหมด →</span>
     </div>
-    <div class="loc-grid" id="seasonGrid"><div class="loading-spinner">กำลังโหลด</div></div>
+    <div class="loc-grid" id="seasonGrid">
+      <div class="loading-spinner">กำลังโหลด</div>
+    </div>
   </div>
 
   <div class="section">
@@ -429,9 +754,12 @@ nav {
       <div class="section-sub">ร้านอาหารและเมนูที่ปรากฏในอนิเมะ</div>
       <span class="see-all" onclick="showExplore('food')">ดูทั้งหมด →</span>
     </div>
-    <div class="loc-grid" id="foodGrid"><div class="loading-spinner">กำลังโหลด</div></div>
+    <div class="loc-grid" id="foodGrid">
+      <div class="loading-spinner">กำลังโหลด</div>
+    </div>
   </div>
 
+  <!-- Stats banner -->
   <div class="section" style="padding-top:0">
     <div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:36px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap;text-align:center">
       <div><div style="font-size:36px;font-weight:900;color:var(--red)" id="statLoc">—</div><div style="color:var(--muted);font-size:14px">สถานที่</div></div>
@@ -467,6 +795,8 @@ nav {
         <div class="filter-opt" onclick="setFilter('prefecture','Tokyo',this)"><input type="radio" name="pref"> 🗼 Tokyo</div>
         <div class="filter-opt" onclick="setFilter('prefecture','Kyoto',this)"><input type="radio" name="pref"> ⛩️ Kyoto</div>
         <div class="filter-opt" onclick="setFilter('prefecture','Osaka',this)"><input type="radio" name="pref"> 🏯 Osaka</div>
+        <div class="filter-opt" onclick="setFilter('prefecture','Hokkaido',this)"><input type="radio" name="pref"> 🌨️ Hokkaido</div>
+        <div class="filter-opt" onclick="setFilter('prefecture','Okinawa',this)"><input type="radio" name="pref"> 🏖️ Okinawa</div>
       </div>
     </div>
     <div class="explore-main">
@@ -474,7 +804,9 @@ nav {
         <input class="search-input" type="text" placeholder="🔍 ค้นหาชื่อสถานที่ หรืออนิเมะ..." id="exploreSearch" oninput="exploreSearchHandler(this.value)">
         <div id="exploreCount" style="font-size:13px;color:var(--muted);white-space:nowrap"></div>
       </div>
-      <div class="loc-grid" id="exploreGrid"><div class="loading-spinner">กำลังโหลด</div></div>
+      <div class="loc-grid" id="exploreGrid">
+        <div class="loading-spinner">กำลังโหลด</div>
+      </div>
     </div>
   </div>
 </div>
@@ -483,11 +815,19 @@ nav {
 <div class="view" id="view-detail">
   <div class="detail-wrap">
     <div class="detail-back" onclick="history.back(); showView(prevView||'explore')">← กลับ</div>
+
     <div class="detail-hero" id="detailHero"></div>
+
     <div class="detail-info" id="detailInfo"></div>
-    <div class="map-container"><div id="detail-map"></div></div>
+
+    <div class="map-container">
+      <div id="detail-map"></div>
+    </div>
+
     <h3 style="font-size:20px;font-weight:700;margin-bottom:20px">💬 รีวิวจากผู้ใช้งาน</h3>
+
     <div id="reviewFormArea"></div>
+
     <div class="review-tabs">
       <button class="rev-tab active" onclick="loadRevTab('all',this)">ทั้งหมด</button>
       <button class="rev-tab" onclick="loadRevTab('local',this)">🇹🇭 รีวิวคนไทย</button>
@@ -510,7 +850,9 @@ nav {
       <div class="cat-tab" onclick="filterRewards('merchandise',this)">🎌 Merchandise</div>
       <div class="cat-tab" onclick="filterRewards('travel',this)">✈️ Travel</div>
     </div>
-    <div class="rewards-grid" id="rewardsGrid"><div class="loading-spinner">กำลังโหลด</div></div>
+    <div class="rewards-grid" id="rewardsGrid">
+      <div class="loading-spinner">กำลังโหลด</div>
+    </div>
   </div>
 </div>
 
@@ -598,17 +940,18 @@ nav {
           </div>
         </div>
 
-        <!-- แนบรูปสถานที่จริง (หลายรูป) -->
+        <!-- 📸 แก้ไข: แยกปุ่ม Upload และกล่อง Preview ออกจากกัน ป้องกัน Hover/Click ซ้อนกัน -->
         <div class="form-group">
           <label class="form-label">รูปสถานที่จริง * <small>(เลือกแนบไฟล์ภาพได้หลายรูป)</small></label>
           <div class="upload-area" onclick="document.getElementById('realPhotoInput').click()">
             <div id="realUploadPrompt">📷 คลิกเพื่อเลือกรูปสถานที่จริง<br><small style="color:var(--muted)">JPG, PNG ขนาดไม่เกิน 5MB</small></div>
           </div>
+          <!-- เอา input ซ่อนไว้ข้างนอก -->
           <input type="file" id="realPhotoInput" accept="image/png, image/jpeg, image/webp" multiple style="display:none" onchange="handleLocPhotoSelect(this, 'real')">
+          <!-- กล่องแสดงรูปที่เลือก ย้ายมาอยู่ข้างนอก ไม่ทับกับปุ่มคลิก -->
           <div id="realUploadPreviewGrid" class="upload-preview-grid"></div>
         </div>
         
-        <!-- แนบรูปอนิเมะ (หลายรูป) -->
         <div class="form-group">
           <label class="form-label">รูปฉากในอนิเมะ * <small>(เลือกแนบไฟล์ภาพได้หลายรูป)</small></label>
           <div class="upload-area" onclick="document.getElementById('animePhotoInput').click()">
@@ -645,7 +988,9 @@ nav {
       <div class="admin-login-form">
         <h2 style="font-family:var(--font-jp);font-size:24px;font-weight:900;margin-bottom:8px">🛡️ Admin Panel</h2>
         <p style="color:var(--muted);font-size:14px;margin-bottom:24px">ใส่รหัส Admin เพื่อเข้าสู่ระบบ</p>
-        <div class="form-group"><input class="form-input" type="password" id="adminKeyInput" placeholder="Admin Secret Key"></div>
+        <div class="form-group">
+          <input class="form-input" type="password" id="adminKeyInput" placeholder="Admin Secret Key">
+        </div>
         <button class="btn btn-red" style="width:100%;padding:12px" onclick="adminLogin()">เข้าสู่ระบบ Admin</button>
         <div id="adminErr" class="error-msg"></div>
       </div>
@@ -679,7 +1024,7 @@ nav {
       <button class="tab-sw-btn" id="tabReg" onclick="switchAuthTab('register')">สมัครสมาชิก</button>
     </div>
 
-    <!-- Login -->
+    <!-- Login form -->
     <div id="loginForm">
       <div class="form-group">
         <label class="form-label">Email หรือ Username</label>
@@ -696,28 +1041,52 @@ nav {
       <button class="btn btn-red" style="width:100%;margin-top:16px;padding:12px" onclick="doLogin()">เข้าสู่ระบบ</button>
     </div>
 
-    <!-- Register -->
+    <!-- Register form -->
     <div id="registerForm" style="display:none">
       <div class="grid2">
-        <div class="form-group"><label class="form-label">Username *</label><input class="form-input" id="regUser" placeholder="coolotaku99"></div>
-        <div class="form-group"><label class="form-label">ชื่อที่แสดง</label><input class="form-input" id="regName" placeholder="ชื่อเล่น"></div>
+        <div class="form-group">
+          <label class="form-label">Username *</label>
+          <input class="form-input" id="regUser" placeholder="coolotaku99">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ชื่อที่แสดง</label>
+          <input class="form-input" id="regName" placeholder="ชื่อเล่น">
+        </div>
       </div>
-      <div class="form-group"><label class="form-label">Email *</label><input class="form-input" id="regEmail" placeholder="email@example.com"></div>
-      <div class="form-group"><label class="form-label">ประเทศของคุณ</label>
+      <div class="form-group">
+        <label class="form-label">Email *</label>
+        <input class="form-input" id="regEmail" placeholder="email@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ประเทศของคุณ</label>
         <select class="form-select country-select" id="regCountry">
           <option value="TH">🇹🇭 Thailand</option>
           <option value="JP">🇯🇵 Japan</option>
           <option value="US">🇺🇸 USA</option>
+          <option value="SG">🇸🇬 Singapore</option>
+          <option value="MY">🇲🇾 Malaysia</option>
+          <option value="PH">🇵🇭 Philippines</option>
+          <option value="ID">🇮🇩 Indonesia</option>
+          <option value="VN">🇻🇳 Vietnam</option>
+          <option value="CN">🇨🇳 China</option>
+          <option value="KR">🇰🇷 Korea</option>
+          <option value="GB">🇬🇧 UK</option>
           <option value="OTHER">🌍 Other</option>
         </select>
       </div>
       <div class="form-group">
         <label class="form-label">Password * <small style="color:var(--muted)">(อย่างน้อย 6 ตัวอักษร)</small></label>
-        <div class="pw-wrap"><input class="form-input" type="password" id="regPw" placeholder="••••••••"><button class="pw-eye" type="button" onclick="togglePw('regPw',this)" tabindex="-1">👁️</button></div>
+        <div class="pw-wrap">
+          <input class="form-input" type="password" id="regPw" placeholder="••••••••">
+          <button class="pw-eye" type="button" onclick="togglePw('regPw',this)" tabindex="-1">👁️</button>
+        </div>
       </div>
       <div class="form-group">
         <label class="form-label">ยืนยัน Password *</label>
-        <div class="pw-wrap"><input class="form-input" type="password" id="regPwConfirm" placeholder="••••••••" oninput="checkPwMatch()"><button class="pw-eye" type="button" onclick="togglePw('regPwConfirm',this)" tabindex="-1">👁️</button></div>
+        <div class="pw-wrap">
+          <input class="form-input" type="password" id="regPwConfirm" placeholder="••••••••" oninput="checkPwMatch()">
+          <button class="pw-eye" type="button" onclick="togglePw('regPwConfirm',this)" tabindex="-1">👁️</button>
+        </div>
         <div id="pwMatchMsg" style="font-size:12px;margin-top:5px;display:none"></div>
       </div>
       <div id="regErr" class="error-msg"></div>
@@ -740,7 +1109,7 @@ nav {
         <div class="profile-big-avatar" id="editAvatarPreview">U</div>
         <div class="avatar-overlay">📷 เปลี่ยนรูป</div>
       </div>
-      <input type="file" id="editAvatarInput" accept="image/png, image/jpeg, image/webp" style="display:none" onchange="handleEditAvatarSelect(this)">
+      <input type="file" id="editAvatarInput" accept="image/png, image/jpeg, image/gif, image/webp" style="display:none" onchange="handleEditAvatarSelect(this)">
       <div style="font-size:12px; color:var(--muted)">คลิกที่รูปเพื่อเปลี่ยน (ขนาดไม่เกิน 5MB)</div>
     </div>
 
@@ -766,7 +1135,11 @@ nav {
 //  CONFIG
 // ─────────────────────────────────────────────
 const API_URL = 'https://script.google.com/macros/s/AKfycbxk543MnoJJ6AIfbrfLWrlsLI_gyq6uyqSU6vG7myxWzkKLj6NdeixPAS32R9_fPPA6UA/exec';
-const ADMIN_EMAILS = ['oppo0620255009@gmail.com'];
+
+// ── อีเมล Admin ──
+const ADMIN_EMAILS = [
+  'oppo0620255009@gmail.com'
+];
 
 // ─────────────────────────────────────────────
 //  STATE
@@ -791,6 +1164,7 @@ async function apiGet(params) {
     const r  = await fetch(`${API_URL}?${qs}`);
     return await r.json();
   } catch(err) {
+    console.error('apiGet error:', err);
     return { success:false, error: err.message };
   }
 }
@@ -806,15 +1180,19 @@ async function apiPost(data) {
     });
     return await r.json();
   } catch(err) {
+    console.error('apiPost error:', err);
     return { success:false, error: err.message };
   }
 }
 
+// ─────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('loader').style.opacity = '0';
     setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
-  }, 1000);
+  }, 1500);
 
   initTheme();
   updateNavUser();
@@ -824,35 +1202,53 @@ window.addEventListener('load', () => {
 });
 
 // ─────────────────────────────────────────────
-//  IMAGE HELPERS (DRIVE URL FIX & RESIZER)
+//  DRIVE IMAGE URL FIXER (แก้ปัญหารูปภาพจาก Drive ไม่แสดง)
 // ─────────────────────────────────────────────
 function getDriveImg(url) {
-  if (!url) return '';
+  if (!url) return 'https://via.placeholder.com/400x200/1a1a2e/ffffff?text=No+Image';
+  // แปลง uc?export=view เป็นลิงก์ Thumbnail เพื่อไม่ให้โดนบล็อก
   if (url.includes('uc?export=view&id=')) {
     return url.replace('uc?export=view&id=', 'thumbnail?id=') + '&sz=w1000';
   }
   return url;
 }
 
+// ─────────────────────────────────────────────
+//  IMAGE RESIZER UTILITY (แก้ปัญหาไฟล์ใหญ่เกินไปตอนส่ง API)
+// ─────────────────────────────────────────────
 function resizeImage(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        let width = img.width; let height = img.height;
+        let width = img.width;
+        let height = img.height;
+        // ลดขนาดรูปภาพให้กว้าง/ยาวสูงสุดไม่เกิน 1000px
         const maxDim = 1000; 
+
         if (width > maxDim || height > maxDim) {
-          if (width > height) { height = Math.round((height * maxDim) / width); width = maxDim; } 
-          else { width = Math.round((width * maxDim) / height); height = maxDim; }
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
         }
+
         const canvas = document.createElement('canvas');
-        canvas.width = width; canvas.height = height;
+        canvas.width = width;
+        canvas.height = height;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, width, height);
         
+        // บีบอัดเป็น JPEG 80% เพื่อลดขนาด base64 ให้ส่งข้อมูลผ่านฉลุย
         const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
-        resolve({ dataUrl: dataUrl, base64: dataUrl.split(',')[1] });
+        resolve({
+          dataUrl: dataUrl,
+          base64: dataUrl.split(',')[1]
+        });
       };
       img.onerror = reject;
       img.src = e.target.result;
@@ -863,13 +1259,19 @@ function resizeImage(file) {
 }
 
 // ─────────────────────────────────────────────
-//  THEME & UTILS
+//  THEME
 // ─────────────────────────────────────────────
 let isDark = localStorage.getItem('seichi_theme') !== 'light';
+
 function initTheme() {
-  document.body.classList.toggle('light', !isDark);
-  document.getElementById('themeToggleBtn').textContent = isDark ? '🌙' : '☀️';
+  if (!isDark) {
+    document.body.classList.add('light');
+    document.getElementById('themeToggleBtn').textContent = '☀️';
+  } else {
+    document.getElementById('themeToggleBtn').textContent = '🌙';
+  }
 }
+
 function toggleTheme() {
   isDark = !isDark;
   document.body.classList.toggle('light', !isDark);
@@ -878,7 +1280,12 @@ function toggleTheme() {
   btn.textContent = isDark ? '🌙' : '☀️';
   setTimeout(() => btn.style.transform = '', 400);
   localStorage.setItem('seichi_theme', isDark ? 'dark' : 'light');
+  showToast('info', isDark ? '🌙 Dark Mode' : '☀️ Light Mode');
 }
+
+// ─────────────────────────────────────────────
+//  PASSWORD SHOW / HIDE
+// ─────────────────────────────────────────────
 function togglePw(inputId, btn) {
   const input = document.getElementById(inputId);
   if (!input) return;
@@ -886,16 +1293,25 @@ function togglePw(inputId, btn) {
   input.type = isHidden ? 'text' : 'password';
   btn.textContent = isHidden ? '🙈' : '👁️';
 }
+
 function checkPwMatch() {
   const pw  = document.getElementById('regPw')?.value || '';
   const pw2 = document.getElementById('regPwConfirm')?.value || '';
   const msg = document.getElementById('pwMatchMsg');
   if (!msg || !pw2) return;
   msg.style.display = 'block';
-  if (pw === pw2) { msg.textContent = '✅ รหัสผ่านตรงกัน'; msg.style.color = 'var(--green)'; } 
-  else { msg.textContent = '❌ รหัสผ่านไม่ตรงกัน'; msg.style.color = 'var(--red)'; }
+  if (pw === pw2) {
+    msg.textContent = '✅ รหัสผ่านตรงกัน';
+    msg.style.color = 'var(--green)';
+  } else {
+    msg.textContent = '❌ รหัสผ่านไม่ตรงกัน';
+    msg.style.color = 'var(--red)';
+  }
 }
 
+// ─────────────────────────────────────────────
+//  NAVIGATION
+// ─────────────────────────────────────────────
 function showView(name, fromView) {
   if (fromView) prevView = fromView;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -908,6 +1324,7 @@ function showView(name, fromView) {
   if (name === 'profile' && currentUser) loadProfile();
   if (name === 'admin') initAdmin();
 }
+
 function requireLogin(cb) {
   if (currentUser) { cb(); return; }
   pendingCallback = cb;
@@ -923,14 +1340,20 @@ async function loadSeasonalRec(season) {
   if (!res.success) return;
   document.getElementById('seasonTitle').textContent = `${res.seasonTh} — แนะนำสถานที่`;
   document.getElementById('seasonSub').textContent = `สถานที่ที่เหมาะกับการไปเที่ยวใน${res.seasonTh}`;
-  document.getElementById('seasonGrid').innerHTML = res.data.length ? res.data.map(renderLocCard).join('') : '<div class="empty-state">ไม่มีสถานที่ในฤดูนี้</div>';
+  document.getElementById('seasonGrid').innerHTML = res.data.length
+    ? res.data.map(renderLocCard).join('')
+    : '<div class="empty-state"><div class="empty-icon">🗾</div><p>ยังไม่มีสถานที่ในฤดูนี้</p></div>';
 }
+
 async function loadFoodGrid() {
   document.getElementById('foodGrid').innerHTML = '<div class="loading-spinner">กำลังโหลด</div>';
   const res = await apiGet({ action:'getLocations', category:'food' });
   if (!res.success) return;
-  document.getElementById('foodGrid').innerHTML = res.data.length ? res.data.slice(0,4).map(renderLocCard).join('') : '<div class="empty-state">ไม่มีข้อมูลร้านอาหาร</div>';
+  document.getElementById('foodGrid').innerHTML = res.data.length
+    ? res.data.slice(0,4).map(renderLocCard).join('')
+    : '<div class="empty-state"><div class="empty-icon">🍜</div><p>ยังไม่มีข้อมูลร้านอาหาร</p></div>';
 }
+
 async function loadStats() {
   const res = await apiGet({ action:'getStats' });
   if (!res.success) return;
@@ -938,6 +1361,7 @@ async function loadStats() {
   document.getElementById('statRev').textContent = res.stats.totalReviews;
   document.getElementById('statUsr').textContent = res.stats.totalUsers;
 }
+
 function setActiveSeason(el) {
   document.querySelectorAll('.season-pill').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
@@ -953,21 +1377,27 @@ async function loadExplore() {
   allLocations = res.data || [];
   renderExploreGrid(allLocations);
 }
+
 function renderExploreGrid(locs) {
   document.getElementById('exploreCount').textContent = `พบ ${locs.length} สถานที่`;
-  document.getElementById('exploreGrid').innerHTML = locs.length ? locs.map(renderLocCard).join('') : '<div class="empty-state" style="grid-column:1/-1">ไม่พบสถานที่ที่ค้นหา</div>';
+  document.getElementById('exploreGrid').innerHTML = locs.length
+    ? locs.map(renderLocCard).join('')
+    : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🗾</div><p>ไม่พบสถานที่ที่ค้นหา</p></div>';
 }
+
 function setFilter(key, val, el) {
   exploreFilters[key] = val;
   document.querySelectorAll(`[onclick*="setFilter('${key}'"]`).forEach(e => e.classList.remove('active'));
   el.classList.add('active');
   loadExplore();
 }
+
 let searchTimer;
 function exploreSearchHandler(val) {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => { exploreFilters.search = val; loadExplore(); }, 400);
 }
+
 function doGlobalSearch(val) {
   if (!val) return;
   showView('explore');
@@ -975,6 +1405,7 @@ function doGlobalSearch(val) {
   document.getElementById('exploreSearch').value = val;
   loadExplore();
 }
+
 function showExplore(category) {
   exploreFilters.category = category;
   showView('explore');
@@ -991,6 +1422,8 @@ function renderLocCard(loc) {
   const rating  = Number(loc.avg_rating||0).toFixed(1);
   const stars   = '★'.repeat(Math.round(Number(rating)));
   const seasons = String(loc.season||'').split(',').map(s=>seaIcon[s.trim()]||'').join('');
+  
+  // โชว์รูปแรกถ้ามีหลายรูป (พร้อมแปลงลิงก์ Drive)
   const imgList = (loc.real_image_url || '').split(',').map(u=>u.trim()).filter(u=>u.startsWith('http'));
   const img     = imgList.length > 0 ? getDriveImg(imgList[0]) : 'https://via.placeholder.com/400x200/1a1a2e/ffffff?text=No+Image';
   
@@ -1005,7 +1438,12 @@ function renderLocCard(loc) {
         <div class="loc-card-title">${loc.name_th||loc.name_en}</div>
         <div class="loc-card-anime">🎬 ${loc.anime_title}</div>
         <div class="loc-card-pref"><span class="icon">📍</span>${loc.prefecture}</div>
-        ${Number(loc.review_count)>0 ? `<div class="loc-rating"><span class="stars">${stars}</span><span class="rating-num">${rating}</span><span class="review-count">(${loc.review_count} รีวิว)</span></div>` : '<div style="font-size:12px;color:var(--muted);margin-top:8px">ยังไม่มีรีวิว</div>'}
+        ${Number(loc.review_count)>0 ? `
+        <div class="loc-rating">
+          <span class="stars">${stars}</span>
+          <span class="rating-num">${rating}</span>
+          <span class="review-count">(${loc.review_count} รีวิว)</span>
+        </div>` : '<div style="font-size:12px;color:var(--muted);margin-top:8px">ยังไม่มีรีวิว</div>'}
       </div>
     </div>`;
 }
@@ -1021,24 +1459,33 @@ async function openDetail(id) {
 
   const res = await apiGet({ action:'getLocationById', id });
   if (!res.success) { showToast('error','ไม่พบข้อมูลสถานที่'); return; }
+
   currentLocation = res.data;
   renderDetail(res.data);
 }
 
 function renderDetail(loc) {
+  // แยก URL รูปด้วย , กรณีมีหลายรูป และแปลงลิงก์ Drive
   const realImgList = (loc.real_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
   const animeImgList = (loc.anime_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
   
-  const realImg  = realImgList[0] || 'https://via.placeholder.com/600x300/1a1a2e/ffffff?text=Real+Photo';
-  const animeImg = animeImgList[0] || 'https://via.placeholder.com/600x300/2d1a1a/ffffff?text=Anime+Scene';
+  const realImg  = realImgList.length > 0 ? realImgList[0] : 'https://via.placeholder.com/600x300/1a1a2e/ffffff?text=Real+Photo';
+  const animeImg = animeImgList.length > 0 ? animeImgList[0] : 'https://via.placeholder.com/600x300/2d1a1a/ffffff?text=Anime+Scene';
   const rating   = Number(loc.avg_rating||0).toFixed(1);
   const stars    = '★'.repeat(Math.round(Number(rating)));
   const seasons  = String(loc.season||'').split(',').map(s => ({spring:'🌸 ใบไม้ผลิ',summer:'☀️ ร้อน',autumn:'🍁 ใบไม้ร่วง',winter:'❄️ หนาว',all:'ตลอดปี'}[s.trim()]||s.trim())).join(' · ');
 
   document.getElementById('detailHero').innerHTML = `
-    <div class="img-compare"><img id="mainRealImg" src="${realImg}" onerror="this.src='https://via.placeholder.com/600x300/1a1a2e/ffffff?text=Real+Photo'"><div class="img-label">📸 สถานที่จริง</div></div>
-    <div class="img-compare"><img id="mainAnimeImg" src="${animeImg}" onerror="this.src='https://via.placeholder.com/600x300/2d1a1a/ffffff?text=Anime+Scene'"><div class="img-label anime-label">🎬 ฉากในอนิเมะ</div></div>`;
+    <div class="img-compare">
+      <img id="mainRealImg" src="${realImg}" alt="สถานที่จริง" onerror="this.src='https://via.placeholder.com/600x300/1a1a2e/ffffff?text=Real+Photo'">
+      <div class="img-label">📸 สถานที่จริง</div>
+    </div>
+    <div class="img-compare">
+      <img id="mainAnimeImg" src="${animeImg}" alt="ฉากในอนิเมะ" onerror="this.src='https://via.placeholder.com/600x300/2d1a1a/ffffff?text=Anime+Scene'">
+      <div class="img-label anime-label">🎬 ฉากในอนิเมะ</div>
+    </div>`;
 
+  // แกลเลอรีแสดงรูปทั้งหมด
   let extraGalleryHtml = '';
   if (realImgList.length > 1 || animeImgList.length > 1) {
       extraGalleryHtml = `<div style="grid-column: 1 / -1; margin-top: -16px; margin-bottom: 24px;">
@@ -1062,36 +1509,74 @@ function renderDetail(loc) {
       ${seasons?`<div class="meta-chip"><span class="icon">🗓️</span>${seasons}</div>`:''}
       ${loc.best_months?`<div class="meta-chip"><span class="icon">✨</span>ดีที่สุด: ${loc.best_months}</div>`:''}
     </div>
-    ${Number(loc.review_count)>0 ? `<div class="loc-rating" style="font-size:18px;margin-bottom:16px"><span style="color:var(--gold)">${stars}</span><span style="font-weight:900;font-size:20px">${rating}</span><span style="color:var(--muted);font-size:14px">(${loc.review_count} รีวิว)</span></div>`:''}
+    ${Number(loc.review_count)>0 ? `<div class="loc-rating" style="font-size:18px;margin-bottom:16px">
+      <span style="color:var(--gold)">${stars}</span>
+      <span style="font-weight:900;font-size:20px">${rating}</span>
+      <span style="color:var(--muted);font-size:14px">(${loc.review_count} รีวิว)</span>
+    </div>`:''}
     <div class="detail-desc">${loc.description_th || loc.description_en || ''}</div>
     <div class="detail-actions">
       <button class="btn btn-red" onclick="openMapsFromDetail()">🗺️ นำทางใน Google Maps</button>
       ${currentUser ? `<button class="btn btn-outline" onclick="scrollToReview()">✍️ เขียนรีวิว</button>` : `<button class="btn btn-outline" onclick="openAuthModal('login')">🔒 Login เพื่อรีวิว</button>`}
     </div>`;
 
+  // Map
   initDetailMap(parseFloat(loc.lat), parseFloat(loc.lng), loc.name_th||loc.name_en, loc.anime_title);
 
+  // Review form
   if (currentUser) {
     document.getElementById('reviewFormArea').innerHTML = renderReviewForm();
     initStarPicker();
   } else {
-    document.getElementById('reviewFormArea').innerHTML = `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-bottom:24px"><div style="font-size:16px;margin-bottom:12px">🔒 Login เพื่อเขียนรีวิวและสะสมแต้ม</div><button class="btn btn-red" onclick="openAuthModal('login')">เข้าสู่ระบบ</button></div>`;
+    document.getElementById('reviewFormArea').innerHTML = `
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center;margin-bottom:24px">
+        <div style="font-size:16px;margin-bottom:12px">🔒 Login เพื่อเขียนรีวิวและสะสมแต้ม</div>
+        <button class="btn btn-red" onclick="openAuthModal('login')">เข้าสู่ระบบ</button>
+      </div>`;
   }
+
   loadRevTab('all', document.querySelector('.rev-tab'));
 }
 
-function openMaps(lat, lng, name) { window.open('https://www.google.com/maps/search/' + encodeURIComponent(name) + '/@' + lat + ',' + lng + ',15z', '_blank'); }
-function openMapsFromDetail() { if (currentLocation) openMaps(currentLocation.lat, currentLocation.lng, currentLocation.name_en || currentLocation.name_th || ''); }
-function scrollToReview() { document.getElementById('reviewFormArea').scrollIntoView({ behavior:'smooth' }); }
+function openMaps(lat, lng, name) {
+  window.open('https://www.google.com/maps/search/' + encodeURIComponent(name) + '/@' + lat + ',' + lng + ',15z', '_blank');
+}
 
+function openMapsFromDetail() {
+  if (!currentLocation) return;
+  var lat  = currentLocation.lat;
+  var lng  = currentLocation.lng;
+  var name = currentLocation.name_en || currentLocation.name_th || '';
+  openMaps(lat, lng, name);
+}
+
+function scrollToReview() {
+  document.getElementById('reviewFormArea').scrollIntoView({ behavior:'smooth' });
+}
+
+// ─────────────────────────────────────────────
+//  LEAFLET MAP
+// ─────────────────────────────────────────────
 function initDetailMap(lat, lng, name, anime) {
   if (detailMap) { detailMap.remove(); detailMap = null; }
-  if (!lat || !lng || isNaN(lat) || isNaN(lng)) { document.getElementById('detail-map').innerHTML = '<div class="loading-spinner" style="padding:100px">ไม่มีข้อมูลพิกัด</div>'; return; }
+  if (!lat || !lng || isNaN(lat) || isNaN(lng)) {
+    document.getElementById('detail-map').innerHTML = '<div class="loading-spinner" style="padding:100px">ไม่มีข้อมูลพิกัด</div>';
+    return;
+  }
   setTimeout(() => {
     detailMap = L.map('detail-map').setView([lat, lng], 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(detailMap);
-    const icon = L.divIcon({ html:`<div style="background:var(--red);width:14px;height:14px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 3px rgba(230,57,70,.3)"></div>`, iconSize:[14,14], className:'' });
-    L.marker([lat,lng], {icon}).addTo(detailMap).bindPopup(`<div class="map-popup-title">${name}</div><div class="map-popup-anime">🎬 ${anime}</div><div class="map-popup-btn" onclick="openMapsFromDetail()">นำทาง →</div>`).openPopup();
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap'
+    }).addTo(detailMap);
+
+    const icon = L.divIcon({
+      html:`<div style="background:var(--red);width:14px;height:14px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 3px rgba(230,57,70,.3)"></div>`,
+      iconSize:[14,14], className:''
+    });
+
+    L.marker([lat,lng], {icon}).addTo(detailMap)
+      .bindPopup(`<div class="map-popup-title">${name}</div><div class="map-popup-anime">🎬 ${anime}</div><div class="map-popup-btn" onclick="openMapsFromDetail()">นำทาง →</div>`)
+      .openPopup();
   }, 100);
 }
 
@@ -1102,27 +1587,43 @@ function renderReviewForm() {
   return `
     <div class="review-form" id="writeReview">
       <div class="form-title">✍️ เขียนรีวิวสถานที่นี้</div>
-      <div class="form-group"><label class="form-label">ให้คะแนน</label><div class="star-picker" id="starPicker">${[1,2,3,4,5].map(i=>`<span class="star-pick" data-star="${i}" onclick="setStar(${i})">★</span>`).join('')}</div></div>
-      <div class="form-group"><label class="form-label">เขียนรีวิว</label><textarea class="form-input form-textarea" id="revComment" placeholder="บอกเล่าประสบการณ์ที่สถานที่นี้..."></textarea></div>
+      <div class="form-group">
+        <label class="form-label">ให้คะแนน</label>
+        <div class="star-picker" id="starPicker">
+          ${[1,2,3,4,5].map(i=>`<span class="star-pick" data-star="${i}" onclick="setStar(${i})">★</span>`).join('')}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">เขียนรีวิว</label>
+        <textarea class="form-input form-textarea" id="revComment" placeholder="บอกเล่าประสบการณ์ที่สถานที่นี้..."></textarea>
+      </div>
       <div class="grid2">
-        <div class="form-group"><label class="form-label">วันที่ไปเที่ยว</label><input class="form-input" type="date" id="revDate"></div>
-        <div class="form-group"><label class="form-label">ฤดูที่ไป</label>
+        <div class="form-group">
+          <label class="form-label">วันที่ไปเที่ยว</label>
+          <input class="form-input" type="date" id="revDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">ฤดูที่ไป</label>
           <select class="form-select" id="revSeason">
-            <option value="">เลือกฤดู</option><option value="spring">🌸 ใบไม้ผลิ</option><option value="summer">☀️ ร้อน</option><option value="autumn">🍁 ใบไม้ร่วง</option><option value="winter">❄️ หนาว</option>
+            <option value="">เลือกฤดู</option>
+            <option value="spring">🌸 ใบไม้ผลิ</option>
+            <option value="summer">☀️ ร้อน</option>
+            <option value="autumn">🍁 ใบไม้ร่วง</option>
+            <option value="winter">❄️ หนาว</option>
           </select>
         </div>
       </div>
       <div class="form-group">
         <label class="form-label">แนบรูปถ่าย (รับ +50 แต้มพิเศษ!)</label>
-        <div class="upload-area" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('photoInput').click()">
           <div id="uploadPrompt">📷 คลิกเพื่อเลือกรูปถ่ายที่สถานที่นี้<br><small style="color:var(--muted)">JPG, PNG ขนาดไม่เกิน 5MB</small></div>
         </div>
-        <input type="file" id="photoInput" accept="image/png, image/jpeg, image/webp" style="display:none" onchange="handlePhotoSelect(this)">
+        <input type="file" id="photoInput" accept="image/png, image/jpeg, image/gif, image/webp" style="display:none" onchange="handlePhotoSelect(this)">
         <img id="uploadPreview" class="upload-preview" style="display:none">
       </div>
       <div id="revMsg" class="error-msg"></div>
       <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
-        <button class="btn btn-red" onclick="doAddReview()" style="padding:12px 28px">📤 ส่งรีวิว (+50 แต้ม)</button>
+        <button class="btn btn-red" onclick="doAddReview()" style="padding:12px 28px">📤 ส่งรีวิว (+${50} แต้ม)</button>
         <span style="font-size:13px;color:var(--muted)">มีรูป = +100 แต้ม</span>
       </div>
     </div>`;
@@ -1130,20 +1631,32 @@ function renderReviewForm() {
 
 let selectedStar = 5;
 let photoBase64 = null;
-function initStarPicker() { setStar(5); }
-function setStar(n) { selectedStar = n; document.querySelectorAll('.star-pick').forEach((s, i) => { s.classList.toggle('lit', i < n); }); }
+
+function initStarPicker() {
+  setStar(5);
+}
+
+function setStar(n) {
+  selectedStar = n;
+  document.querySelectorAll('.star-pick').forEach((s, i) => {
+    s.classList.toggle('lit', i < n);
+  });
+}
 
 async function handlePhotoSelect(input) {
   const file = input.files[0];
   if (!file) return;
   if (!file.type.startsWith('image/')) { showToast('error','กรุณาเลือกไฟล์รูปภาพ'); return; }
+
   try {
     const resized = await resizeImage(file);
     photoBase64 = resized.base64;
     document.getElementById('uploadPreview').src = resized.dataUrl;
     document.getElementById('uploadPreview').style.display = 'block';
     document.getElementById('uploadPrompt').style.display = 'none';
-  } catch(e) { showToast('error', 'ไม่สามารถอ่านไฟล์ได้'); }
+  } catch(e) {
+    showToast('error', 'ไม่สามารถอ่านไฟล์ได้');
+  }
 }
 
 async function doAddReview() {
@@ -1156,36 +1669,80 @@ async function doAddReview() {
 
   let photo_url = '';
   if (photoBase64) {
-    const up = await apiPost({ action:'uploadImage', userId:currentUser.userId, token:currentUser.token, base64:photoBase64, mimeType:'image/jpeg', filename:'review.jpg' });
+    const up = await apiPost({ action:'uploadImage', userId:currentUser.userId, token:currentUser.token,
+      base64:photoBase64, mimeType:'image/jpeg', filename:'review.jpg' });
     if (up.success) photo_url = up.url;
   }
 
-  const res = await apiPost({ action:'addReview', userId:currentUser.userId, token:currentUser.token, locationId: currentLocation.location_id, rating: selectedStar, comment, photo_url, visit_date: document.getElementById('revDate').value, season_visited: document.getElementById('revSeason').value });
+  const res = await apiPost({ action:'addReview',
+    userId:currentUser.userId, token:currentUser.token,
+    locationId: currentLocation.location_id,
+    rating: selectedStar,
+    comment,
+    photo_url,
+    visit_date: document.getElementById('revDate').value,
+    season_visited: document.getElementById('revSeason').value
+  });
+
   btn.textContent = '📤 ส่งรีวิว'; btn.disabled = false;
 
   if (res.success) {
     showToast('success', `รีวิวสำเร็จ! 🎉 +${res.points_earned} แต้ม`);
     currentUser.points = (Number(currentUser.points||0)) + res.points_earned;
     localStorage.setItem('seichi_user', JSON.stringify(currentUser));
-    updateNavUser(); loadRevTab(currentRevType, document.querySelector('.rev-tab.active'));
-    document.getElementById('revComment').value = ''; photoBase64 = null;
-    document.getElementById('uploadPreview').style.display = 'none'; document.getElementById('uploadPrompt').style.display = 'block'; setStar(5);
-  } else { showMsg('revMsg', res.error); }
+    updateNavUser();
+    loadRevTab(currentRevType, document.querySelector('.rev-tab.active'));
+    // Reset form
+    document.getElementById('revComment').value = '';
+    photoBase64 = null;
+    document.getElementById('uploadPreview').style.display = 'none';
+    document.getElementById('uploadPrompt').style.display = 'block';
+    setStar(5);
+  } else {
+    showMsg('revMsg', res.error);
+  }
 }
 
+// ─────────────────────────────────────────────
+//  REVIEWS LIST
+// ─────────────────────────────────────────────
 async function loadRevTab(type, el) {
   currentRevType = type;
   document.querySelectorAll('.rev-tab').forEach(t => t.classList.remove('active'));
   if (el) el.classList.add('active');
+
   document.getElementById('reviewsList').innerHTML = '<div class="loading-spinner">กำลังโหลดรีวิว</div>';
   if (!currentLocation) return;
+
   const res = await apiGet({ action:'getReviews', locationId:currentLocation.location_id, type });
-  if (!res.success || !res.data.length) { document.getElementById('reviewsList').innerHTML = '<div class="empty-state"><div class="empty-icon">💬</div><p>ยังไม่มีรีวิว — มาเป็นคนแรกกัน!</p></div>'; return; }
+
+  if (!res.success || !res.data.length) {
+    document.getElementById('reviewsList').innerHTML = '<div class="empty-state"><div class="empty-icon">💬</div><p>ยังไม่มีรีวิว — มาเป็นคนแรกกัน!</p></div>';
+    return;
+  }
+
   const flags = { TH:'🇹🇭', JP:'🇯🇵', US:'🇺🇸', SG:'🇸🇬', MY:'🇲🇾', PH:'🇵🇭', ID:'🇮🇩', VN:'🇻🇳', CN:'🇨🇳', KR:'🇰🇷', GB:'🇬🇧' };
   document.getElementById('reviewsList').innerHTML = res.data.map(r => {
+    // โหลดรูป Avatar (แปลงเป็น thumbnail)
     const avUrl = getDriveImg(r.avatar_url);
     const avHtml = avUrl ? `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">` : (r.username||'U')[0].toUpperCase();
-    return `<div class="review-card"><div class="rev-header"><div class="rev-avatar">${avHtml}</div><div class="rev-user"><div class="rev-name">${r.username} <span class="flag">${flags[r.country]||'🌍'}</span></div><div class="rev-meta"><span>${'★'.repeat(Number(r.rating))}</span>${r.visit_date ? `<span>📅 ${r.visit_date}</span>` : ''}${r.season_visited ? `<span>${{spring:'🌸',summer:'☀️',autumn:'🍁',winter:'❄️'}[r.season_visited]||''}</span>` : ''}</div></div></div><div class="rev-body">${r.comment}</div>${r.photo_url ? `<img src="${getDriveImg(r.photo_url)}" class="rev-photo" onerror="this.style.display='none'">` : ''}<div class="rev-date">${new Date(r.review_date).toLocaleDateString('th-TH', {year:'numeric',month:'long',day:'numeric'})}</div></div>`}).join('');
+    return `
+    <div class="review-card">
+      <div class="rev-header">
+        <div class="rev-avatar">${avHtml}</div>
+        <div class="rev-user">
+          <div class="rev-name">${r.username} <span class="flag">${flags[r.country]||'🌍'}</span></div>
+          <div class="rev-meta">
+            <span>${'★'.repeat(Number(r.rating))}</span>
+            ${r.visit_date ? `<span>📅 ${r.visit_date}</span>` : ''}
+            ${r.season_visited ? `<span>${{spring:'🌸',summer:'☀️',autumn:'🍁',winter:'❄️'}[r.season_visited]||''}</span>` : ''}
+          </div>
+        </div>
+      </div>
+      <div class="rev-body">${r.comment}</div>
+      ${r.photo_url ? `<img src="${getDriveImg(r.photo_url)}" class="rev-photo" alt="รูปรีวิว" onerror="this.style.display='none'">` : ''}
+      <div class="rev-date">${new Date(r.review_date).toLocaleDateString('th-TH', {year:'numeric',month:'long',day:'numeric'})}</div>
+    </div>`}).join('');
 }
 
 // ─────────────────────────────────────────────
@@ -1193,25 +1750,54 @@ async function loadRevTab(type, el) {
 // ─────────────────────────────────────────────
 async function loadRewards() {
   document.getElementById('rewardsGrid').innerHTML = '<div class="loading-spinner">กำลังโหลด</div>';
-  document.getElementById('myPtsDisplay').textContent = currentUser ? `⭐ ${currentUser.points||0} แต้มของฉัน` : '';
+  if (currentUser) document.getElementById('myPtsDisplay').textContent = `⭐ ${currentUser.points||0} แต้มของฉัน`;
+  else document.getElementById('myPtsDisplay').textContent = '';
+
   const res = await apiGet({ action:'getRewards' });
   if (!res.success) return;
   allRewards = res.data || [];
   renderRewards(allRewards);
 }
+
 function renderRewards(rewards) {
   const icons = { merchandise:'🎌', travel:'✈️' };
-  document.getElementById('rewardsGrid').innerHTML = rewards.length ? rewards.map(r => `<div class="reward-card"><div class="reward-icon">${icons[r.category]||'🎁'}</div><div class="reward-name">${r.name}</div><div class="reward-desc">${r.description}</div><div class="reward-pts">⭐ ${Number(r.points_required).toLocaleString()}</div><div class="reward-stock">เหลือ: ${r.stock} ชิ้น</div><button class="btn ${currentUser && currentUser.points >= r.points_required ? 'btn-gold' : 'btn-outline'}" onclick="doClaimReward('${r.reward_id}','${r.name}')" style="width:100%">${currentUser && currentUser.points >= r.points_required ? '🎁 แลกรางวัล' : '🔒 แต้มไม่พอ'}</button></div>`).join('') : '<div class="empty-state" style="grid-column:1/-1">ยังไม่มีของรางวัล</div>';
+  document.getElementById('rewardsGrid').innerHTML = rewards.length
+    ? rewards.map(r => `
+      <div class="reward-card">
+        <div class="reward-icon">${icons[r.category]||'🎁'}</div>
+        <div class="reward-name">${r.name}</div>
+        <div class="reward-desc">${r.description}</div>
+        <div class="reward-pts">⭐ ${Number(r.points_required).toLocaleString()}</div>
+        <div class="reward-stock">เหลือ: ${r.stock} ชิ้น</div>
+        <button class="btn ${currentUser && currentUser.points >= r.points_required ? 'btn-gold' : 'btn-outline'}"
+          onclick="doClaimReward('${r.reward_id}','${r.name}')" style="width:100%">
+          ${currentUser && currentUser.points >= r.points_required ? '🎁 แลกรางวัล' : '🔒 แต้มไม่พอ'}
+        </button>
+      </div>`).join('')
+    : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🎁</div><p>ยังไม่มีของรางวัล</p></div>';
 }
+
 function filterRewards(cat, el) {
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active')); el.classList.add('active');
-  renderRewards(cat === 'all' ? allRewards : allRewards.filter(r => r.category === cat));
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const filtered = cat === 'all' ? allRewards : allRewards.filter(r => r.category === cat);
+  renderRewards(filtered);
 }
+
 async function doClaimReward(rewardId, name) {
   if (!currentUser) { openAuthModal('login'); return; }
   if (!confirm(`แลก "${name}" ใช้แต้มสะสมหรือไม่?`)) return;
+
   const res = await apiPost({ action:'claimReward', userId:currentUser.userId, token:currentUser.token, rewardId });
-  if (res.success) { showToast('success', res.message); currentUser.points = res.remaining_points; localStorage.setItem('seichi_user', JSON.stringify(currentUser)); updateNavUser(); loadRewards(); } else { showToast('error', res.error); }
+  if (res.success) {
+    showToast('success', res.message);
+    currentUser.points = res.remaining_points;
+    localStorage.setItem('seichi_user', JSON.stringify(currentUser));
+    updateNavUser();
+    loadRewards();
+  } else {
+    showToast('error', res.error);
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -1219,23 +1805,32 @@ async function doClaimReward(rewardId, name) {
 // ─────────────────────────────────────────────
 async function loadProfile() {
   if (!currentUser) { showView('home'); openAuthModal('login'); return; }
+
   const nextLvlPts = (currentUser.level||1) * 500;
   const progress = Math.min(100, ((currentUser.points||0) % 500) / 500 * 100);
+
   const avUrl = getDriveImg(currentUser.avatar_url);
-  const avHtml = avUrl ? `<img src="${avUrl}" alt="Avatar">` : `${(currentUser.username||'U')[0].toUpperCase()}`;
+  const avHtml = avUrl 
+    ? `<img src="${avUrl}" alt="Avatar">` 
+    : `${(currentUser.username||'U')[0].toUpperCase()}`;
 
   document.getElementById('profileContent').innerHTML = `
     <div class="profile-hero">
       <div class="profile-avatar-container" style="margin: 0 auto 16px; border:none; cursor:default">
         <div class="profile-big-avatar">${avHtml}</div>
       </div>
+      
       <div class="profile-username">${currentUser.display_name||currentUser.username}</div>
       <button class="btn btn-outline" style="padding:6px 14px;font-size:13px;margin-top:8px" onclick="openEditProfile()">✏️ แก้ไขโปรไฟล์</button>
+      
       <div class="profile-level" style="margin-top:16px">⚔️ Level ${currentUser.level||1} Seichi Explorer</div>
       <div class="points-display">${Number(currentUser.points||0).toLocaleString()}</div>
       <div class="points-label">แต้มสะสม</div>
+      
       <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-      <div style="font-size:12px;color:var(--muted);margin-top:8px;position:relative">${Math.round((currentUser.points||0) % 500)} / 500 แต้ม สู่ Level ${(currentUser.level||1)+1}</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;position:relative">
+        ${Math.round((currentUser.points||0) % 500)} / 500 แต้ม สู่ Level ${(currentUser.level||1)+1}
+      </div>
     </div>
     <div class="stats-row">
       <div class="stat-card"><div class="stat-num">${currentUser.points||0}</div><div class="stat-lbl">แต้มสะสม</div></div>
@@ -1245,7 +1840,11 @@ async function loadProfile() {
     <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px">
       <div style="font-size:17px;font-weight:700;margin-bottom:16px">💡 วิธีสะสมแต้ม</div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        ${[['✍️ เขียนรีวิว','50 แต้ม'],['📷 รีวิวพร้อมรูป','100 แต้ม'],['📍 ส่งสถานที่ใหม่','200 แต้ม'],['✅ สถานที่ได้รับอนุมัติ','500 แต้ม']].map(([a,b])=>`<div style="display:flex;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-radius:8px"><span style="font-size:14px">${a}</span><span style="color:var(--gold);font-weight:700">+${b}</span></div>`).join('')}
+        ${[['✍️ เขียนรีวิว','50 แต้ม'],['📷 รีวิวพร้อมรูป','100 แต้ม'],['📍 ส่งสถานที่ใหม่','200 แต้ม'],['✅ สถานที่ได้รับอนุมัติ','500 แต้ม']].map(([a,b])=>`
+          <div style="display:flex;justify-content:space-between;padding:10px 14px;background:var(--bg3);border-radius:8px">
+            <span style="font-size:14px">${a}</span>
+            <span style="color:var(--gold);font-weight:700">+${b}</span>
+          </div>`).join('')}
       </div>
     </div>
     <div style="display:flex;gap:12px;flex-wrap:wrap">
@@ -1260,8 +1859,12 @@ let stagedAvatarBase64 = null;
 function openEditProfile() {
   stagedAvatarBase64 = null;
   document.getElementById('editDisplayName').value = currentUser.display_name || currentUser.username;
+  
   const avUrl = getDriveImg(currentUser.avatar_url);
-  const avHtml = avUrl ? `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">` : `${(currentUser.username||'U')[0].toUpperCase()}`;
+  const avHtml = avUrl 
+    ? `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">` 
+    : `${(currentUser.username||'U')[0].toUpperCase()}`;
+  
   document.getElementById('editAvatarPreview').innerHTML = avHtml;
   document.getElementById('editProfileErr').style.display = 'none';
   openModal('editProfileModal');
@@ -1271,35 +1874,60 @@ async function handleEditAvatarSelect(input) {
   const file = input.files[0];
   if (!file) return;
   if (!file.type.startsWith('image/')) { showMsg('editProfileErr', 'กรุณาเลือกไฟล์รูปภาพ'); return; }
+  
   try {
     const resized = await resizeImage(file);
     stagedAvatarBase64 = resized.base64;
     document.getElementById('editAvatarPreview').innerHTML = `<img src="${resized.dataUrl}" style="width:100%;height:100%;object-fit:cover;">`;
-  } catch(e) { showMsg('editProfileErr', 'เกิดข้อผิดพลาดในการอ่านไฟล์'); }
+  } catch(e) {
+    showMsg('editProfileErr', 'เกิดข้อผิดพลาดในการอ่านไฟล์');
+  }
 }
 
 async function saveProfileChanges() {
   const newName = document.getElementById('editDisplayName').value.trim();
   if (!newName) { showMsg('editProfileErr', 'กรุณาใส่ชื่อที่แสดงผล'); return; }
-  const btn = document.querySelector('#editProfileModal .btn-red');
-  btn.textContent = 'กำลังบันทึก...'; btn.disabled = true;
 
-  let successMsg = []; let errMsg = [];
+  const btn = document.querySelector('#editProfileModal .btn-red');
+  btn.textContent = 'กำลังบันทึก...';
+  btn.disabled = true;
+
+  let successMsg = [];
+  let errMsg = [];
+
+  // กรณีเปลี่ยนชื่อ
   if (newName !== currentUser.display_name && newName !== currentUser.username) {
     const resN = await apiPost({ action:'updateProfile', userId: currentUser.userId, token: currentUser.token, display_name: newName });
-    if (resN.success) { currentUser.display_name = newName; successMsg.push('ชื่อ'); } else errMsg.push(resN.error);
-  }
-  if (stagedAvatarBase64) {
-    const resA = await apiPost({ action:'updateAvatar', userId: currentUser.userId, token: currentUser.token, base64: stagedAvatarBase64 });
-    if (resA.success) { currentUser.avatar_url = resA.avatar_url; successMsg.push('รูปโปรไฟล์'); } else errMsg.push(resA.error);
+    if (resN.success) {
+      currentUser.display_name = newName;
+      successMsg.push('ชื่อ');
+    } else errMsg.push(resN.error);
   }
 
-  btn.textContent = 'บันทึกการเปลี่ยนแปลง'; btn.disabled = false;
-  if (errMsg.length > 0) { showMsg('editProfileErr', 'เกิดข้อผิดพลาด: ' + errMsg.join(', ')); } 
-  else if (successMsg.length > 0) {
+  // กรณีเปลี่ยนรูปโปรไฟล์
+  if (stagedAvatarBase64) {
+    const resA = await apiPost({ action:'updateAvatar', userId: currentUser.userId, token: currentUser.token, base64: stagedAvatarBase64 });
+    if (resA.success) {
+      currentUser.avatar_url = resA.avatar_url;
+      successMsg.push('รูปโปรไฟล์');
+    } else errMsg.push(resA.error);
+  }
+
+  btn.textContent = 'บันทึกการเปลี่ยนแปลง';
+  btn.disabled = false;
+
+  if (errMsg.length > 0) {
+    showMsg('editProfileErr', 'เกิดข้อผิดพลาด: ' + errMsg.join(', '));
+  } else if (successMsg.length > 0) {
     localStorage.setItem('seichi_user', JSON.stringify(currentUser));
-    updateNavUser(); loadProfile(); closeModal('editProfileModal'); showToast('success', 'เปลี่ยน ' + successMsg.join(' และ ') + ' สำเร็จ! 🎉');
-  } else { closeModal('editProfileModal'); }
+    updateNavUser();
+    loadProfile();
+    closeModal('editProfileModal');
+    showToast('success', 'เปลี่ยน ' + successMsg.join(' และ ') + ' สำเร็จ! 🎉');
+  } else {
+    // ไม่ได้แก้ไขอะไร
+    closeModal('editProfileModal');
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -1314,44 +1942,86 @@ async function handleLocPhotoSelect(input, type) {
   if (!files || files.length === 0) return;
 
   for (let file of Array.from(files)) {
-    if (!file.type.startsWith('image/')) { showToast('error', 'ไฟล์ที่ไม่ใช่รูปภาพจะถูกข้ามไป'); continue; }
+    if (!file.type.startsWith('image/')) { 
+      showToast('error', 'ไฟล์ที่ไม่ใช่รูปภาพจะถูกข้ามไป'); 
+      continue; 
+    }
+    
     try {
       const resized = await resizeImage(file);
       const imgObj = { id: imgCounterId++, base64: resized.base64, dataUrl: resized.dataUrl };
-      if (type === 'real') { realImagesList.push(imgObj); renderImagePreviews('real'); } 
-      else { animeImagesList.push(imgObj); renderImagePreviews('anime'); }
-    } catch(err) { showToast('error', 'อ่านไฟล์รูปภาพไม่สำเร็จ'); }
+
+      if (type === 'real') {
+        realImagesList.push(imgObj);
+        renderImagePreviews('real');
+      } else {
+        animeImagesList.push(imgObj);
+        renderImagePreviews('anime');
+      }
+    } catch(err) {
+      showToast('error', 'อ่านไฟล์รูปภาพไม่สำเร็จ');
+    }
   }
-  input.value = ''; // รีเซ็ตให้เลือกไฟล์ซ้ำได้
+  input.value = ''; // รีเซ็ตค่าให้สามารถอัปโหลดรูปเดิมซ้ำได้อีก
 }
 
 function removeLocImage(type, id) {
-  if (type === 'real') { realImagesList = realImagesList.filter(img => img.id !== id); renderImagePreviews('real'); } 
-  else { animeImagesList = animeImagesList.filter(img => img.id !== id); renderImagePreviews('anime'); }
+  if (type === 'real') {
+    realImagesList = realImagesList.filter(img => img.id !== id);
+    renderImagePreviews('real');
+  } else {
+    animeImagesList = animeImagesList.filter(img => img.id !== id);
+    renderImagePreviews('anime');
+  }
 }
 
 function renderImagePreviews(type) {
   const images = type === 'real' ? realImagesList : animeImagesList;
   const containerId = type === 'real' ? 'realUploadPreviewGrid' : 'animeUploadPreviewGrid';
   const promptId = type === 'real' ? 'realUploadPrompt' : 'animeUploadPrompt';
-  document.getElementById(containerId).innerHTML = images.map(img => `<div class="preview-item"><img src="${img.dataUrl}"><button class="remove-preview-btn" type="button" onclick="event.stopPropagation(); removeLocImage('${type}', ${img.id})">✕</button></div>`).join('');
+  
+  const container = document.getElementById(containerId);
+  container.innerHTML = images.map(img => `
+    <div class="preview-item">
+      <img src="${img.dataUrl}">
+      <button class="remove-preview-btn" type="button" onclick="event.stopPropagation(); removeLocImage('${type}', ${img.id})">✕</button>
+    </div>
+  `).join('');
+
   document.getElementById(promptId).style.display = images.length > 0 ? 'none' : 'block';
 }
 
 async function doSubmitLocation() {
   if (!currentUser) { openAuthModal('login'); return; }
+
   const seasons = ['spring','summer','autumn','winter'].filter(s => document.getElementById('s_'+s)?.checked);
   const data = {
-    action:'submitLocation', userId: currentUser.userId, token: currentUser.token,
-    name_th: document.getElementById('s_name_th').value.trim(), name_jp: document.getElementById('s_name_jp').value.trim(), name_en: document.getElementById('s_name_en').value.trim(),
-    category: document.getElementById('s_category').value, anime_title: document.getElementById('s_anime').value.trim(), anime_ep: document.getElementById('s_ep').value.trim(),
-    prefecture: document.getElementById('s_pref').value.trim(), address: document.getElementById('s_address').value.trim(), lat: document.getElementById('s_lat').value, lng: document.getElementById('s_lng').value,
-    season: seasons.join(',') || 'all', best_months: document.getElementById('s_months').value.trim(), hours: document.getElementById('s_hours').value.trim(),
-    real_base64_list: realImagesList.map(img => img.base64), anime_base64_list: animeImagesList.map(img => img.base64), desc_th: document.getElementById('s_desc_th').value.trim()
+    action:'submitLocation',
+    userId: currentUser.userId, token: currentUser.token,
+    name_th:   document.getElementById('s_name_th').value.trim(),
+    name_jp:   document.getElementById('s_name_jp').value.trim(),
+    name_en:   document.getElementById('s_name_en').value.trim(),
+    category:  document.getElementById('s_category').value,
+    anime_title: document.getElementById('s_anime').value.trim(),
+    anime_ep:  document.getElementById('s_ep').value.trim(),
+    prefecture: document.getElementById('s_pref').value.trim(),
+    address:   document.getElementById('s_address').value.trim(),
+    lat:       document.getElementById('s_lat').value,
+    lng:       document.getElementById('s_lng').value,
+    season:    seasons.join(',') || 'all',
+    best_months: document.getElementById('s_months').value.trim(),
+    hours:     document.getElementById('s_hours').value.trim(),
+    real_base64_list: realImagesList.map(img => img.base64),
+    anime_base64_list: animeImagesList.map(img => img.base64),
+    desc_th:   document.getElementById('s_desc_th').value.trim()
   };
 
-  if (!data.name_th || !data.name_en || !data.anime_title || !data.prefecture || !data.lat || !data.lng) { showMsg('submitMsg','กรุณากรอกข้อมูลที่จำเป็น (มี *)'); return; }
-  if (data.real_base64_list.length === 0 || data.anime_base64_list.length === 0) { showMsg('submitMsg','กรุณาแนบรูปภาพอย่างน้อย 1 รูปทั้งสถานที่จริงและอนิเมะ'); return; }
+  if (!data.name_th || !data.name_en || !data.anime_title || !data.prefecture || !data.lat || !data.lng) {
+    showMsg('submitMsg','กรุณากรอกข้อมูลที่จำเป็น (มี *)'); return;
+  }
+  if (data.real_base64_list.length === 0 || data.anime_base64_list.length === 0) {
+    showMsg('submitMsg','กรุณาแนบรูปภาพอย่างน้อย 1 รูปทั้งสถานที่จริงและอนิเมะ'); return;
+  }
 
   const btn = document.querySelector('#submitForm .btn-red');
   btn.textContent = 'กำลังส่ง (รวมอัปโหลดรูปลง Google Drive)...'; btn.disabled = true;
@@ -1361,11 +2031,20 @@ async function doSubmitLocation() {
 
   if (res.success) {
     showToast('success', `ส่งสำเร็จ! 🎉 รอ Admin ตรวจสอบ (+${POINTS_DISPLAY.SUBMIT_LOCATION} แต้ม)`);
-    currentUser.points = (Number(currentUser.points||0)) + 200; localStorage.setItem('seichi_user', JSON.stringify(currentUser)); updateNavUser();
+    currentUser.points = (Number(currentUser.points||0)) + 200;
+    localStorage.setItem('seichi_user', JSON.stringify(currentUser));
+    updateNavUser();
+    
+    // รีเซ็ตฟอร์มและรูปภาพ
     document.querySelectorAll('#submitForm input[type="text"], #submitForm input[type="number"], #submitForm textarea').forEach(i => i.value='');
-    realImagesList = []; animeImagesList = []; renderImagePreviews('real'); renderImagePreviews('anime');
+    realImagesList = []; animeImagesList = [];
+    renderImagePreviews('real');
+    renderImagePreviews('anime');
+
     showView('home');
-  } else { showMsg('submitMsg', res.error); }
+  } else {
+    showMsg('submitMsg', res.error);
+  }
 }
 
 const POINTS_DISPLAY = { SUBMIT_LOCATION: 200 };
@@ -1374,90 +2053,201 @@ const POINTS_DISPLAY = { SUBMIT_LOCATION: 200 };
 //  ADMIN
 // ─────────────────────────────────────────────
 function initAdmin() {
-  if (!currentUser || !isAdmin(currentUser)) { showView('home'); showToast('error', '🔒 คุณไม่มีสิทธิ์เข้าถึงหน้านี้'); return; }
+  if (!currentUser || !isAdmin(currentUser)) {
+    showView('home');
+    showToast('error', '🔒 คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
+    return;
+  }
   adminKey = adminKey || 'AUTO_ADMIN_FROM_EMAIL';
-  document.getElementById('adminLoginSection').style.display = 'none'; showAdminDashboard();
+  document.getElementById('adminLoginSection').style.display = 'none';
+  showAdminDashboard();
 }
-function adminLogin() { const key = document.getElementById('adminKeyInput').value; if (!key) return; adminKey = key; showAdminDashboard(); }
+
+function adminLogin() {
+  const key = document.getElementById('adminKeyInput').value;
+  if (!key) return;
+  adminKey = key;
+  showAdminDashboard();
+}
+
 async function showAdminDashboard() {
   const res = await apiGet({ action:'getPendingLocations', userId: currentUser?.userId, token: currentUser?.token, adminKey });
-  if (!res.success) { document.getElementById('adminErr').style.display = 'block'; document.getElementById('adminErr').textContent = 'ระบบ Admin มีปัญหา หรือคุณไม่มีสิทธิ์เข้าถึง'; adminKey = ''; return; }
+  if (!res.success) {
+    document.getElementById('adminErr').style.display = 'block';
+    document.getElementById('adminErr').textContent = 'ระบบ Admin มีปัญหา หรือคุณไม่มีสิทธิ์เข้าถึง';
+    adminKey = '';
+    return;
+  }
 
-  document.getElementById('adminLoginSection').style.display = 'none'; document.getElementById('adminDashboard').style.display = 'block';
+  document.getElementById('adminLoginSection').style.display = 'none';
+  document.getElementById('adminDashboard').style.display = 'block';
+
   const stats = await apiGet({ action:'getStats' });
-  if (stats.success) { document.getElementById('adminStats').innerHTML = `<div style="text-align:center"><div style="font-size:22px;font-weight:900;color:var(--red)">${stats.stats.pendingLocations}</div><div style="font-size:12px;color:var(--muted)">รอตรวจสอบ</div></div><div style="text-align:center"><div style="font-size:22px;font-weight:900;color:var(--green)">${stats.stats.totalLocations}</div><div style="font-size:12px;color:var(--muted)">อนุมัติแล้ว</div></div><div style="text-align:center"><div style="font-size:22px;font-weight:900;color:var(--gold)">${stats.stats.totalUsers}</div><div style="font-size:12px;color:var(--muted)">ผู้ใช้</div></div>`; }
+  if (stats.success) {
+    document.getElementById('adminStats').innerHTML = `
+      <div style="text-align:center"><div style="font-size:22px;font-weight:900;color:var(--red)">${stats.stats.pendingLocations}</div><div style="font-size:12px;color:var(--muted)">รอตรวจสอบ</div></div>
+      <div style="text-align:center"><div style="font-size:22px;font-weight:900;color:var(--green)">${stats.stats.totalLocations}</div><div style="font-size:12px;color:var(--muted)">อนุมัติแล้ว</div></div>
+      <div style="text-align:center"><div style="font-size:22px;font-weight:900;color:var(--gold)">${stats.stats.totalUsers}</div><div style="font-size:12px;color:var(--muted)">ผู้ใช้</div></div>`;
+  }
 
-  if (!res.data.length) { document.getElementById('pendingList').innerHTML = `<div class="empty-state"><div class="empty-icon">✅</div><p>ไม่มีสถานที่รอตรวจสอบ</p></div>`; return; }
+  if (!res.data.length) {
+    document.getElementById('pendingList').innerHTML = `<div class="empty-state"><div class="empty-icon">✅</div><p>ไม่มีสถานที่รอตรวจสอบ</p></div>`;
+    return;
+  }
 
   document.getElementById('pendingList').innerHTML = res.data.map(loc => {
     const realImgList = (loc.real_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
     const animeImgList = (loc.anime_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
+    
     const realImg = realImgList[0] || 'https://via.placeholder.com/300x140/1a1a2e/ffffff?text=No+Image';
     const animeImg = animeImgList[0] || 'https://via.placeholder.com/300x140/2d1a1a/ffffff?text=No+Anime+Image';
     
-    return `<div class="admin-pending-card" id="pcard_${loc.location_id}"><div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap"><div style="flex:1"><div style="font-size:18px;font-weight:700;margin-bottom:4px">${loc.name_th} <span style="font-size:14px;color:var(--muted)">${loc.name_jp||''}</span></div><div style="font-size:13px;color:var(--red);margin-bottom:6px">🎬 ${loc.anime_title} ${loc.anime_episode?'· '+loc.anime_episode:''}</div><div style="font-size:13px;color:var(--muted)">📍 ${loc.prefecture} · ${loc.address||''}</div><div style="font-size:13px;color:var(--muted)">📂 ${loc.category} · ฤดู: ${loc.season} · เวลา: ${loc.opening_hours||'-'}</div><div style="font-size:13px;color:var(--muted);margin-top:4px">ส่งโดย: ${loc.submitted_by} · ${new Date(loc.submitted_date).toLocaleDateString('th-TH')}</div>${loc.description_th ? `<div style="font-size:13px;margin-top:8px;color:rgba(240,240,245,0.7)">${loc.description_th}</div>` : ''}</div><div style="font-size:12px;color:var(--muted)">Lat: ${loc.lat}<br>Lng: ${loc.lng}</div></div><div class="pending-imgs"><img src="${realImg}" onerror="this.src='https://via.placeholder.com/300x140/1a1a2e/ffffff?text=No+Image'"><img src="${animeImg}" onerror="this.src='https://via.placeholder.com/300x140/2d1a1a/ffffff?text=No+Anime+Image'"></div><div class="admin-actions"><button class="btn btn-green" onclick="adminAction('approve','${loc.location_id}')">✅ อนุมัติ</button><button class="btn btn-red" onclick="adminAction('reject','${loc.location_id}')">❌ ปฏิเสธ</button><button class="btn btn-outline" onclick="window.open('https://maps.google.com/?q=${loc.lat},${loc.lng}','_blank')">🗺️ ดูบนแผนที่</button></div></div>`
+    return `
+    <div class="admin-pending-card" id="pcard_${loc.location_id}">
+      <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:1">
+          <div style="font-size:18px;font-weight:700;margin-bottom:4px">${loc.name_th} <span style="font-size:14px;color:var(--muted)">${loc.name_jp||''}</span></div>
+          <div style="font-size:13px;color:var(--red);margin-bottom:6px">🎬 ${loc.anime_title} ${loc.anime_episode?'· '+loc.anime_episode:''}</div>
+          <div style="font-size:13px;color:var(--muted)">📍 ${loc.prefecture} · ${loc.address||''}</div>
+          <div style="font-size:13px;color:var(--muted)">📂 ${loc.category} · ฤดู: ${loc.season} · เวลา: ${loc.opening_hours||'-'}</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px">ส่งโดย: ${loc.submitted_by} · ${new Date(loc.submitted_date).toLocaleDateString('th-TH')}</div>
+          ${loc.description_th ? `<div style="font-size:13px;margin-top:8px;color:rgba(240,240,245,0.7)">${loc.description_th}</div>` : ''}
+        </div>
+        <div style="font-size:12px;color:var(--muted)">Lat: ${loc.lat}<br>Lng: ${loc.lng}</div>
+      </div>
+      <div class="pending-imgs">
+        <img src="${realImg}" alt="สถานที่จริง" onerror="this.src='https://via.placeholder.com/300x140/1a1a2e/ffffff?text=No+Image'">
+        <img src="${animeImg}" alt="อนิเมะ" onerror="this.src='https://via.placeholder.com/300x140/2d1a1a/ffffff?text=No+Anime+Image'">
+      </div>
+      <div class="admin-actions">
+        <button class="btn btn-green" onclick="adminAction('approve','${loc.location_id}')">✅ อนุมัติ</button>
+        <button class="btn btn-red" onclick="adminAction('reject','${loc.location_id}')">❌ ปฏิเสธ</button>
+        <button class="btn btn-outline" onclick="window.open('https://maps.google.com/?q=${loc.lat},${loc.lng}','_blank')">🗺️ ดูบนแผนที่</button>
+      </div>
+    </div>`
   }).join('');
 }
+
 async function adminAction(type, locId) {
   if (type === 'approve') {
     const res = await apiPost({ action:'approveLocation', userId: currentUser?.userId, token: currentUser?.token, locationId:locId });
-    if (res.success) { showToast('success', 'อนุมัติสถานที่แล้ว ✅'); document.getElementById('pcard_'+locId)?.remove(); } else showToast('error', res.error);
+    if (res.success) {
+      showToast('success', 'อนุมัติสถานที่แล้ว ✅');
+      document.getElementById('pcard_'+locId)?.remove();
+    } else showToast('error', res.error);
   } else {
-    const reason = prompt('เหตุผลในการปฏิเสธ:'); if (reason === null) return;
+    const reason = prompt('เหตุผลในการปฏิเสธ:');
+    if (reason === null) return;
     const res = await apiPost({ action:'rejectLocation', userId: currentUser?.userId, token: currentUser?.token, locationId:locId, reason });
-    if (res.success) { showToast('info', 'ปฏิเสธสถานที่แล้ว'); document.getElementById('pcard_'+locId)?.remove(); } else showToast('error', res.error);
+    if (res.success) {
+      showToast('info', 'ปฏิเสธสถานที่แล้ว');
+      document.getElementById('pcard_'+locId)?.remove();
+    } else showToast('error', res.error);
   }
 }
 
 // ─────────────────────────────────────────────
 //  AUTH
 // ─────────────────────────────────────────────
-function openAuthModal(tab) { openModal('authModal'); switchAuthTab(tab); }
-function switchAuthTab(tab) {
-  document.getElementById('loginForm').style.display = tab==='login' ? 'block' : 'none';
-  document.getElementById('registerForm').style.display = tab==='register' ? 'block' : 'none';
-  document.getElementById('tabLogin').classList.toggle('active', tab==='login'); document.getElementById('tabReg').classList.toggle('active', tab==='register');
+function openAuthModal(tab) {
+  openModal('authModal');
+  switchAuthTab(tab);
 }
+
+function switchAuthTab(tab) {
+  document.getElementById('loginForm').style.display    = tab==='login' ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = tab==='register' ? 'block' : 'none';
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+  document.getElementById('tabReg').classList.toggle('active',   tab==='register');
+}
+
 async function doLogin() {
-  const id = document.getElementById('loginId').value.trim(); const pw = document.getElementById('loginPw').value;
+  const id = document.getElementById('loginId').value.trim();
+  const pw = document.getElementById('loginPw').value;
   if (!id||!pw) { showMsg('loginErr','กรุณากรอกข้อมูลให้ครบ'); return; }
-  const btn = document.querySelector('#loginForm .btn-red'); btn.textContent = 'กำลังเข้าสู่ระบบ...'; btn.disabled = true;
+
+  const btn = document.querySelector('#loginForm .btn-red');
+  btn.textContent = 'กำลังเข้าสู่ระบบ...'; btn.disabled = true;
+
   const res = await apiPost({ action:'login', emailOrUser:id, password:pw });
   btn.textContent = 'เข้าสู่ระบบ'; btn.disabled = false;
+
   if (res.success) {
-    currentUser = res; localStorage.setItem('seichi_user', JSON.stringify(currentUser)); updateNavUser(); closeModal('authModal'); showToast('success', `ยินดีต้อนรับ ${res.display_name}! 🎌`);
+    currentUser = res;
+    localStorage.setItem('seichi_user', JSON.stringify(currentUser));
+    updateNavUser();
+    closeModal('authModal');
+    showToast('success', `ยินดีต้อนรับ ${res.display_name}! 🎌`);
     if (pendingCallback) { pendingCallback(); pendingCallback = null; }
-  } else { showMsg('loginErr', res.error); }
+  } else {
+    showMsg('loginErr', res.error);
+  }
 }
+
 async function doRegister() {
-  const u = document.getElementById('regUser').value.trim(); const e = document.getElementById('regEmail').value.trim(); const p = document.getElementById('regPw').value; const p2 = document.getElementById('regPwConfirm').value; const n = document.getElementById('regName').value.trim(); const c = document.getElementById('regCountry').value;
-  if (!u||!e||!p) { showMsg('regErr','กรุณากรอกข้อมูลที่จำเป็น'); return; }
-  if (p.length < 6) { showMsg('regErr','Password ต้องมีอย่างน้อย 6 ตัวอักษร'); return; }
-  if (p !== p2) { showMsg('regErr','❌ รหัสผ่านไม่ตรงกัน กรุณาตรวจสอบอีกครั้ง'); return; }
-  const btn = document.querySelector('#registerForm .btn-red'); btn.textContent = 'กำลังสมัคร...'; btn.disabled = true;
+  const u  = document.getElementById('regUser').value.trim();
+  const e  = document.getElementById('regEmail').value.trim();
+  const p  = document.getElementById('regPw').value;
+  const p2 = document.getElementById('regPwConfirm').value;
+  const n  = document.getElementById('regName').value.trim();
+  const c  = document.getElementById('regCountry').value;
+  if (!u||!e||!p)       { showMsg('regErr','กรุณากรอกข้อมูลที่จำเป็น'); return; }
+  if (p.length < 6)     { showMsg('regErr','Password ต้องมีอย่างน้อย 6 ตัวอักษร'); return; }
+  if (p !== p2)         { showMsg('regErr','❌ รหัสผ่านไม่ตรงกัน กรุณาตรวจสอบอีกครั้ง'); return; }
+
+  const btn = document.querySelector('#registerForm .btn-red');
+  btn.textContent = 'กำลังสมัคร...'; btn.disabled = true;
+
   const res = await apiPost({ action:'register', username:u, email:e, password:p, display_name:n||u, country:c });
   btn.textContent = 'สมัครสมาชิก ฟรี!'; btn.disabled = false;
+
   if (res.success) {
-    currentUser = res; localStorage.setItem('seichi_user', JSON.stringify(currentUser)); updateNavUser(); closeModal('authModal'); showToast('success', `สมัครสมาชิกสำเร็จ! 🎉 รับ ${res.points} แต้มต้อนรับ`);
+    currentUser = res;
+    localStorage.setItem('seichi_user', JSON.stringify(currentUser));
+    updateNavUser();
+    closeModal('authModal');
+    showToast('success', `สมัครสมาชิกสำเร็จ! 🎉 รับ ${res.points} แต้มต้อนรับ`);
     if (pendingCallback) { pendingCallback(); pendingCallback = null; }
-  } else { showMsg('regErr', res.error); }
+  } else {
+    showMsg('regErr', res.error);
+  }
 }
+
 function logout() {
   if (!confirm('ออกจากระบบหรือไม่?')) return;
   if (currentUser) apiPost({ action:'logout', userId:currentUser.userId, token:currentUser.token });
-  currentUser = null; localStorage.removeItem('seichi_user'); updateNavUser(); showView('home'); showToast('info', 'ออกจากระบบแล้ว');
+  currentUser = null;
+  localStorage.removeItem('seichi_user');
+  updateNavUser();
+  showView('home');
+  showToast('info', 'ออกจากระบบแล้ว');
 }
-function isAdmin(user) { return user && ADMIN_EMAILS.includes((user.email || '').toLowerCase().trim()); }
+
+function isAdmin(user) {
+  return user && ADMIN_EMAILS.includes((user.email || '').toLowerCase().trim());
+}
+
 function updateNavUser() {
   const adminBtn = document.getElementById('navAdminBtn');
   if (currentUser) {
-    document.getElementById('navUser').style.display = 'none'; document.getElementById('navLoggedIn').style.display = 'flex';
+    document.getElementById('navUser').style.display = 'none';
+    document.getElementById('navLoggedIn').style.display = 'flex';
     document.getElementById('navPoints').textContent = Number(currentUser.points||0).toLocaleString();
-    const av = document.getElementById('navAvatar'); const avUrl = getDriveImg(currentUser.avatar_url);
-    if (avUrl) { av.innerHTML = `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">`; } else { av.innerHTML = (currentUser.username||'U')[0].toUpperCase(); }
+    
+    const av = document.getElementById('navAvatar');
+    const avUrl = getDriveImg(currentUser.avatar_url);
+    if (avUrl) {
+      av.innerHTML = `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+    } else {
+      av.innerHTML = (currentUser.username||'U')[0].toUpperCase();
+    }
+    
+    // แสดงเมนู Admin เฉพาะอีเมล admin เท่านั้น
     adminBtn.style.display = isAdmin(currentUser) ? 'inline-block' : 'none';
   } else {
-    document.getElementById('navUser').style.display = 'flex'; document.getElementById('navLoggedIn').style.display = 'none'; adminBtn.style.display = 'none';
+    document.getElementById('navUser').style.display = 'flex';
+    document.getElementById('navLoggedIn').style.display = 'none';
+    adminBtn.style.display = 'none';
   }
 }
 
@@ -1466,13 +2256,31 @@ function updateNavUser() {
 // ─────────────────────────────────────────────
 function openModal(id)  { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(el => { el.addEventListener('click', e => { if (e.target===el) closeModal(el.id); }); });
-function showMsg(id, msg) { const el = document.getElementById(id); if (!el) return; el.textContent = msg; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 5000); }
-function showToast(type, msg) {
-  const container = document.getElementById('toast-container'); const t = document.createElement('div'); t.className = `toast ${type}`; t.innerHTML = `<span>${{success:'✅',error:'❌',info:'ℹ️'}[type]||'💬'}</span><span>${msg}</span>`;
-  container.appendChild(t); setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(60px)'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); }, 3500);
+
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target===el) closeModal(el.id); });
+});
+
+function showMsg(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 5000);
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open')); });
+
+function showToast(type, msg) {
+  const container = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.innerHTML = `<span>${{success:'✅',error:'❌',info:'ℹ️'}[type]||'💬'}</span><span>${msg}</span>`;
+  container.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(60px)'; t.style.transition='.3s'; setTimeout(()=>t.remove(),300); }, 3500);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+});
 </script>
 </body>
 </html>
