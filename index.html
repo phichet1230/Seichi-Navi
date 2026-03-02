@@ -1260,16 +1260,49 @@ async function apiPost(data) {
 }
 
 // ✅ ตรวจจับ token หมดอายุ → ล้าง session + แจ้ง Login ใหม่
-function _handleUnauthorized(res) {
+// ✅ logout เฉพาะเมื่อ token ของ user หมดอายุเท่านั้น
+// ไม่ logout เมื่อเป็น admin action ที่ใช้ adminKey (เพราะเป็นคนละ auth กัน)
+function _handleUnauthorized(res, isAdminAction) {
   if (res && !res.success && typeof res.error === 'string' &&
       res.error.toLowerCase().includes('unauthorized')) {
-    if (currentUser) {
+    if (!isAdminAction && currentUser) {
       currentUser = null;
       localStorage.removeItem('seichi_user');
       updateNavUser();
       showToast('error', '🔒 Session หมดอายุ กรุณา Login ใหม่');
       setTimeout(() => openAuthModal('login'), 700);
     }
+  }
+}
+
+async function apiGetAdmin(params) {
+  try {
+    const qs = new URLSearchParams(params).toString();
+    const r  = await fetch(`${API_URL}?${qs}`);
+    const d  = await r.json();
+    _handleUnauthorized(d, true); // isAdminAction = true → ไม่ logout
+    return d;
+  } catch(err) {
+    console.error('apiGetAdmin error:', err);
+    return { success:false, error: err.message };
+  }
+}
+
+async function apiPostAdmin(data) {
+  try {
+    const body = new URLSearchParams();
+    body.append('payload', JSON.stringify(data));
+    const r = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    });
+    const d = await r.json();
+    _handleUnauthorized(d, true); // isAdminAction = true → ไม่ logout
+    return d;
+  } catch(err) {
+    console.error('apiPostAdmin error:', err);
+    return { success:false, error: err.message };
   }
 }
 
@@ -2015,14 +2048,14 @@ const POINTS_DISPLAY = { SUBMIT_LOCATION: 200 };
 //  ADMIN
 // ─────────────────────────────────────────────
 function initAdmin() {
-  // ถ้าไม่ได้ login หรือไม่ใช่ admin → redirect กลับหน้าหลัก
   if (!currentUser || !isAdmin(currentUser)) {
     showView('home');
     showToast('error', '🔒 คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
     return;
   }
-  // admin ที่ login แล้ว → ข้ามหน้ากรอก key ไปแสดง dashboard เลย
-  adminKey = adminKey || 'AUTO_ADMIN_FROM_EMAIL';
+  // ✅ admin login ด้วย email → ใช้ userId+token เป็นหลัก
+  // adminKey เป็น legacy fallback ตั้งไว้เผื่อ Code.gs ใช้ checkAdmin
+  adminKey = 'SEICHI_ADMIN_SECRET_2025';
   document.getElementById('adminLoginSection').style.display = 'none';
   showAdminDashboard();
 }
@@ -2035,8 +2068,14 @@ function adminLogin() {
 }
 
 async function showAdminDashboard() {
-  const res = await apiGet({ action:'getPendingLocations',
-    userId: currentUser?.userId, token: currentUser?.token, adminKey });
+  // ส่งทั้ง userId+token (email-based) และ adminKey (legacy) ไปพร้อมกัน
+  const authParams = {
+    action: 'getPendingLocations',
+    userId: currentUser?.userId || '',
+    token:  currentUser?.token  || '',
+    adminKey
+  };
+  const res = await apiGetAdmin(authParams);
   if (!res.success) {
     document.getElementById('adminErr').style.display = 'block';
     document.getElementById('adminErr').textContent = 'รหัส Admin ไม่ถูกต้อง';
@@ -2086,19 +2125,31 @@ async function showAdminDashboard() {
 }
 
 async function adminAction(type, locId) {
+  // ✅ ส่งทั้ง userId+token และ adminKey เพื่อให้ Code.gs checkAdmin() ผ่านได้
+  const adminAuth = {
+    userId:   currentUser?.userId || '',
+    token:    currentUser?.token  || '',
+    adminKey: adminKey
+  };
+
   if (type === 'approve') {
-    const res = await apiPost({ action:'approveLocation', adminKey, locationId:locId });
+    const res = await apiPostAdmin({ action:'approveLocation', ...adminAuth, locationId:locId });
     if (res.success) {
       showToast('success', 'อนุมัติสถานที่แล้ว ✅');
       document.getElementById('pcard_'+locId)?.remove();
-    } else showToast('error', res.error);
+    } else {
+      showToast('error', '❌ ' + (res.error || 'ไม่สามารถอนุมัติได้'));
+    }
   } else {
-    const reason = prompt('เหตุผลในการปฏิเสธ:');
-    const res = await apiPost({ action:'rejectLocation', adminKey, locationId:locId, reason });
+    const reason = prompt('เหตุผลในการปฏิเสธ (ถ้ามี):');
+    if (reason === null) return; // กด Cancel
+    const res = await apiPostAdmin({ action:'rejectLocation', ...adminAuth, locationId:locId, reason });
     if (res.success) {
       showToast('info', 'ปฏิเสธสถานที่แล้ว');
       document.getElementById('pcard_'+locId)?.remove();
-    } else showToast('error', res.error);
+    } else {
+      showToast('error', '❌ ' + (res.error || 'ไม่สามารถปฏิเสธได้'));
+    }
   }
 }
 
