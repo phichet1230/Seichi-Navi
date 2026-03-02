@@ -193,9 +193,8 @@ nav {
   width:36px; height:36px; border-radius:50%;
   background: linear-gradient(135deg,var(--red),var(--red2));
   display:flex; align-items:center; justify-content:center;
-  font-size:14px; font-weight:700; cursor:pointer; overflow:hidden;
+  font-size:14px; font-weight:700; cursor:pointer;
 }
-.user-avatar img { width:100%; height:100%; object-fit:cover; }
 
 /* ══════════════════════════════════════════
    VIEWS / PAGES
@@ -404,9 +403,8 @@ nav {
   width:40px; height:40px; border-radius:50%; font-size:14px;
   display:flex; align-items:center; justify-content:center;
   background:linear-gradient(135deg,var(--red),var(--red2));
-  font-weight:700; flex-shrink:0; overflow:hidden;
+  font-weight:700; flex-shrink:0;
 }
-.rev-avatar img { width:100%; height:100%; object-fit:cover; }
 .rev-user { flex:1; }
 .rev-name { font-size:15px; font-weight:700; }
 .rev-meta { font-size:12px; color:var(--muted); display:flex; gap:8px; flex-wrap:wrap; margin-top:2px; }
@@ -416,7 +414,7 @@ nav {
 .rev-date { font-size:12px; color:var(--muted); margin-top:8px; }
 
 /* ══════════════════════════════════════════
-   REVIEW FORM & UPLOAD AREA
+   REVIEW FORM
 ══════════════════════════════════════════ */
 .review-form {
   background:var(--bg3); border:1px solid var(--border);
@@ -439,33 +437,15 @@ nav {
 }
 .star-pick.lit { opacity:1; }
 
+/* Upload area */
 .upload-area {
   border:2px dashed var(--border); border-radius:12px;
   padding:24px; text-align:center; cursor:pointer; transition:all .2s;
   position:relative;
 }
 .upload-area:hover { border-color:var(--red); background:rgba(230,57,70,0.05); }
+.upload-area input { position:absolute; inset:0; opacity:0; cursor:pointer; }
 .upload-preview { max-height:200px; border-radius:8px; margin-top:12px; }
-
-.upload-preview-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 10px; margin-top: 12px;
-}
-.preview-item {
-  position: relative; padding-top: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--border);
-}
-.preview-item img { position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; }
-.remove-preview-btn {
-  position: absolute; top: 4px; right: 4px; background: rgba(230,57,70,0.9); color: white;
-  border: none; border-radius: 50%; width: 24px; height: 24px; font-size: 12px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-.gallery-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; margin-top: 16px; }
-.gallery-row::-webkit-scrollbar { height: 6px; }
-.gallery-row::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
-.gallery-row img { height: 80px; width: 120px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.2s; border: 2px solid transparent; flex-shrink: 0; }
-.gallery-row img:hover { transform: scale(1.05); border-color: var(--border); }
-
 
 /* ══════════════════════════════════════════
    REWARDS VIEW
@@ -500,21 +480,14 @@ nav {
 .profile-hero::before {
   content:'';position:absolute;inset:0;
   background:radial-gradient(ellipse 80% 60% at 50% 100%, rgba(230,57,70,0.1) 0%, transparent 60%);
+  pointer-events:none; /* ✅ ไม่บล็อก click บนปุ่มที่อยู่ข้างใน */
 }
-
-.profile-avatar-container {
-  position: relative; width: 100px; height: 100px; margin: 0 auto 16px;
-  border-radius: 50%; overflow: hidden; cursor: pointer; border: 2px solid var(--border);
+.profile-big-avatar {
+  width:90px; height:90px; border-radius:50%; margin:0 auto 16px;
+  background:linear-gradient(135deg,var(--red),var(--red2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:32px; font-weight:900; position:relative;
 }
-.profile-avatar-container:hover .avatar-overlay { opacity: 1; }
-.profile-big-avatar { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,var(--red),var(--red2)); font-size: 32px; font-weight: 900; }
-.profile-big-avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
-.avatar-overlay {
-  position: absolute; inset: 0; background: rgba(0,0,0,0.6);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity 0.2s; color: white; font-size: 13px; font-weight: bold; text-align: center;
-}
-
 .profile-username { font-size:26px; font-weight:900; position:relative; }
 .profile-level {
   font-size:13px; color:var(--gold); position:relative;
@@ -582,8 +555,8 @@ nav {
   background:var(--card); border:1px solid var(--border);
   border-radius:16px; padding:24px; margin-bottom:16px;
 }
-.pending-imgs { display:flex; gap:12px; margin:12px 0; overflow-x: auto; }
-.pending-imgs img { width:200px; border-radius:8px; height:140px; object-fit:cover; flex-shrink: 0; }
+.pending-imgs { display:flex; gap:12px; margin:12px 0; }
+.pending-imgs img { width:50%; border-radius:8px; height:140px; object-fit:cover; }
 .admin-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
 
 /* ══════════════════════════════════════════
@@ -599,7 +572,6 @@ nav {
   background:var(--bg2); border:1px solid var(--border);
   border-radius:20px; padding:36px; width:100%; max-width:480px;
   position:relative; animation:modalIn .25s ease;
-  max-height: 90vh; overflow-y: auto;
 }
 @keyframes modalIn { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
 .modal-close {
@@ -939,28 +911,33 @@ nav {
             <input class="form-input" id="s_hours" placeholder="เช่น 09:00-18:00">
           </div>
         </div>
-
-        <!-- 📸 แก้ไข: แยกปุ่ม Upload และกล่อง Preview ออกจากกัน ป้องกัน Hover/Click ซ้อนกัน -->
+        <!-- ✅ อัปโหลดรูปสถานที่จริง -->
         <div class="form-group">
-          <label class="form-label">รูปสถานที่จริง * <small>(เลือกแนบไฟล์ภาพได้หลายรูป)</small></label>
-          <div class="upload-area" onclick="document.getElementById('realPhotoInput').click()">
-            <div id="realUploadPrompt">📷 คลิกเพื่อเลือกรูปสถานที่จริง<br><small style="color:var(--muted)">JPG, PNG ขนาดไม่เกิน 5MB</small></div>
+          <label class="form-label">📸 รูปสถานที่จริง * <small style="color:var(--muted);font-weight:400">(ถ่ายเองจากสถานที่นั้น)</small></label>
+          <div class="upload-area" id="realUploadArea" onclick="document.getElementById('s_real_files').click()" ondragover="event.preventDefault();this.style.borderColor='var(--red)'" ondragleave="this.style.borderColor=''" ondrop="handleFileDrop(event,'real')">
+            <input type="file" id="s_real_files" accept="image/*" multiple style="display:none" onchange="handleFileSelect(this,'real')">
+            <div id="realUploadHint">
+              <div style="font-size:32px;margin-bottom:8px">📷</div>
+              <div style="font-size:14px;font-weight:600">คลิกหรือลากรูปมาวางที่นี่</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">รูปจากกล้อง/สมาร์ทโฟน · รองรับหลายรูป · JPG, PNG</div>
+            </div>
+            <div id="realPreviewGrid" style="display:none;margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
           </div>
-          <!-- เอา input ซ่อนไว้ข้างนอก -->
-          <input type="file" id="realPhotoInput" accept="image/png, image/jpeg, image/webp" multiple style="display:none" onchange="handleLocPhotoSelect(this, 'real')">
-          <!-- กล่องแสดงรูปที่เลือก ย้ายมาอยู่ข้างนอก ไม่ทับกับปุ่มคลิก -->
-          <div id="realUploadPreviewGrid" class="upload-preview-grid"></div>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">รูปฉากในอนิเมะ * <small>(เลือกแนบไฟล์ภาพได้หลายรูป)</small></label>
-          <div class="upload-area" onclick="document.getElementById('animePhotoInput').click()">
-            <div id="animeUploadPrompt">📷 คลิกเพื่อเลือกรูปฉากในอนิเมะ<br><small style="color:var(--muted)">JPG, PNG ขนาดไม่เกิน 5MB</small></div>
-          </div>
-          <input type="file" id="animePhotoInput" accept="image/png, image/jpeg, image/webp" multiple style="display:none" onchange="handleLocPhotoSelect(this, 'anime')">
-          <div id="animeUploadPreviewGrid" class="upload-preview-grid"></div>
         </div>
 
+        <!-- ✅ อัปโหลดรูปฉากอนิเมะ -->
+        <div class="form-group">
+          <label class="form-label">🎬 รูปฉากในอนิเมะ * <small style="color:var(--muted);font-weight:400">(Screenshot จากอนิเมะที่ตรงกับสถานที่)</small></label>
+          <div class="upload-area" id="animeUploadArea" onclick="document.getElementById('s_anime_files').click()" ondragover="event.preventDefault();this.style.borderColor='var(--red)'" ondragleave="this.style.borderColor=''" ondrop="handleFileDrop(event,'anime')">
+            <input type="file" id="s_anime_files" accept="image/*" multiple style="display:none" onchange="handleFileSelect(this,'anime')">
+            <div id="animeUploadHint">
+              <div style="font-size:32px;margin-bottom:8px">🎬</div>
+              <div style="font-size:14px;font-weight:600">คลิกหรือลากรูปมาวางที่นี่</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:4px">Screenshot จากตอนในอนิเมะ · รองรับหลายรูป · JPG, PNG</div>
+            </div>
+            <div id="animePreviewGrid" style="display:none;margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center"></div>
+          </div>
+        </div>
         <div class="form-group">
           <label class="form-label">คำอธิบาย (ไทย)</label>
           <textarea class="form-input form-textarea" id="s_desc_th" placeholder="บอกเล่าสถานที่นี้ให้น่าสนใจ..."></textarea>
@@ -1096,31 +1073,53 @@ nav {
   </div>
 </div>
 
-<!-- ✏️ Modal กล่องแก้ไขโปรไฟล์แยกชัดเจน -->
+<!-- ✏️ Edit Profile Modal -->
 <div class="modal-overlay" id="editProfileModal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('editProfileModal')">✕</button>
-    <div class="modal-title" style="text-align:center;">✏️ แก้ไขข้อมูลส่วนตัว</div>
-    <div class="modal-sub" style="text-align:center; margin-bottom: 24px;">อัปเดตรูปโปรไฟล์และชื่อที่ใช้แสดงผล</div>
-    
-    <!-- ส่วนเลือกรูปใหม่ -->
-    <div style="text-align: center; margin-bottom: 24px;">
-      <div class="profile-avatar-container" style="margin: 0 auto 12px; cursor: pointer; width: 100px; height: 100px;" onclick="document.getElementById('editAvatarInput').click()">
-        <div class="profile-big-avatar" id="editAvatarPreview">U</div>
-        <div class="avatar-overlay">📷 เปลี่ยนรูป</div>
+    <div class="modal-title" style="text-align:center">✏️ แก้ไขโปรไฟล์</div>
+    <div class="modal-sub" style="text-align:center;margin-bottom:20px">เปลี่ยนรูปโปรไฟล์และชื่อที่แสดง</div>
+
+    <!-- Avatar picker -->
+    <div style="text-align:center;margin-bottom:20px">
+      <div id="editAvatarWrap" onclick="document.getElementById('editAvatarInput').click()"
+        style="width:90px;height:90px;border-radius:50%;margin:0 auto 10px;cursor:pointer;
+               background:linear-gradient(135deg,var(--red),var(--red2));overflow:hidden;
+               position:relative;border:2px solid var(--border)">
+        <div id="editAvatarInner" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900"></div>
+        <div style="position:absolute;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;color:white;font-size:12px;font-weight:700">📷<br>เปลี่ยน</div>
       </div>
-      <input type="file" id="editAvatarInput" accept="image/png, image/jpeg, image/gif, image/webp" style="display:none" onchange="handleEditAvatarSelect(this)">
-      <div style="font-size:12px; color:var(--muted)">คลิกที่รูปเพื่อเปลี่ยน (ขนาดไม่เกิน 5MB)</div>
+      <input type="file" id="editAvatarInput" accept="image/*" style="display:none" onchange="handleEditAvatarSelect(this)">
+      <div style="font-size:12px;color:var(--muted)">คลิกที่รูปเพื่อเลือกรูปใหม่</div>
     </div>
 
-    <!-- ส่วนแก้ไขชื่อ -->
+    <!-- Display name -->
     <div class="form-group">
       <label class="form-label">ชื่อที่แสดงผล (Display Name)</label>
       <input class="form-input" id="editDisplayName" placeholder="ใส่ชื่อที่ต้องการแสดง">
     </div>
 
+    <!-- Country -->
+    <div class="form-group">
+      <label class="form-label">ประเทศ</label>
+      <select class="form-select" id="editCountry">
+        <option value="TH">🇹🇭 Thailand</option>
+        <option value="JP">🇯🇵 Japan</option>
+        <option value="US">🇺🇸 USA</option>
+        <option value="SG">🇸🇬 Singapore</option>
+        <option value="MY">🇲🇾 Malaysia</option>
+        <option value="PH">🇵🇭 Philippines</option>
+        <option value="ID">🇮🇩 Indonesia</option>
+        <option value="VN">🇻🇳 Vietnam</option>
+        <option value="CN">🇨🇳 China</option>
+        <option value="KR">🇰🇷 Korea</option>
+        <option value="GB">🇬🇧 UK</option>
+        <option value="OTHER">🌍 Other</option>
+      </select>
+    </div>
+
     <div id="editProfileErr" class="error-msg"></div>
-    <button class="btn btn-red" style="width:100%; margin-top:16px; padding:12px" onclick="saveProfileChanges()">บันทึกการเปลี่ยนแปลง</button>
+    <button class="btn btn-red" id="editSaveBtn" style="width:100%;margin-top:16px;padding:12px" onclick="saveProfileChanges()">💾 บันทึกการเปลี่ยนแปลง</button>
   </div>
 </div>
 
@@ -1132,14 +1131,85 @@ nav {
 ══════════════════════════════════════════ -->
 <script>
 // ─────────────────────────────────────────────
-//  CONFIG
+//  CONFIG — เปลี่ยน URL นี้เป็น URL ของ Web App ที่ Deploy จาก Apps Script
 // ─────────────────────────────────────────────
-const API_URL = 'https://script.google.com/macros/s/AKfycbxk543MnoJJ6AIfbrfLWrlsLI_gyq6uyqSU6vG7myxWzkKLj6NdeixPAS32R9_fPPA6UA/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbw5Wc0BosMTosYZUl_9ywz-TxeTCzYwrntliexAe4LzP-zxuV_DadhOQFYD4xTbzFQd/exec';
 
-// ── อีเมล Admin ──
+// ── อีเมล Admin (เพิ่มได้หลายคน) ──
 const ADMIN_EMAILS = [
   'oppo0620255009@gmail.com'
 ];
+
+// ─────────────────────────────────────────────
+//  DRIVE IMAGE URL FIXER + SAFE IMAGE LOADER
+// ─────────────────────────────────────────────
+function getDriveImg(url) {
+  if (!url || !String(url).startsWith('http')) return '';
+  const s = String(url).trim();
+  // Google Drive uc?export=view → thumbnail
+  if (s.includes('drive.google.com/uc?export=view') || s.includes('drive.google.com/open?id=')) {
+    const m = s.match(/id=([^&]+)/);
+    if (m) return 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w1000';
+  }
+  // thumbnail URL อยู่แล้ว
+  if (s.includes('drive.google.com/thumbnail')) return s;
+  // MAL CDN บล็อก hotlink → ใช้ placeholder แทน
+  if (s.includes('myanimelist.net') || s.includes('cdn.myanimelist')) return '';
+  // URL ทั่วไป (Wikipedia, imgur, etc.)
+  return s;
+}
+
+// ✅ SVG placeholder — ไม่พึ่ง via.placeholder.com (ถูกบล็อกในบางประเทศ)
+function makeSvg(label, emoji, w, h, dark) {
+  const bg = dark ? '%231a1a2e' : '%232d1a2e';
+  const s = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}'>
+    <rect width='100%25' height='100%25' fill='${bg}' rx='8'/>
+    <text x='50%25' y='44%25' text-anchor='middle' dominant-baseline='middle'
+      font-size='32' font-family='sans-serif'>${emoji}</text>
+    <text x='50%25' y='68%25' text-anchor='middle' dominant-baseline='middle'
+      font-size='13' font-family='sans-serif' fill='%23667799'>${label}</text>
+  </svg>`;
+  return 'data:image/svg+xml,' + s;
+}
+
+const SVG_REAL  = makeSvg('ไม่มีรูปสถานที่', '🏯', 600, 300, true);
+const SVG_ANIME = makeSvg('ไม่มีรูปอนิเมะ',  '🎬', 600, 300, false);
+const SVG_CARD  = makeSvg('ไม่มีรูป', '📍', 400, 200, true);
+
+function safeImg(url, type) {
+  const safe = getDriveImg(url);
+  if (!safe) return type === 'anime' ? SVG_ANIME : type === 'card' ? SVG_CARD : SVG_REAL;
+  return safe;
+}
+
+// ─────────────────────────────────────────────
+//  IMAGE RESIZER (ลดขนาดก่อนส่ง base64)
+// ─────────────────────────────────────────────
+function resizeImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        const maxDim = 1000;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+          else       { w = Math.round(w * maxDim / h); h = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+        resolve({ dataUrl, base64: dataUrl.split(',')[1] });
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
 // ─────────────────────────────────────────────
 //  STATE
@@ -1162,7 +1232,9 @@ async function apiGet(params) {
   try {
     const qs = new URLSearchParams(params).toString();
     const r  = await fetch(`${API_URL}?${qs}`);
-    return await r.json();
+    const d  = await r.json();
+    _handleUnauthorized(d);
+    return d;
   } catch(err) {
     console.error('apiGet error:', err);
     return { success:false, error: err.message };
@@ -1178,10 +1250,26 @@ async function apiPost(data) {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: body.toString()
     });
-    return await r.json();
+    const d = await r.json();
+    _handleUnauthorized(d);
+    return d;
   } catch(err) {
     console.error('apiPost error:', err);
     return { success:false, error: err.message };
+  }
+}
+
+// ✅ ตรวจจับ token หมดอายุ → ล้าง session + แจ้ง Login ใหม่
+function _handleUnauthorized(res) {
+  if (res && !res.success && typeof res.error === 'string' &&
+      res.error.toLowerCase().includes('unauthorized')) {
+    if (currentUser) {
+      currentUser = null;
+      localStorage.removeItem('seichi_user');
+      updateNavUser();
+      showToast('error', '🔒 Session หมดอายุ กรุณา Login ใหม่');
+      setTimeout(() => openAuthModal('login'), 700);
+    }
   }
 }
 
@@ -1202,64 +1290,7 @@ window.addEventListener('load', () => {
 });
 
 // ─────────────────────────────────────────────
-//  DRIVE IMAGE URL FIXER (แก้ปัญหารูปภาพจาก Drive ไม่แสดง)
-// ─────────────────────────────────────────────
-function getDriveImg(url) {
-  if (!url) return 'https://via.placeholder.com/400x200/1a1a2e/ffffff?text=No+Image';
-  // แปลง uc?export=view เป็นลิงก์ Thumbnail เพื่อไม่ให้โดนบล็อก
-  if (url.includes('uc?export=view&id=')) {
-    return url.replace('uc?export=view&id=', 'thumbnail?id=') + '&sz=w1000';
-  }
-  return url;
-}
-
-// ─────────────────────────────────────────────
-//  IMAGE RESIZER UTILITY (แก้ปัญหาไฟล์ใหญ่เกินไปตอนส่ง API)
-// ─────────────────────────────────────────────
-function resizeImage(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new Image();
-      img.onload = () => {
-        let width = img.width;
-        let height = img.height;
-        // ลดขนาดรูปภาพให้กว้าง/ยาวสูงสุดไม่เกิน 1000px
-        const maxDim = 1000; 
-
-        if (width > maxDim || height > maxDim) {
-          if (width > height) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          } else {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
-          }
-        }
-
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-        
-        // บีบอัดเป็น JPEG 80% เพื่อลดขนาด base64 ให้ส่งข้อมูลผ่านฉลุย
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
-        resolve({
-          dataUrl: dataUrl,
-          base64: dataUrl.split(',')[1]
-        });
-      };
-      img.onerror = reject;
-      img.src = e.target.result;
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
-
-// ─────────────────────────────────────────────
-//  THEME
+//  THEME (Dark / Light)
 // ─────────────────────────────────────────────
 let isDark = localStorage.getItem('seichi_theme') !== 'light';
 
@@ -1276,6 +1307,7 @@ function toggleTheme() {
   isDark = !isDark;
   document.body.classList.toggle('light', !isDark);
   const btn = document.getElementById('themeToggleBtn');
+  // เอฟเฟค spin
   btn.style.transform = 'rotate(360deg) scale(1.2)';
   btn.textContent = isDark ? '🌙' : '☀️';
   setTimeout(() => btn.style.transform = '', 400);
@@ -1422,15 +1454,13 @@ function renderLocCard(loc) {
   const rating  = Number(loc.avg_rating||0).toFixed(1);
   const stars   = '★'.repeat(Math.round(Number(rating)));
   const seasons = String(loc.season||'').split(',').map(s=>seaIcon[s.trim()]||'').join('');
-  
-  // โชว์รูปแรกถ้ามีหลายรูป (พร้อมแปลงลิงก์ Drive)
-  const imgList = (loc.real_image_url || '').split(',').map(u=>u.trim()).filter(u=>u.startsWith('http'));
-  const img     = imgList.length > 0 ? getDriveImg(imgList[0]) : 'https://via.placeholder.com/400x200/1a1a2e/ffffff?text=No+Image';
-  
+  // รูปแรกจาก comma-separated list
+  const rawUrl  = String(loc.real_image_url||'').split(',')[0].trim();
+  const img     = safeImg(rawUrl, 'card');
   return `
     <div class="loc-card" onclick="openDetail('${loc.location_id}')">
       <div class="loc-img-wrap">
-        <img src="${img}" alt="${loc.name_th}" onerror="this.src='https://via.placeholder.com/400x200/1a1a2e/ffffff?text=No+Image'">
+        <img src="${img}" alt="${loc.name_th}" loading="lazy" onerror="this.onerror=null;this.src=SVG_CARD">
         <div class="loc-cat-badge">${catLabel[loc.category]||loc.category}</div>
         <div class="loc-season-badge">${seasons}</div>
       </div>
@@ -1465,40 +1495,37 @@ async function openDetail(id) {
 }
 
 function renderDetail(loc) {
-  // แยก URL รูปด้วย , กรณีมีหลายรูป และแปลงลิงก์ Drive
-  const realImgList = (loc.real_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
-  const animeImgList = (loc.anime_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
-  
-  const realImg  = realImgList.length > 0 ? realImgList[0] : 'https://via.placeholder.com/600x300/1a1a2e/ffffff?text=Real+Photo';
-  const animeImg = animeImgList.length > 0 ? animeImgList[0] : 'https://via.placeholder.com/600x300/2d1a1a/ffffff?text=Anime+Scene';
+  // รองรับ comma-separated + แปลง Drive URL + กรอง MAL hotlink
+  const realImgList  = String(loc.real_image_url  || '').split(',').map(u => getDriveImg(u.trim())).filter(Boolean);
+  const animeImgList = String(loc.anime_image_url || '').split(',').map(u => getDriveImg(u.trim())).filter(Boolean);
+  const realImg  = realImgList[0]  || SVG_REAL;
+  const animeImg = animeImgList[0] || SVG_ANIME;
   const rating   = Number(loc.avg_rating||0).toFixed(1);
   const stars    = '★'.repeat(Math.round(Number(rating)));
   const seasons  = String(loc.season||'').split(',').map(s => ({spring:'🌸 ใบไม้ผลิ',summer:'☀️ ร้อน',autumn:'🍁 ใบไม้ร่วง',winter:'❄️ หนาว',all:'ตลอดปี'}[s.trim()]||s.trim())).join(' · ');
 
+  // ✅ thumbnail row ถ้ามีหลายรูป
+  const extraGallery = (realImgList.length > 1 || animeImgList.length > 1) ? `
+    <div style="grid-column:1/-1;margin-bottom:8px">
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px">📸 คลิกรูปเพื่อดูขนาดใหญ่</div>
+      <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:8px">
+        ${realImgList.map((u,i) => `<img src="${u}" onclick="document.getElementById('mainRealImg').src=this.src" style="height:70px;width:100px;object-fit:cover;border-radius:8px;cursor:pointer;flex-shrink:0;border:2px solid transparent" onmouseover="this.style.borderColor='var(--red)'" onmouseout="this.style.borderColor='transparent'">`).join('')}
+        ${animeImgList.map((u,i) => `<img src="${u}" onclick="document.getElementById('mainAnimeImg').src=this.src" style="height:70px;width:100px;object-fit:cover;border-radius:8px;cursor:pointer;flex-shrink:0;border:2px solid var(--red)" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">`).join('')}
+      </div>
+    </div>` : '';
+
   document.getElementById('detailHero').innerHTML = `
+    ${extraGallery}
     <div class="img-compare">
-      <img id="mainRealImg" src="${realImg}" alt="สถานที่จริง" onerror="this.src='https://via.placeholder.com/600x300/1a1a2e/ffffff?text=Real+Photo'">
+      <img id="mainRealImg" src="${realImg}" alt="สถานที่จริง" onerror="this.onerror=null;this.src=SVG_REAL">
       <div class="img-label">📸 สถานที่จริง</div>
     </div>
     <div class="img-compare">
-      <img id="mainAnimeImg" src="${animeImg}" alt="ฉากในอนิเมะ" onerror="this.src='https://via.placeholder.com/600x300/2d1a1a/ffffff?text=Anime+Scene'">
+      <img id="mainAnimeImg" src="${animeImg}" alt="ฉากในอนิเมะ" onerror="this.onerror=null;this.src=SVG_ANIME">
       <div class="img-label anime-label">🎬 ฉากในอนิเมะ</div>
     </div>`;
 
-  // แกลเลอรีแสดงรูปทั้งหมด
-  let extraGalleryHtml = '';
-  if (realImgList.length > 1 || animeImgList.length > 1) {
-      extraGalleryHtml = `<div style="grid-column: 1 / -1; margin-top: -16px; margin-bottom: 24px;">
-          <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: var(--muted);">📸 รูปภาพทั้งหมด (คลิกเพื่อดูรูปใหญ่)</div>
-          <div class="gallery-row">
-              ${realImgList.map(url => `<img src="${url}" onclick="document.getElementById('mainRealImg').src=this.src" title="ดูรูปสถานที่จริง">`).join('')}
-              ${animeImgList.map(url => `<img src="${url}" onclick="document.getElementById('mainAnimeImg').src=this.src" style="border: 2px solid var(--red)" title="ดูรูปอนิเมะ">`).join('')}
-          </div>
-      </div>`;
-  }
-
   document.getElementById('detailInfo').innerHTML = `
-    ${extraGalleryHtml}
     <div class="detail-title">${loc.name_th||loc.name_en}</div>
     <div class="detail-jp">${loc.name_jp||''} ${loc.name_en ? '· '+loc.name_en : ''}</div>
     <div class="detail-meta">
@@ -1616,10 +1643,10 @@ function renderReviewForm() {
       <div class="form-group">
         <label class="form-label">แนบรูปถ่าย (รับ +50 แต้มพิเศษ!)</label>
         <div class="upload-area" id="uploadArea" onclick="document.getElementById('photoInput').click()">
+          <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoSelect(this)">
           <div id="uploadPrompt">📷 คลิกเพื่อเลือกรูปถ่ายที่สถานที่นี้<br><small style="color:var(--muted)">JPG, PNG ขนาดไม่เกิน 5MB</small></div>
+          <img id="uploadPreview" class="upload-preview" style="display:none">
         </div>
-        <input type="file" id="photoInput" accept="image/png, image/jpeg, image/gif, image/webp" style="display:none" onchange="handlePhotoSelect(this)">
-        <img id="uploadPreview" class="upload-preview" style="display:none">
       </div>
       <div id="revMsg" class="error-msg"></div>
       <div style="margin-top:16px;display:flex;gap:10px;align-items:center">
@@ -1643,20 +1670,20 @@ function setStar(n) {
   });
 }
 
-async function handlePhotoSelect(input) {
+function handlePhotoSelect(input) {
   const file = input.files[0];
   if (!file) return;
-  if (!file.type.startsWith('image/')) { showToast('error','กรุณาเลือกไฟล์รูปภาพ'); return; }
+  if (file.size > 5 * 1024 * 1024) { showToast('error','รูปต้องมีขนาดไม่เกิน 5MB'); return; }
 
-  try {
-    const resized = await resizeImage(file);
-    photoBase64 = resized.base64;
-    document.getElementById('uploadPreview').src = resized.dataUrl;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const result = e.target.result;
+    photoBase64 = result.split(',')[1];
+    document.getElementById('uploadPreview').src = result;
     document.getElementById('uploadPreview').style.display = 'block';
     document.getElementById('uploadPrompt').style.display = 'none';
-  } catch(e) {
-    showToast('error', 'ไม่สามารถอ่านไฟล์ได้');
-  }
+  };
+  reader.readAsDataURL(file);
 }
 
 async function doAddReview() {
@@ -1722,14 +1749,10 @@ async function loadRevTab(type, el) {
   }
 
   const flags = { TH:'🇹🇭', JP:'🇯🇵', US:'🇺🇸', SG:'🇸🇬', MY:'🇲🇾', PH:'🇵🇭', ID:'🇮🇩', VN:'🇻🇳', CN:'🇨🇳', KR:'🇰🇷', GB:'🇬🇧' };
-  document.getElementById('reviewsList').innerHTML = res.data.map(r => {
-    // โหลดรูป Avatar (แปลงเป็น thumbnail)
-    const avUrl = getDriveImg(r.avatar_url);
-    const avHtml = avUrl ? `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">` : (r.username||'U')[0].toUpperCase();
-    return `
+  document.getElementById('reviewsList').innerHTML = res.data.map(r => `
     <div class="review-card">
       <div class="rev-header">
-        <div class="rev-avatar">${avHtml}</div>
+        <div class="rev-avatar">${(r.username||'U')[0].toUpperCase()}</div>
         <div class="rev-user">
           <div class="rev-name">${r.username} <span class="flag">${flags[r.country]||'🌍'}</span></div>
           <div class="rev-meta">
@@ -1740,9 +1763,9 @@ async function loadRevTab(type, el) {
         </div>
       </div>
       <div class="rev-body">${r.comment}</div>
-      ${r.photo_url ? `<img src="${getDriveImg(r.photo_url)}" class="rev-photo" alt="รูปรีวิว" onerror="this.style.display='none'">` : ''}
+      ${r.photo_url ? `<img src="${r.photo_url}" class="rev-photo" alt="รูปรีวิว" onerror="this.style.display='none'">` : ''}
       <div class="rev-date">${new Date(r.review_date).toLocaleDateString('th-TH', {year:'numeric',month:'long',day:'numeric'})}</div>
-    </div>`}).join('');
+    </div>`).join('');
 }
 
 // ─────────────────────────────────────────────
@@ -1801,35 +1824,39 @@ async function doClaimReward(rewardId, name) {
 }
 
 // ─────────────────────────────────────────────
-//  PROFILE & MODAL จัดการข้อมูลส่วนตัว
+//  PROFILE
 // ─────────────────────────────────────────────
 async function loadProfile() {
   if (!currentUser) { showView('home'); openAuthModal('login'); return; }
 
-  const nextLvlPts = (currentUser.level||1) * 500;
   const progress = Math.min(100, ((currentUser.points||0) % 500) / 500 * 100);
-
-  const avUrl = getDriveImg(currentUser.avatar_url);
-  const avHtml = avUrl 
-    ? `<img src="${avUrl}" alt="Avatar">` 
-    : `${(currentUser.username||'U')[0].toUpperCase()}`;
+  const avUrl    = getDriveImg(currentUser.avatar_url || '');
+  const avHtml   = avUrl
+    ? `<img src="${avUrl}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+    : '';
+  const avInit   = (currentUser.username||'U')[0].toUpperCase();
 
   document.getElementById('profileContent').innerHTML = `
     <div class="profile-hero">
-      <div class="profile-avatar-container" style="margin: 0 auto 16px; border:none; cursor:default">
-        <div class="profile-big-avatar">${avHtml}</div>
+      <!-- Avatar — คลิกได้ผ่าน z-index -->
+      <div style="position:relative;width:100px;height:100px;margin:0 auto 12px;border-radius:50%;overflow:hidden;border:2px solid var(--border);z-index:1">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--red),var(--red2));display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900">
+          ${avHtml}${avUrl ? '' : avInit}
+        </div>
       </div>
-      
-      <div class="profile-username">${currentUser.display_name||currentUser.username}</div>
-      <button class="btn btn-outline" style="padding:6px 14px;font-size:13px;margin-top:8px" onclick="openEditProfile()">✏️ แก้ไขโปรไฟล์</button>
-      
-      <div class="profile-level" style="margin-top:16px">⚔️ Level ${currentUser.level||1} Seichi Explorer</div>
+
+      <div class="profile-username" style="position:relative;z-index:1">${currentUser.display_name||currentUser.username}</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;position:relative;z-index:1">@${currentUser.username}</div>
+
+      <!-- ✅ ปุ่มแก้ไข — z-index:1 เพื่อไม่โดน ::before บัง -->
+      <button class="btn btn-outline" style="padding:8px 20px;font-size:14px;position:relative;z-index:1;cursor:pointer" onclick="openEditProfile()">✏️ แก้ไขโปรไฟล์</button>
+
+      <div class="profile-level" style="margin-top:16px;position:relative;z-index:1">⚔️ Level ${currentUser.level||1} Seichi Explorer</div>
       <div class="points-display">${Number(currentUser.points||0).toLocaleString()}</div>
       <div class="points-label">แต้มสะสม</div>
-      
-      <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
-      <div style="font-size:12px;color:var(--muted);margin-top:8px;position:relative">
-        ${Math.round((currentUser.points||0) % 500)} / 500 แต้ม สู่ Level ${(currentUser.level||1)+1}
+      <div class="progress-bar" style="position:relative;z-index:1"><div class="progress-fill" style="width:${progress}%"></div></div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px;position:relative;z-index:1">
+        ${Math.round((currentUser.points||0) % 500)} / 500 แต้ม → Level ${(currentUser.level||1)+1}
       </div>
     </div>
     <div class="stats-row">
@@ -1853,178 +1880,112 @@ async function loadProfile() {
     </div>`;
 }
 
-// ── ระบบแก้ไขโปรไฟล์ผ่าน Modal ──
-let stagedAvatarBase64 = null;
-
-function openEditProfile() {
-  stagedAvatarBase64 = null;
-  document.getElementById('editDisplayName').value = currentUser.display_name || currentUser.username;
-  
-  const avUrl = getDriveImg(currentUser.avatar_url);
-  const avHtml = avUrl 
-    ? `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">` 
-    : `${(currentUser.username||'U')[0].toUpperCase()}`;
-  
-  document.getElementById('editAvatarPreview').innerHTML = avHtml;
-  document.getElementById('editProfileErr').style.display = 'none';
-  openModal('editProfileModal');
-}
-
-async function handleEditAvatarSelect(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (!file.type.startsWith('image/')) { showMsg('editProfileErr', 'กรุณาเลือกไฟล์รูปภาพ'); return; }
-  
-  try {
-    const resized = await resizeImage(file);
-    stagedAvatarBase64 = resized.base64;
-    document.getElementById('editAvatarPreview').innerHTML = `<img src="${resized.dataUrl}" style="width:100%;height:100%;object-fit:cover;">`;
-  } catch(e) {
-    showMsg('editProfileErr', 'เกิดข้อผิดพลาดในการอ่านไฟล์');
-  }
-}
-
-async function saveProfileChanges() {
-  const newName = document.getElementById('editDisplayName').value.trim();
-  if (!newName) { showMsg('editProfileErr', 'กรุณาใส่ชื่อที่แสดงผล'); return; }
-
-  const btn = document.querySelector('#editProfileModal .btn-red');
-  btn.textContent = 'กำลังบันทึก...';
-  btn.disabled = true;
-
-  let successMsg = [];
-  let errMsg = [];
-
-  // กรณีเปลี่ยนชื่อ
-  if (newName !== currentUser.display_name && newName !== currentUser.username) {
-    const resN = await apiPost({ action:'updateProfile', userId: currentUser.userId, token: currentUser.token, display_name: newName });
-    if (resN.success) {
-      currentUser.display_name = newName;
-      successMsg.push('ชื่อ');
-    } else errMsg.push(resN.error);
-  }
-
-  // กรณีเปลี่ยนรูปโปรไฟล์
-  if (stagedAvatarBase64) {
-    const resA = await apiPost({ action:'updateAvatar', userId: currentUser.userId, token: currentUser.token, base64: stagedAvatarBase64 });
-    if (resA.success) {
-      currentUser.avatar_url = resA.avatar_url;
-      successMsg.push('รูปโปรไฟล์');
-    } else errMsg.push(resA.error);
-  }
-
-  btn.textContent = 'บันทึกการเปลี่ยนแปลง';
-  btn.disabled = false;
-
-  if (errMsg.length > 0) {
-    showMsg('editProfileErr', 'เกิดข้อผิดพลาด: ' + errMsg.join(', '));
-  } else if (successMsg.length > 0) {
-    localStorage.setItem('seichi_user', JSON.stringify(currentUser));
-    updateNavUser();
-    loadProfile();
-    closeModal('editProfileModal');
-    showToast('success', 'เปลี่ยน ' + successMsg.join(' และ ') + ' สำเร็จ! 🎉');
-  } else {
-    // ไม่ได้แก้ไขอะไร
-    closeModal('editProfileModal');
-  }
-}
-
 // ─────────────────────────────────────────────
-//  SUBMIT LOCATION (MULTI-IMAGE UPLOADS)
+//  SUBMIT LOCATION — FILE UPLOAD
 // ─────────────────────────────────────────────
-let realImagesList = [];
-let animeImagesList = [];
-let imgCounterId = 0;
+let submitRealFiles  = [];   // base64 list รูปสถานที่จริง
+let submitAnimeFiles = [];   // base64 list รูปอนิเมะ
 
-async function handleLocPhotoSelect(input, type) {
-  const files = input.files;
-  if (!files || files.length === 0) return;
+async function handleFileSelect(input, type) {
+  const files = Array.from(input.files);
+  if (!files.length) return;
+  await processUploadFiles(files, type);
+}
 
-  for (let file of Array.from(files)) {
-    if (!file.type.startsWith('image/')) { 
-      showToast('error', 'ไฟล์ที่ไม่ใช่รูปภาพจะถูกข้ามไป'); 
-      continue; 
-    }
-    
+async function handleFileDrop(event, type) {
+  event.preventDefault();
+  document.getElementById(type + 'UploadArea').style.borderColor = '';
+  const files = Array.from(event.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;
+  await processUploadFiles(files, type);
+}
+
+async function processUploadFiles(files, type) {
+  const gridId  = type + 'PreviewGrid';
+  const hintId  = type + 'UploadHint';
+  const listRef = type === 'real' ? submitRealFiles : submitAnimeFiles;
+  const areaEl  = document.getElementById(type + 'UploadArea');
+
+  // แสดง loading
+  areaEl.style.borderColor = 'var(--red)';
+  document.getElementById(hintId).innerHTML =
+    `<div style="color:var(--muted);font-size:13px">⌛ กำลังประมวลผลรูป ${files.length} ใบ...</div>`;
+
+  for (const f of files) {
     try {
-      const resized = await resizeImage(file);
-      const imgObj = { id: imgCounterId++, base64: resized.base64, dataUrl: resized.dataUrl };
-
-      if (type === 'real') {
-        realImagesList.push(imgObj);
-        renderImagePreviews('real');
-      } else {
-        animeImagesList.push(imgObj);
-        renderImagePreviews('anime');
-      }
-    } catch(err) {
-      showToast('error', 'อ่านไฟล์รูปภาพไม่สำเร็จ');
-    }
+      const r = await resizeImage(f);
+      listRef.push(r.base64);
+      // เพิ่ม thumbnail preview
+      const grid = document.getElementById(gridId);
+      grid.style.display = 'flex';
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;width:90px;height:90px;border-radius:8px;overflow:hidden;flex-shrink:0';
+      const img  = document.createElement('img');
+      img.src = r.dataUrl;
+      img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+      const del  = document.createElement('button');
+      del.textContent = '✕';
+      del.style.cssText = 'position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.7);color:white;border:none;border-radius:50%;width:20px;height:20px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1';
+      const idx  = listRef.length - 1;
+      del.onclick = (e) => { e.stopPropagation(); listRef.splice(idx,1); wrap.remove(); updateUploadHint(type); };
+      wrap.appendChild(img); wrap.appendChild(del);
+      grid.appendChild(wrap);
+    } catch(e) { console.error('resize error', e); }
   }
-  input.value = ''; // รีเซ็ตค่าให้สามารถอัปโหลดรูปเดิมซ้ำได้อีก
+
+  areaEl.style.borderColor = '';
+  updateUploadHint(type);
 }
 
-function removeLocImage(type, id) {
-  if (type === 'real') {
-    realImagesList = realImagesList.filter(img => img.id !== id);
-    renderImagePreviews('real');
-  } else {
-    animeImagesList = animeImagesList.filter(img => img.id !== id);
-    renderImagePreviews('anime');
-  }
-}
-
-function renderImagePreviews(type) {
-  const images = type === 'real' ? realImagesList : animeImagesList;
-  const containerId = type === 'real' ? 'realUploadPreviewGrid' : 'animeUploadPreviewGrid';
-  const promptId = type === 'real' ? 'realUploadPrompt' : 'animeUploadPrompt';
-  
-  const container = document.getElementById(containerId);
-  container.innerHTML = images.map(img => `
-    <div class="preview-item">
-      <img src="${img.dataUrl}">
-      <button class="remove-preview-btn" type="button" onclick="event.stopPropagation(); removeLocImage('${type}', ${img.id})">✕</button>
-    </div>
-  `).join('');
-
-  document.getElementById(promptId).style.display = images.length > 0 ? 'none' : 'block';
+function updateUploadHint(type) {
+  const list   = type === 'real' ? submitRealFiles : submitAnimeFiles;
+  const hintId = type + 'UploadHint';
+  const emoji  = type === 'real' ? '📷' : '🎬';
+  const label  = type === 'real' ? 'รูปสถานที่จริง' : 'ฉากอนิเมะ';
+  document.getElementById(hintId).innerHTML = list.length > 0
+    ? `<div style="font-size:13px;color:var(--muted)">${emoji} เพิ่ม ${label} อีกได้ · มีแล้ว ${list.length} รูป</div>`
+    : `<div style="font-size:32px;margin-bottom:8px">${emoji}</div>
+       <div style="font-size:14px;font-weight:600">คลิกหรือลากรูปมาวางที่นี่</div>`;
 }
 
 async function doSubmitLocation() {
   if (!currentUser) { openAuthModal('login'); return; }
 
   const seasons = ['spring','summer','autumn','winter'].filter(s => document.getElementById('s_'+s)?.checked);
-  const data = {
-    action:'submitLocation',
-    userId: currentUser.userId, token: currentUser.token,
-    name_th:   document.getElementById('s_name_th').value.trim(),
-    name_jp:   document.getElementById('s_name_jp').value.trim(),
-    name_en:   document.getElementById('s_name_en').value.trim(),
-    category:  document.getElementById('s_category').value,
-    anime_title: document.getElementById('s_anime').value.trim(),
-    anime_ep:  document.getElementById('s_ep').value.trim(),
-    prefecture: document.getElementById('s_pref').value.trim(),
-    address:   document.getElementById('s_address').value.trim(),
-    lat:       document.getElementById('s_lat').value,
-    lng:       document.getElementById('s_lng').value,
-    season:    seasons.join(',') || 'all',
-    best_months: document.getElementById('s_months').value.trim(),
-    hours:     document.getElementById('s_hours').value.trim(),
-    real_base64_list: realImagesList.map(img => img.base64),
-    anime_base64_list: animeImagesList.map(img => img.base64),
-    desc_th:   document.getElementById('s_desc_th').value.trim()
-  };
+  const name_th = document.getElementById('s_name_th').value.trim();
+  const name_en = document.getElementById('s_name_en').value.trim();
+  const anime   = document.getElementById('s_anime').value.trim();
+  const pref    = document.getElementById('s_pref').value.trim();
+  const lat     = document.getElementById('s_lat').value;
+  const lng     = document.getElementById('s_lng').value;
 
-  if (!data.name_th || !data.name_en || !data.anime_title || !data.prefecture || !data.lat || !data.lng) {
+  if (!name_th || !name_en || !anime || !pref || !lat || !lng) {
     showMsg('submitMsg','กรุณากรอกข้อมูลที่จำเป็น (มี *)'); return;
   }
-  if (data.real_base64_list.length === 0 || data.anime_base64_list.length === 0) {
-    showMsg('submitMsg','กรุณาแนบรูปภาพอย่างน้อย 1 รูปทั้งสถานที่จริงและอนิเมะ'); return;
-  }
+  if (submitRealFiles.length === 0)  { showMsg('submitMsg','กรุณาแนบรูปสถานที่จริงอย่างน้อย 1 รูป'); return; }
+  if (submitAnimeFiles.length === 0) { showMsg('submitMsg','กรุณาแนบรูปฉากในอนิเมะอย่างน้อย 1 รูป'); return; }
 
   const btn = document.querySelector('#submitForm .btn-red');
-  btn.textContent = 'กำลังส่ง (รวมอัปโหลดรูปลง Google Drive)...'; btn.disabled = true;
+  btn.textContent = '⌛ กำลังอัปโหลดรูป...'; btn.disabled = true;
+
+  const data = {
+    action: 'submitLocation',
+    userId: currentUser.userId, token: currentUser.token,
+    name_th, name_en,
+    name_jp:     document.getElementById('s_name_jp').value.trim(),
+    category:    document.getElementById('s_category').value,
+    anime_title: anime,
+    anime_ep:    document.getElementById('s_ep').value.trim(),
+    prefecture:  pref,
+    address:     document.getElementById('s_address').value.trim(),
+    lat, lng,
+    season:      seasons.join(',') || 'all',
+    best_months: document.getElementById('s_months').value.trim(),
+    hours:       document.getElementById('s_hours').value.trim(),
+    desc_th:     document.getElementById('s_desc_th').value.trim(),
+    real_base64_list:  submitRealFiles,
+    anime_base64_list: submitAnimeFiles
+  };
 
   const res = await apiPost(data);
   btn.textContent = '📍 ส่งข้อมูลสถานที่'; btn.disabled = false;
@@ -2034,13 +1995,14 @@ async function doSubmitLocation() {
     currentUser.points = (Number(currentUser.points||0)) + 200;
     localStorage.setItem('seichi_user', JSON.stringify(currentUser));
     updateNavUser();
-    
-    // รีเซ็ตฟอร์มและรูปภาพ
-    document.querySelectorAll('#submitForm input[type="text"], #submitForm input[type="number"], #submitForm textarea').forEach(i => i.value='');
-    realImagesList = []; animeImagesList = [];
-    renderImagePreviews('real');
-    renderImagePreviews('anime');
-
+    // ✅ reset ไฟล์ที่เลือก
+    submitRealFiles = []; submitAnimeFiles = [];
+    document.getElementById('s_real_files').value  = '';
+    document.getElementById('s_anime_files').value = '';
+    document.getElementById('realPreviewGrid').innerHTML  = '';
+    document.getElementById('animePreviewGrid').innerHTML = '';
+    updateUploadHint('real'); updateUploadHint('anime');
+    document.querySelector('#submitForm').reset?.();
     showView('home');
   } else {
     showMsg('submitMsg', res.error);
@@ -2053,11 +2015,13 @@ const POINTS_DISPLAY = { SUBMIT_LOCATION: 200 };
 //  ADMIN
 // ─────────────────────────────────────────────
 function initAdmin() {
+  // ถ้าไม่ได้ login หรือไม่ใช่ admin → redirect กลับหน้าหลัก
   if (!currentUser || !isAdmin(currentUser)) {
     showView('home');
     showToast('error', '🔒 คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
     return;
   }
+  // admin ที่ login แล้ว → ข้ามหน้ากรอก key ไปแสดง dashboard เลย
   adminKey = adminKey || 'AUTO_ADMIN_FROM_EMAIL';
   document.getElementById('adminLoginSection').style.display = 'none';
   showAdminDashboard();
@@ -2071,10 +2035,11 @@ function adminLogin() {
 }
 
 async function showAdminDashboard() {
-  const res = await apiGet({ action:'getPendingLocations', userId: currentUser?.userId, token: currentUser?.token, adminKey });
+  const res = await apiGet({ action:'getPendingLocations',
+    userId: currentUser?.userId, token: currentUser?.token, adminKey });
   if (!res.success) {
     document.getElementById('adminErr').style.display = 'block';
-    document.getElementById('adminErr').textContent = 'ระบบ Admin มีปัญหา หรือคุณไม่มีสิทธิ์เข้าถึง';
+    document.getElementById('adminErr').textContent = 'รหัส Admin ไม่ถูกต้อง';
     adminKey = '';
     return;
   }
@@ -2095,14 +2060,7 @@ async function showAdminDashboard() {
     return;
   }
 
-  document.getElementById('pendingList').innerHTML = res.data.map(loc => {
-    const realImgList = (loc.real_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
-    const animeImgList = (loc.anime_image_url || '').split(',').map(u=>getDriveImg(u.trim())).filter(u=>u.startsWith('http'));
-    
-    const realImg = realImgList[0] || 'https://via.placeholder.com/300x140/1a1a2e/ffffff?text=No+Image';
-    const animeImg = animeImgList[0] || 'https://via.placeholder.com/300x140/2d1a1a/ffffff?text=No+Anime+Image';
-    
-    return `
+  document.getElementById('pendingList').innerHTML = res.data.map(loc => `
     <div class="admin-pending-card" id="pcard_${loc.location_id}">
       <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
         <div style="flex:1">
@@ -2116,33 +2074,114 @@ async function showAdminDashboard() {
         <div style="font-size:12px;color:var(--muted)">Lat: ${loc.lat}<br>Lng: ${loc.lng}</div>
       </div>
       <div class="pending-imgs">
-        <img src="${realImg}" alt="สถานที่จริง" onerror="this.src='https://via.placeholder.com/300x140/1a1a2e/ffffff?text=No+Image'">
-        <img src="${animeImg}" alt="อนิเมะ" onerror="this.src='https://via.placeholder.com/300x140/2d1a1a/ffffff?text=No+Anime+Image'">
+        <img src="${safeImg(loc.real_image_url,'card')}" alt="สถานที่จริง" onerror="this.onerror=null;this.src=SVG_CARD">
+        <img src="${safeImg(loc.anime_image_url,'anime')}" alt="อนิเมะ" onerror="this.onerror=null;this.src=SVG_ANIME">
       </div>
       <div class="admin-actions">
         <button class="btn btn-green" onclick="adminAction('approve','${loc.location_id}')">✅ อนุมัติ</button>
         <button class="btn btn-red" onclick="adminAction('reject','${loc.location_id}')">❌ ปฏิเสธ</button>
         <button class="btn btn-outline" onclick="window.open('https://maps.google.com/?q=${loc.lat},${loc.lng}','_blank')">🗺️ ดูบนแผนที่</button>
       </div>
-    </div>`
-  }).join('');
+    </div>`).join('');
 }
 
 async function adminAction(type, locId) {
   if (type === 'approve') {
-    const res = await apiPost({ action:'approveLocation', userId: currentUser?.userId, token: currentUser?.token, locationId:locId });
+    const res = await apiPost({ action:'approveLocation', adminKey, locationId:locId });
     if (res.success) {
       showToast('success', 'อนุมัติสถานที่แล้ว ✅');
       document.getElementById('pcard_'+locId)?.remove();
     } else showToast('error', res.error);
   } else {
     const reason = prompt('เหตุผลในการปฏิเสธ:');
-    if (reason === null) return;
-    const res = await apiPost({ action:'rejectLocation', userId: currentUser?.userId, token: currentUser?.token, locationId:locId, reason });
+    const res = await apiPost({ action:'rejectLocation', adminKey, locationId:locId, reason });
     if (res.success) {
       showToast('info', 'ปฏิเสธสถานที่แล้ว');
       document.getElementById('pcard_'+locId)?.remove();
     } else showToast('error', res.error);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  PROFILE EDIT MODAL
+// ─────────────────────────────────────────────
+let editAvatarBase64 = null;
+
+function openEditProfile() {
+  if (!currentUser) return;
+  editAvatarBase64 = null;
+
+  // preset ค่าปัจจุบัน
+  document.getElementById('editDisplayName').value = currentUser.display_name || currentUser.username;
+  const sel = document.getElementById('editCountry');
+  for (let o of sel.options) o.selected = (o.value === (currentUser.country || 'TH'));
+
+  // แสดงรูป avatar ปัจจุบัน
+  const inner = document.getElementById('editAvatarInner');
+  const avUrl = getDriveImg(currentUser.avatar_url || '');
+  if (avUrl) {
+    inner.innerHTML = `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;" onerror="this.replaceWith(document.createTextNode('${(currentUser.username||'U')[0].toUpperCase()}'))">`;
+  } else {
+    inner.textContent = (currentUser.username||'U')[0].toUpperCase();
+  }
+
+  document.getElementById('editProfileErr').style.display = 'none';
+  openModal('editProfileModal');
+}
+
+async function handleEditAvatarSelect(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) { showMsg('editProfileErr','กรุณาเลือกไฟล์รูปภาพ'); return; }
+  try {
+    const resized = await resizeImage(file);
+    editAvatarBase64 = resized.base64;
+    document.getElementById('editAvatarInner').innerHTML =
+      `<img src="${resized.dataUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+  } catch(e) {
+    showMsg('editProfileErr','อ่านไฟล์ไม่สำเร็จ');
+  }
+}
+
+async function saveProfileChanges() {
+  if (!currentUser) return;
+  const newName    = document.getElementById('editDisplayName').value.trim();
+  const newCountry = document.getElementById('editCountry').value;
+  if (!newName) { showMsg('editProfileErr','กรุณาใส่ชื่อที่แสดงผล'); return; }
+
+  const btn = document.getElementById('editSaveBtn');
+  btn.textContent = '⌛ กำลังบันทึก...'; btn.disabled = true;
+
+  let changed = [], errors = [];
+
+  // 1. อัปเดตชื่อ + ประเทศ
+  if (newName !== currentUser.display_name || newCountry !== currentUser.country) {
+    const r = await apiPost({ action:'updateProfile', userId:currentUser.userId, token:currentUser.token,
+      display_name: newName, country: newCountry });
+    if (r.success) { currentUser.display_name = newName; currentUser.country = newCountry; changed.push('ชื่อ'); }
+    else errors.push(r.error);
+  }
+
+  // 2. อัปเดต Avatar
+  if (editAvatarBase64) {
+    const r = await apiPost({ action:'updateAvatar', userId:currentUser.userId, token:currentUser.token,
+      base64: editAvatarBase64 });
+    if (r.success) { currentUser.avatar_url = r.avatar_url; changed.push('รูปโปรไฟล์'); }
+    else errors.push(r.error);
+  }
+
+  btn.textContent = '💾 บันทึกการเปลี่ยนแปลง'; btn.disabled = false;
+
+  if (errors.length > 0) {
+    showMsg('editProfileErr', errors.join(' / '));
+  } else if (changed.length > 0) {
+    localStorage.setItem('seichi_user', JSON.stringify(currentUser));
+    updateNavUser();
+    loadProfile();
+    closeModal('editProfileModal');
+    showToast('success', '✅ บันทึก ' + changed.join(' และ ') + ' สำเร็จ!');
+  } else {
+    closeModal('editProfileModal');
   }
 }
 
@@ -2233,16 +2272,16 @@ function updateNavUser() {
     document.getElementById('navUser').style.display = 'none';
     document.getElementById('navLoggedIn').style.display = 'flex';
     document.getElementById('navPoints').textContent = Number(currentUser.points||0).toLocaleString();
-    
-    const av = document.getElementById('navAvatar');
-    const avUrl = getDriveImg(currentUser.avatar_url);
+
+    // ✅ แสดงรูป Avatar ใน navbar (ถ้ามี)
+    const navAv  = document.getElementById('navAvatar');
+    const avUrl  = getDriveImg(currentUser.avatar_url || '');
     if (avUrl) {
-      av.innerHTML = `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;">`;
+      navAv.innerHTML = `<img src="${avUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentElement.textContent='${(currentUser.username||'U')[0].toUpperCase()}'">`;
     } else {
-      av.innerHTML = (currentUser.username||'U')[0].toUpperCase();
+      navAv.textContent = (currentUser.username||'U')[0].toUpperCase();
     }
-    
-    // แสดงเมนู Admin เฉพาะอีเมล admin เท่านั้น
+
     adminBtn.style.display = isAdmin(currentUser) ? 'inline-block' : 'none';
   } else {
     document.getElementById('navUser').style.display = 'flex';
