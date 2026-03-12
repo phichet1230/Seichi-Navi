@@ -55,6 +55,21 @@ body.light .leaflet-popup-content-wrapper { background:#fff!important; border-co
 body.light .leaflet-popup-content { color:#1a1a2e!important; }
 body.light .leaflet-popup-tip { background:#fff!important; }
 
+/* ── Light mode: แก้สีที่ hardcode เป็นสว่าง ── */
+body.light .filter-card { background:var(--card); }
+body.light .stat-card   { background:var(--bg3); color:var(--text); }
+body.light .nav         { color:var(--text); }
+body.light .form-input  { color:var(--text); background:var(--bg3); }
+body.light .meta-chip   { background:var(--bg3); color:var(--text); }
+body.light .reward-card { background:var(--card); }
+body.light .admin-pending-card { background:var(--card); }
+body.light .profile-hero { background: linear-gradient(135deg, #e8e8f0 0%, #d0d0e0 100%); }
+body.light .profile-hero::before { opacity:0.5; }
+body.light .review-card { background:var(--card); }
+body.light .modal-overlay { background:rgba(0,0,0,0.4); }
+/* toast ในธีมสว่าง */
+body.light .toast { box-shadow:0 4px 20px rgba(0,0,0,0.18); }
+
 /* ── Theme transition ── */
 *, *::before, *::after {
   margin:0; padding:0; box-sizing:border-box;
@@ -328,12 +343,28 @@ nav {
   text-transform:uppercase; color:var(--muted); margin-bottom:16px; }
 .filter-opt {
   display:flex; align-items:center; gap:10px;
-  padding:8px 12px; border-radius:8px; cursor:pointer;
-  font-size:14px; transition:all .2s;
+  padding:9px 14px; border-radius:10px; cursor:pointer;
+  font-size:14px; transition:all .18s; user-select:none;
+  color:var(--text); border:1.5px solid transparent;
 }
 .filter-opt:hover { background:var(--bg3); }
-.filter-opt.active { background:rgba(230,57,70,0.15); color:var(--red); }
-.filter-opt input[type=radio] { accent-color:var(--red); }
+.filter-opt.active {
+  background:rgba(230,57,70,0.13);
+  color:var(--red);
+  border-color:rgba(230,57,70,0.35);
+  font-weight:600;
+}
+/* ซ่อน radio input — ใช้ JS จัดการ active state แทน */
+.filter-opt input[type=radio] { display:none; }
+.filter-opt::before {
+  content:''; width:8px; height:8px; border-radius:50%;
+  border:2px solid var(--muted); flex-shrink:0;
+  transition:all .18s;
+}
+.filter-opt.active::before {
+  background:var(--red); border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(230,57,70,0.2);
+}
 .explore-main { flex:1; min-width:0; }
 .explore-toolbar {
   display:flex; gap:12px; align-items:center;
@@ -378,7 +409,7 @@ nav {
   border-radius:8px; padding:6px 14px;
 }
 .meta-chip .icon { font-size:16px; }
-.detail-desc { font-size:16px; color:rgba(240,240,245,0.7); line-height:1.8; margin-bottom:24px; }
+.detail-desc { font-size:16px; color:var(--muted); line-height:1.8; margin-bottom:24px; }
 .detail-actions { display:flex; gap:12px; flex-wrap:wrap; }
 
 /* Map container */
@@ -409,7 +440,7 @@ nav {
 .rev-name { font-size:15px; font-weight:700; }
 .rev-meta { font-size:12px; color:var(--muted); display:flex; gap:8px; flex-wrap:wrap; margin-top:2px; }
 .flag { font-size:16px; }
-.rev-body { font-size:15px; line-height:1.7; color:rgba(240,240,245,0.8); }
+.rev-body { font-size:15px; line-height:1.7; color:var(--muted); }
 .rev-photo { width:100%; max-width:400px; border-radius:10px; margin-top:12px; }
 .rev-date { font-size:12px; color:var(--muted); margin-top:8px; }
 
@@ -558,6 +589,24 @@ nav {
 .pending-imgs { display:flex; gap:12px; margin:12px 0; }
 .pending-imgs img { width:50%; border-radius:8px; height:140px; object-fit:cover; }
 .admin-actions { display:flex; gap:10px; margin-top:16px; flex-wrap:wrap; }
+
+/* ── Delete request tab/card ── */
+.admin-tab-row { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.admin-tab {
+  padding:8px 18px; border-radius:8px; cursor:pointer;
+  font-size:13px; font-weight:600; border:1.5px solid var(--border);
+  background:var(--bg3); color:var(--muted); transition:all .18s;
+}
+.admin-tab.active { background:rgba(230,57,70,0.15); color:var(--red); border-color:rgba(230,57,70,0.4); }
+.del-req-card {
+  background:var(--card); border:1px solid rgba(230,57,70,0.25);
+  border-radius:14px; padding:20px; margin-bottom:14px;
+}
+.del-req-reason {
+  background:var(--bg3); border-radius:8px; padding:12px;
+  font-size:13px; color:var(--muted); margin:10px 0; line-height:1.6;
+}
+.btn-danger { background:rgba(230,57,70,0.1); color:var(--red); border:1.5px solid rgba(230,57,70,0.3); }
 
 /* ══════════════════════════════════════════
    MODAL
@@ -747,28 +796,27 @@ nav {
     <div class="filter-panel">
       <div class="filter-card">
         <div class="filter-title">หมวดหมู่</div>
-        <div class="filter-opt active" onclick="setFilter('category','all',this)"><input type="radio" name="cat" checked> 🗾 ทั้งหมด</div>
-        <div class="filter-opt" onclick="setFilter('category','tourist',this)"><input type="radio" name="cat"> 🏛️ สถานที่ท่องเที่ยว</div>
-        <div class="filter-opt" onclick="setFilter('category','food',this)"><input type="radio" name="cat"> 🍜 ร้านอาหาร</div>
-        <div class="filter-opt" onclick="setFilter('category','restaurant',this)"><input type="radio" name="cat"> 🍱 ร้านอาหาร Anime</div>
-        <div class="filter-opt" onclick="setFilter('category','nature',this)"><input type="radio" name="cat"> 🌿 ธรรมชาติ</div>
+      <div class="filter-card">
+        <div class="filter-title">หมวดหมู่</div>
+        <div class="filter-opt active" data-key="category" data-val="all" onclick="setFilter('category','all')"><input type="radio" name="cat" checked> 🗾 ทั้งหมด</div>
+        <div class="filter-opt" data-key="category" data-val="tourist" onclick="setFilter('category','tourist')"><input type="radio" name="cat"> 🏛️ สถานที่ท่องเที่ยว</div>
+        <div class="filter-opt" data-key="category" data-val="food" onclick="setFilter('category','food')"><input type="radio" name="cat"> 🍜 ร้านอาหาร</div>
+        <div class="filter-opt" data-key="category" data-val="restaurant" onclick="setFilter('category','restaurant')"><input type="radio" name="cat"> 🍱 ร้านอาหาร Anime</div>
+        <div class="filter-opt" data-key="category" data-val="nature" onclick="setFilter('category','nature')"><input type="radio" name="cat"> 🌿 ธรรมชาติ</div>
       </div>
       <div class="filter-card">
         <div class="filter-title">ฤดูกาล</div>
-        <div class="filter-opt active" onclick="setFilter('season','all',this)"><input type="radio" name="sea" checked> ทั้งหมด</div>
-        <div class="filter-opt" onclick="setFilter('season','spring',this)"><input type="radio" name="sea"> 🌸 ใบไม้ผลิ</div>
-        <div class="filter-opt" onclick="setFilter('season','summer',this)"><input type="radio" name="sea"> ☀️ ร้อน</div>
-        <div class="filter-opt" onclick="setFilter('season','autumn',this)"><input type="radio" name="sea"> 🍁 ใบไม้ร่วง</div>
-        <div class="filter-opt" onclick="setFilter('season','winter',this)"><input type="radio" name="sea"> ❄️ หนาว</div>
+        <div class="filter-opt active" data-key="season" data-val="all" onclick="setFilter('season','all')"><input type="radio" name="sea" checked> ทั้งหมด</div>
+        <div class="filter-opt" data-key="season" data-val="spring" onclick="setFilter('season','spring')"><input type="radio" name="sea"> 🌸 ใบไม้ผลิ</div>
+        <div class="filter-opt" data-key="season" data-val="summer" onclick="setFilter('season','summer')"><input type="radio" name="sea"> ☀️ ร้อน</div>
+        <div class="filter-opt" data-key="season" data-val="autumn" onclick="setFilter('season','autumn')"><input type="radio" name="sea"> 🍁 ใบไม้ร่วง</div>
+        <div class="filter-opt" data-key="season" data-val="winter" onclick="setFilter('season','winter')"><input type="radio" name="sea"> ❄️ หนาว</div>
       </div>
       <div class="filter-card">
-        <div class="filter-title">จังหวัด</div>
-        <div class="filter-opt active" onclick="setFilter('prefecture','all',this)"><input type="radio" name="pref" checked> ทั้งหมด</div>
-        <div class="filter-opt" onclick="setFilter('prefecture','Tokyo',this)"><input type="radio" name="pref"> 🗼 Tokyo</div>
-        <div class="filter-opt" onclick="setFilter('prefecture','Kyoto',this)"><input type="radio" name="pref"> ⛩️ Kyoto</div>
-        <div class="filter-opt" onclick="setFilter('prefecture','Osaka',this)"><input type="radio" name="pref"> 🏯 Osaka</div>
-        <div class="filter-opt" onclick="setFilter('prefecture','Hokkaido',this)"><input type="radio" name="pref"> 🌨️ Hokkaido</div>
-        <div class="filter-opt" onclick="setFilter('prefecture','Okinawa',this)"><input type="radio" name="pref"> 🏖️ Okinawa</div>
+        <div class="filter-title">จังหวัด <span style="font-size:11px;color:var(--muted);font-weight:400">(ซิงค์กับระบบ)</span></div>
+        <div id="prefFilterList">
+          <div class="filter-opt active" data-key="prefecture" data-val="all" onclick="setFilter('prefecture','all')">ทั้งหมด</div>
+        </div>
       </div>
     </div>
     <div class="explore-main">
@@ -977,12 +1025,20 @@ nav {
         <div class="admin-badge">ADMIN</div>
         <div>
           <div style="font-size:18px;font-weight:700">Admin Dashboard</div>
-          <div style="font-size:13px;color:var(--muted)">ตรวจสอบสถานที่ที่รอการอนุมัติ</div>
+          <div style="font-size:13px;color:var(--muted)">จัดการสถานที่และคำขอต่างๆ</div>
         </div>
         <div id="adminStats" style="margin-left:auto;display:flex;gap:20px"></div>
       </div>
-      <h3 style="font-size:18px;font-weight:700;margin-bottom:16px">📋 รายการรอตรวจสอบ</h3>
-      <div id="pendingList"></div>
+      <!-- แท็บ -->
+      <div class="admin-tab-row">
+        <div class="admin-tab active" id="adminTab_pending" onclick="switchAdminTab('pending')">📋 รอตรวจสอบ <span id="pendingBadge"></span></div>
+        <div class="admin-tab" id="adminTab_delreq" onclick="switchAdminTab('delreq')">🗑️ คำขอลบ <span id="delreqBadge"></span></div>
+        <div class="admin-tab" id="adminTab_approved" onclick="switchAdminTab('approved')">✅ อนุมัติแล้ว</div>
+      </div>
+      <!-- เนื้อหาแต่ละแท็บ -->
+      <div id="adminTabContent_pending"><div id="pendingList"></div></div>
+      <div id="adminTabContent_delreq" style="display:none"><div id="delreqList"></div></div>
+      <div id="adminTabContent_approved" style="display:none"><div id="approvedList"><div class="loading-spinner">กำลังโหลด</div></div></div>
     </div>
   </div>
 </div>
@@ -1120,6 +1176,28 @@ nav {
 
     <div id="editProfileErr" class="error-msg"></div>
     <button class="btn btn-red" id="editSaveBtn" style="width:100%;margin-top:16px;padding:12px" onclick="saveProfileChanges()">💾 บันทึกการเปลี่ยนแปลง</button>
+  </div>
+</div>
+
+<!-- ── Modal: ขอลบโพสต์ (สำหรับเจ้าของโพสต์) ── -->
+<div class="modal-overlay" id="deleteRequestModal">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('deleteRequestModal')">✕</button>
+    <div class="modal-title" style="color:var(--red)">🗑️ ขอลบสถานที่</div>
+    <div class="modal-sub" id="deleteReqLocName" style="margin-bottom:20px;font-size:15px;font-weight:600"></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7">
+      การลบจะต้องผ่านการอนุมัติจาก Admin ก่อน กรุณากรอกเหตุผลที่ต้องการลบสถานที่นี้
+    </p>
+    <div class="form-group">
+      <label class="form-label">เหตุผลที่ต้องการลบ *</label>
+      <textarea class="form-input form-textarea" id="deleteReqReason" rows="4"
+        placeholder="เช่น สถานที่ปิดถาวรแล้ว / ข้อมูลผิดพลาด / ซ้ำกับสถานที่อื่น..."></textarea>
+    </div>
+    <div id="deleteReqErr" class="error-msg"></div>
+    <div style="display:flex;gap:10px;margin-top:16px">
+      <button class="btn btn-outline" style="flex:1" onclick="closeModal('deleteRequestModal')">ยกเลิก</button>
+      <button class="btn btn-red" style="flex:1" id="deleteReqBtn" onclick="submitDeleteRequest()">📨 ส่งคำขอลบ</button>
+    </div>
   </div>
 </div>
 
@@ -1440,6 +1518,7 @@ async function loadExplore() {
   const res = await apiGet({ action:'getLocations', ...exploreFilters });
   if (!res.success) { showToast('error','โหลดข้อมูลไม่สำเร็จ'); return; }
   allLocations = res.data || [];
+  rebuildPrefectureFilter(allLocations);
   renderExploreGrid(allLocations);
 }
 
@@ -1450,11 +1529,39 @@ function renderExploreGrid(locs) {
     : '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🗾</div><p>ไม่พบสถานที่ที่ค้นหา</p></div>';
 }
 
-function setFilter(key, val, el) {
+function setFilter(key, val) {
   exploreFilters[key] = val;
-  document.querySelectorAll(`[onclick*="setFilter('${key}'"]`).forEach(e => e.classList.remove('active'));
-  el.classList.add('active');
+  // ลบ active ทุกปุ่มในกลุ่มเดียวกัน แล้วติ้กปุ่มที่ถูกกด
+  document.querySelectorAll(`.filter-opt[data-key="${key}"]`).forEach(e => e.classList.remove('active'));
+  const target = document.querySelector(`.filter-opt[data-key="${key}"][data-val="${val}"]`);
+  if (target) target.classList.add('active');
   loadExplore();
+}
+
+// ซิงค์จังหวัดจากข้อมูลจริงในระบบ
+function rebuildPrefectureFilter(locations) {
+  const prefEmoji = {
+    Tokyo:'🗼', Kyoto:'⛩️', Osaka:'🏯', Hokkaido:'🌨️', Okinawa:'🏖️',
+    Nara:'🦌', Hiroshima:'🕊️', Kanagawa:'🌊', Aichi:'🏯', Fukuoka:'🌸',
+    Sapporo:'❄️', Kobe:'⚓', Yokohama:'🚢', Nagoya:'🍜', Kamakura:'🏛️'
+  };
+  const current = exploreFilters.prefecture;
+
+  // เก็บ unique prefecture จาก data ที่โหลดมา
+  const prefSet = new Set(locations.map(l => l.prefecture).filter(Boolean));
+  const prefs   = [...prefSet].sort();
+
+  const container = document.getElementById('prefFilterList');
+  if (!container) return;
+
+  const allActive = (current === 'all') ? 'active' : '';
+  let html = `<div class="filter-opt ${allActive}" data-key="prefecture" data-val="all" onclick="setFilter('prefecture','all')">ทั้งหมด</div>`;
+  prefs.forEach(p => {
+    const active = (current === p) ? 'active' : '';
+    const em = prefEmoji[p] || '📍';
+    html += `<div class="filter-opt ${active}" data-key="prefecture" data-val="${p}" onclick="setFilter('prefecture','${p}')">${em} ${p}</div>`;
+  });
+  container.innerHTML = html;
 }
 
 let searchTimer;
@@ -1578,6 +1685,10 @@ function renderDetail(loc) {
     <div class="detail-actions">
       <button class="btn btn-red" onclick="openMapsFromDetail()">🗺️ นำทางใน Google Maps</button>
       ${currentUser ? `<button class="btn btn-outline" onclick="scrollToReview()">✍️ เขียนรีวิว</button>` : `<button class="btn btn-outline" onclick="openAuthModal('login')">🔒 Login เพื่อรีวิว</button>`}
+      ${currentUser && (currentUser.email === loc.submitted_by || isAdmin(currentUser)) ? `
+        <button class="btn btn-danger" style="margin-left:auto" onclick="openDeleteRequest('${loc.location_id}','${(loc.name_th||loc.name_en||'').replace(/'/g,'')}')">
+          🗑️ ${isAdmin(currentUser) ? 'ลบโพสต์ (Admin)' : 'ขอลบโพสต์'}
+        </button>` : ''}
     </div>`;
 
   // Map
@@ -2108,7 +2219,7 @@ async function showAdminDashboard() {
           <div style="font-size:13px;color:var(--muted)">📍 ${loc.prefecture} · ${loc.address||''}</div>
           <div style="font-size:13px;color:var(--muted)">📂 ${loc.category} · ฤดู: ${loc.season} · เวลา: ${loc.opening_hours||'-'}</div>
           <div style="font-size:13px;color:var(--muted);margin-top:4px">ส่งโดย: ${loc.submitted_by} · ${new Date(loc.submitted_date).toLocaleDateString('th-TH')}</div>
-          ${loc.description_th ? `<div style="font-size:13px;margin-top:8px;color:rgba(240,240,245,0.7)">${loc.description_th}</div>` : ''}
+          ${loc.description_th ? `<div style="font-size:13px;margin-top:8px;color:var(--muted)">${loc.description_th}</div>` : ''}
         </div>
         <div style="font-size:12px;color:var(--muted)">Lat: ${loc.lat}<br>Lng: ${loc.lng}</div>
       </div>
@@ -2125,7 +2236,6 @@ async function showAdminDashboard() {
 }
 
 async function adminAction(type, locId) {
-  // ✅ ส่งทั้ง userId+token และ adminKey เพื่อให้ Code.gs checkAdmin() ผ่านได้
   const adminAuth = {
     userId:   currentUser?.userId || '',
     token:    currentUser?.token  || '',
@@ -2142,7 +2252,7 @@ async function adminAction(type, locId) {
     }
   } else {
     const reason = prompt('เหตุผลในการปฏิเสธ (ถ้ามี):');
-    if (reason === null) return; // กด Cancel
+    if (reason === null) return;
     const res = await apiPostAdmin({ action:'rejectLocation', ...adminAuth, locationId:locId, reason });
     if (res.success) {
       showToast('info', 'ปฏิเสธสถานที่แล้ว');
@@ -2150,6 +2260,133 @@ async function adminAction(type, locId) {
     } else {
       showToast('error', '❌ ' + (res.error || 'ไม่สามารถปฏิเสธได้'));
     }
+  }
+}
+
+// ─── Admin: ลบโพสต์โดยตรง (admin เท่านั้น) ───
+async function adminDeleteLocation(locId, locName) {
+  if (!confirm(`⚠️ ยืนยันการลบ "${locName}" ?\n\nการลบไม่สามารถย้อนคืนได้`)) return;
+  const adminAuth = { userId: currentUser?.userId||'', token: currentUser?.token||'', adminKey };
+  const res = await apiPostAdmin({ action:'deleteLocation', ...adminAuth, locationId: locId });
+  if (res.success) {
+    showToast('success', '🗑️ ลบสถานที่แล้ว');
+    document.getElementById('pcard_'+locId)?.remove();
+    document.getElementById('acard_'+locId)?.remove();
+  } else {
+    showToast('error', '❌ ' + (res.error||'ลบไม่สำเร็จ'));
+  }
+}
+
+// ─── Admin tabs ───
+function switchAdminTab(tab) {
+  ['pending','delreq','approved'].forEach(t => {
+    document.getElementById('adminTab_'+t)?.classList.toggle('active', t===tab);
+    const el = document.getElementById('adminTabContent_'+t);
+    if (el) el.style.display = t===tab ? '' : 'none';
+  });
+  if (tab === 'delreq')   loadDeleteRequests();
+  if (tab === 'approved') loadApprovedLocations();
+}
+
+// ─── Admin: โหลดคำขอลบ ───
+async function loadDeleteRequests() {
+  const el = document.getElementById('delreqList');
+  el.innerHTML = '<div class="loading-spinner">กำลังโหลด</div>';
+  const adminAuth = { userId: currentUser?.userId||'', token: currentUser?.token||'', adminKey };
+  const res = await apiGetAdmin({ action:'getDeleteRequests', ...adminAuth });
+  if (!res.success || !res.data?.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">✅</div><p>ไม่มีคำขอลบ</p></div>';
+    return;
+  }
+  const badge = document.getElementById('delreqBadge');
+  if (badge) badge.textContent = ` (${res.data.length})`;
+  el.innerHTML = res.data.map(req => `
+    <div class="del-req-card" id="dreq_${req.request_id}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+        <div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:4px">📍 ${req.location_name||req.location_id}</div>
+          <div style="font-size:12px;color:var(--muted)">ขอโดย: ${req.requested_by} · ${new Date(req.requested_date||'').toLocaleDateString('th-TH')}</div>
+        </div>
+        <span style="background:rgba(255,209,102,0.15);color:var(--gold);border-radius:6px;padding:3px 10px;font-size:12px;font-weight:700">รอพิจารณา</span>
+      </div>
+      <div class="del-req-reason">💬 เหตุผล: ${req.reason||'-'}</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-red" style="flex:1" onclick="adminDecideDelete('approve','${req.request_id}','${req.location_id}')">✅ อนุมัติการลบ</button>
+        <button class="btn btn-outline" style="flex:1" onclick="adminDecideDelete('reject','${req.request_id}','')">❌ ปฏิเสธ</button>
+      </div>
+    </div>`).join('');
+}
+
+// ─── Admin: ตัดสินใจเรื่องคำขอลบ ───
+async function adminDecideDelete(decision, reqId, locId) {
+  const adminAuth = { userId: currentUser?.userId||'', token: currentUser?.token||'', adminKey };
+  if (decision === 'approve') {
+    if (!confirm('⚠️ ยืนยันการอนุมัติลบสถานที่นี้? ไม่สามารถย้อนคืนได้')) return;
+    const res = await apiPostAdmin({ action:'approveDeleteRequest', ...adminAuth, requestId: reqId, locationId: locId });
+    if (res.success) { showToast('success', '🗑️ อนุมัติการลบแล้ว'); document.getElementById('dreq_'+reqId)?.remove(); }
+    else showToast('error', '❌ ' + (res.error||'ไม่สำเร็จ'));
+  } else {
+    const res = await apiPostAdmin({ action:'rejectDeleteRequest', ...adminAuth, requestId: reqId });
+    if (res.success) { showToast('info', 'ปฏิเสธคำขอลบแล้ว'); document.getElementById('dreq_'+reqId)?.remove(); }
+    else showToast('error', '❌ ' + (res.error||'ไม่สำเร็จ'));
+  }
+}
+
+// ─── Admin: โหลดสถานที่ที่อนุมัติแล้ว (พร้อมปุ่มลบ) ───
+async function loadApprovedLocations() {
+  const el = document.getElementById('approvedList');
+  el.innerHTML = '<div class="loading-spinner">กำลังโหลด</div>';
+  const res = await apiGetAdmin({ action:'getLocations', status:'approved', userId: currentUser?.userId||'', token: currentUser?.token||'', adminKey });
+  if (!res.success || !res.data?.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>ไม่มีสถานที่</p></div>';
+    return;
+  }
+  el.innerHTML = res.data.map(loc => `
+    <div class="admin-pending-card" id="acard_${loc.location_id}" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:16px 20px">
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:15px">${loc.name_th||loc.name_en}</div>
+        <div style="font-size:12px;color:var(--muted)">🎬 ${loc.anime_title} · 📍 ${loc.prefecture}</div>
+        <div style="font-size:12px;color:var(--muted)">ส่งโดย: ${loc.submitted_by}</div>
+      </div>
+      <button class="btn btn-danger" style="padding:7px 14px;font-size:13px" onclick="adminDeleteLocation('${loc.location_id}','${(loc.name_th||loc.name_en||'').replace(/'/g,'')}')">🗑️ ลบ</button>
+    </div>`).join('');
+}
+
+// ─── User: เปิด modal ขอลบโพสต์ ───
+let deleteRequestLocId = null;
+function openDeleteRequest(locId, locName) {
+  deleteRequestLocId = locId;
+  if (!currentUser) { openAuthModal('login'); return; }
+
+  // admin → ลบตรงเลยไม่ต้องขอ
+  if (isAdmin(currentUser)) {
+    adminDeleteLocation(locId, locName);
+    return;
+  }
+  document.getElementById('deleteReqLocName').textContent = '📍 ' + locName;
+  document.getElementById('deleteReqReason').value = '';
+  document.getElementById('deleteReqErr').style.display = 'none';
+  openModal('deleteRequestModal');
+}
+
+// ─── User: ส่งคำขอลบ ───
+async function submitDeleteRequest() {
+  const reason = document.getElementById('deleteReqReason').value.trim();
+  if (!reason) { showMsg('deleteReqErr', 'กรุณากรอกเหตุผล'); return; }
+  const btn = document.getElementById('deleteReqBtn');
+  btn.textContent = '⌛ กำลังส่ง...'; btn.disabled = true;
+  const res = await apiPost({
+    action: 'requestDeleteLocation',
+    userId: currentUser.userId, token: currentUser.token,
+    locationId: deleteRequestLocId,
+    reason
+  });
+  btn.textContent = '📨 ส่งคำขอลบ'; btn.disabled = false;
+  if (res.success) {
+    closeModal('deleteRequestModal');
+    showToast('success', '📨 ส่งคำขอลบแล้ว รอ Admin พิจารณา');
+  } else {
+    showMsg('deleteReqErr', res.error || 'ส่งไม่สำเร็จ');
   }
 }
 
