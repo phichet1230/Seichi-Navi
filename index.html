@@ -796,21 +796,19 @@ nav {
     <div class="filter-panel">
       <div class="filter-card">
         <div class="filter-title">หมวดหมู่</div>
-      <div class="filter-card">
-        <div class="filter-title">หมวดหมู่</div>
-        <div class="filter-opt active" data-key="category" data-val="all" onclick="setFilter('category','all')"><input type="radio" name="cat" checked> 🗾 ทั้งหมด</div>
-        <div class="filter-opt" data-key="category" data-val="tourist" onclick="setFilter('category','tourist')"><input type="radio" name="cat"> 🏛️ สถานที่ท่องเที่ยว</div>
-        <div class="filter-opt" data-key="category" data-val="food" onclick="setFilter('category','food')"><input type="radio" name="cat"> 🍜 ร้านอาหาร</div>
-        <div class="filter-opt" data-key="category" data-val="restaurant" onclick="setFilter('category','restaurant')"><input type="radio" name="cat"> 🍱 ร้านอาหาร Anime</div>
-        <div class="filter-opt" data-key="category" data-val="nature" onclick="setFilter('category','nature')"><input type="radio" name="cat"> 🌿 ธรรมชาติ</div>
+        <div class="filter-opt active" data-key="category" data-val="all" onclick="setFilter('category','all')">🗾 ทั้งหมด</div>
+        <div class="filter-opt" data-key="category" data-val="tourist" onclick="setFilter('category','tourist')">🏛️ สถานที่ท่องเที่ยว</div>
+        <div class="filter-opt" data-key="category" data-val="food" onclick="setFilter('category','food')">🍜 ร้านอาหาร</div>
+        <div class="filter-opt" data-key="category" data-val="restaurant" onclick="setFilter('category','restaurant')">🍱 ร้านอาหาร Anime</div>
+        <div class="filter-opt" data-key="category" data-val="nature" onclick="setFilter('category','nature')">🌿 ธรรมชาติ</div>
       </div>
       <div class="filter-card">
         <div class="filter-title">ฤดูกาล</div>
-        <div class="filter-opt active" data-key="season" data-val="all" onclick="setFilter('season','all')"><input type="radio" name="sea" checked> ทั้งหมด</div>
-        <div class="filter-opt" data-key="season" data-val="spring" onclick="setFilter('season','spring')"><input type="radio" name="sea"> 🌸 ใบไม้ผลิ</div>
-        <div class="filter-opt" data-key="season" data-val="summer" onclick="setFilter('season','summer')"><input type="radio" name="sea"> ☀️ ร้อน</div>
-        <div class="filter-opt" data-key="season" data-val="autumn" onclick="setFilter('season','autumn')"><input type="radio" name="sea"> 🍁 ใบไม้ร่วง</div>
-        <div class="filter-opt" data-key="season" data-val="winter" onclick="setFilter('season','winter')"><input type="radio" name="sea"> ❄️ หนาว</div>
+        <div class="filter-opt active" data-key="season" data-val="all" onclick="setFilter('season','all')">ทั้งหมด</div>
+        <div class="filter-opt" data-key="season" data-val="spring" onclick="setFilter('season','spring')">🌸 ใบไม้ผลิ</div>
+        <div class="filter-opt" data-key="season" data-val="summer" onclick="setFilter('season','summer')">☀️ ร้อน</div>
+        <div class="filter-opt" data-key="season" data-val="autumn" onclick="setFilter('season','autumn')">🍁 ใบไม้ร่วง</div>
+        <div class="filter-opt" data-key="season" data-val="winter" onclick="setFilter('season','winter')">❄️ หนาว</div>
       </div>
       <div class="filter-card">
         <div class="filter-title">จังหวัด <span style="font-size:11px;color:var(--muted);font-weight:400">(ซิงค์กับระบบ)</span></div>
@@ -1665,6 +1663,10 @@ function renderDetail(loc) {
       <div class="img-label anime-label">🎬 ฉากในอนิเมะ</div>
     </div>`;
 
+  const deleteBtn = (currentUser && (currentUser.email === loc.submitted_by || isAdmin(currentUser)))
+    ? `<button class="btn btn-danger" style="margin-left:auto" onclick="openDeleteRequest('${loc.location_id}','${String(loc.name_th||loc.name_en||'').replace(/['"]/g,'')}')">\u{1F5D1}\uFE0F ${isAdmin(currentUser) ? 'ลบโพสต์ (Admin)' : 'ขอลบโพสต์'}</button>`
+    : '';
+
   document.getElementById('detailInfo').innerHTML = `
     <div class="detail-title">${loc.name_th||loc.name_en}</div>
     <div class="detail-jp">${loc.name_jp||''} ${loc.name_en ? '· '+loc.name_en : ''}</div>
@@ -1685,10 +1687,7 @@ function renderDetail(loc) {
     <div class="detail-actions">
       <button class="btn btn-red" onclick="openMapsFromDetail()">🗺️ นำทางใน Google Maps</button>
       ${currentUser ? `<button class="btn btn-outline" onclick="scrollToReview()">✍️ เขียนรีวิว</button>` : `<button class="btn btn-outline" onclick="openAuthModal('login')">🔒 Login เพื่อรีวิว</button>`}
-      ${currentUser && (currentUser.email === loc.submitted_by || isAdmin(currentUser)) ? `
-        <button class="btn btn-danger" style="margin-left:auto" onclick="openDeleteRequest('${loc.location_id}','${(loc.name_th||loc.name_en||'').replace(/'/g,'')}')">
-          🗑️ ${isAdmin(currentUser) ? 'ลบโพสต์ (Admin)' : 'ขอลบโพสต์'}
-        </button>` : ''}
+      ${deleteBtn}
     </div>`;
 
   // Map
